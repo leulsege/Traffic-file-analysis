@@ -3,10 +3,8 @@ import dotenv from 'dotenv'
 import app from './app'
 
 dotenv.config({ path: `${__dirname}/../.env` })
-const DB = process.env.DATABASE.replace(
-  '<PASSWORD>',
-  process.env.DATABASE_PASSWORD,
-)
+
+const DB = process.env.DATABASE
 
 const connectDB = async (): Promise<void> => {
   try {
