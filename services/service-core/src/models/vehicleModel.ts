@@ -43,6 +43,18 @@ const vehicleSchema: Schema = new mongoose.Schema({
   others: {
     type: String,
   },
+  startingPoint: {
+    type: String,
+    required: true,
+  },
+  destination: {
+    type: String,
+    required: true,
+  },
+  stayingPlace: {
+    type: String,
+    required: true,
+  },
 })
 
 const VehicleModal = mongoose.model<Vehicle>('Vehicle', vehicleSchema)

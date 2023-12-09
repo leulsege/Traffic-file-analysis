@@ -1,14 +1,13 @@
 import express from 'express'
-import FaultRecordController from '../controllers/faultRecordController'
-
-const faultRecordRouter = express.Router()
-const {
+import {
   createFaultRecord,
   getAllFaultRecords,
   getFaultRecord,
   updateFaultRecord,
   deleteFaultRecord,
-} = new FaultRecordController()
+} from '../controllers/faultRecordController'
+
+const faultRecordRouter = express.Router()
 
 faultRecordRouter.route('/').post(createFaultRecord).get(getAllFaultRecords)
 faultRecordRouter

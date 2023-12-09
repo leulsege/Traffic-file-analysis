@@ -1,14 +1,13 @@
 import express from 'express'
-import VehicleController from '../controllers/vehicleController'
-
-const vehicleRouter = express.Router()
-const {
+import {
   createVehicle,
   getAllVehicles,
   getVehicle,
   updateVehicle,
   deleteVehicle,
-} = new VehicleController()
+} from '../controllers/vehicleController'
+
+const vehicleRouter = express.Router()
 
 vehicleRouter.route('/').post(createVehicle).get(getAllVehicles)
 vehicleRouter

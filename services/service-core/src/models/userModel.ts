@@ -9,6 +9,9 @@ interface Driver extends Document {
   commencementDate: Date
   age: number
   idNumber: string
+  startingPoint: String
+  destination: String
+  stayingPlace: String
 }
 
 const driverSchema: Schema = new mongoose.Schema({
@@ -45,6 +48,16 @@ const driverSchema: Schema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+  },
+  givenPoint: {
+    type: Number,
+    required: true,
+  },
+  reducedPoint: {
+    type: Number,
+  },
+  remainingPoint: {
+    type: Number,
   },
 })
 

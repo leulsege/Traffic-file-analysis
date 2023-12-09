@@ -1,14 +1,13 @@
 import express from 'express'
-import TrainingController from '../controllers/trainingController'
-
-const trainingRouter = express.Router()
-const {
-  createTraining,
+import {
   getAllTrainings,
   getTraining,
   updateTraining,
   deleteTraining,
-} = new TrainingController()
+  createTraining,
+} from '../controllers/trainingController'
+
+const trainingRouter = express.Router()
 
 trainingRouter.route('/').post(createTraining).get(getAllTrainings)
 trainingRouter

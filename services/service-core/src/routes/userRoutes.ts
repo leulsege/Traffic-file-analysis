@@ -1,5 +1,11 @@
 import express from 'express'
-import UserController from '../controllers/userController'
+import {
+  getAllDrivers,
+  createDriver,
+  getDriver,
+  updateDriver,
+  deleteDriver,
+} from '../controllers/userController'
 import { Request, Response, NextFunction } from 'express'
 
 type AsyncFunction = (
@@ -20,10 +26,13 @@ const catchAsync = (fn: AsyncFunction) => {
   }
 }
 
-const userRouter = express.Router()
-const { getAllUsers, getUser, createUser, updateUser, deleteUser } =
-  new UserController()
-userRouter.route('/').get(catchAsync(getAllUsers)).post(createUser)
-userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser)
+const driverRouter = express.Router()
 
-export default userRouter
+driverRouter.route('/').get(catchAsync(getAllDrivers)).post(createDriver)
+driverRouter
+  .route('/:id')
+  .get(getDriver)
+  .patch(updateDriver)
+  .delete(deleteDriver)
+
+export default driverRouter
