@@ -1,14 +1,21 @@
+import asyncError from '../utils/asyncError'
 import TrainingModel from '../models/trainingModel'
 import GenericController from './genericController'
-import { Request, Response, NextFunction } from 'express'
 
 const TrainingController = new GenericController(TrainingModel)
 
-export const createTraining = TrainingController.create.bind(TrainingController)
-export const getAllTrainings =
-  TrainingController.getAll.bind(TrainingController)
-export const getTraining = TrainingController.getOne.bind(TrainingController)
-export const updateTraining =
-  TrainingController.updateOne.bind(TrainingController)
-export const deleteTraining =
-  TrainingController.deleteOne.bind(TrainingController)
+export const createTraining = asyncError(
+  TrainingController.create.bind(TrainingController),
+)
+export const getAllTrainings = asyncError(
+  TrainingController.getAll.bind(TrainingController),
+)
+export const getTraining = asyncError(
+  TrainingController.getOne.bind(TrainingController),
+)
+export const updateTraining = asyncError(
+  TrainingController.updateOne.bind(TrainingController),
+)
+export const deleteTraining = asyncError(
+  TrainingController.deleteOne.bind(TrainingController),
+)
