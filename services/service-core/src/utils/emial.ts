@@ -19,7 +19,7 @@ const sendEmail = async (options: EmailOptions): Promise<void> => {
 
   // 2) Define the email options
   const mailOptions: nodemailer.SendMailOptions = {
-    from: 'Jonas Schmedtmann <hello@jonas.io>',
+    from: 'PSTS <psts@gmail.et>',
     to: options.email,
     subject: options.subject,
     text: options.message,
