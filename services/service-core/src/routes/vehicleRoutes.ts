@@ -6,14 +6,20 @@ import {
   updateVehicle,
   deleteVehicle,
 } from '../controllers/vehicleController'
+import { protect, restrictTo } from '../middleware/authMiddleware'
 
 const vehicleRouter = express.Router()
 
-vehicleRouter.route('/').post(createVehicle).get(getAllVehicles)
+vehicleRouter
+  .route('/')
+  .all(protect, restrictTo('admin', 'owner'))
+  .post(createVehicle)
+  .get(getAllVehicles)
 vehicleRouter
   .route('/:id')
+  .all(protect)
   .get(getVehicle)
-  .patch(updateVehicle)
-  .delete(deleteVehicle)
+  .patch(restrictTo('admin', 'owner'), updateVehicle)
+  .delete(restrictTo('admin', 'owner'), deleteVehicle)
 
 export default vehicleRouter

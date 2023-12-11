@@ -15,9 +15,14 @@ interface Driver extends Document {
 }
 
 const driverSchema: Schema = new mongoose.Schema({
-  driverName: {
+  name: {
     type: String,
     required: true,
+  },
+
+  email: {
+    type: String,
+    unique: true,
   },
   licenseLevel: {
     type: String,
@@ -48,16 +53,6 @@ const driverSchema: Schema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-  },
-  givenPoint: {
-    type: Number,
-    required: true,
-  },
-  reducedPoint: {
-    type: Number,
-  },
-  remainingPoint: {
-    type: Number,
   },
 })
 

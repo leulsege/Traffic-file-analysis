@@ -1,5 +1,5 @@
 import asyncError from '../utils/asyncError'
-import DriverModel from '../models/userModel'
+import DriverModel from '../models/driverModel'
 import GenericController from './genericController'
 
 const DriverController = new GenericController(DriverModel)

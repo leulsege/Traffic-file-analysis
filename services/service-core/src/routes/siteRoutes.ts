@@ -6,10 +6,20 @@ import {
   updateSite,
   deleteSite,
 } from '../controllers/siteController'
+import { protect, restrictTo } from '../middleware/authMiddleware'
 
 const siteRouter = express.Router()
 
-siteRouter.route('/').post(createSite).get(getAllSites)
-siteRouter.route('/:id').get(getSite).patch(updateSite).delete(deleteSite)
+siteRouter
+  .route('/')
+  .all(protect, restrictTo('admin', 'owner'))
+  .post(createSite)
+  .get(getAllSites)
+siteRouter
+  .route('/:id')
+  .all(protect)
+  .get(getSite)
+  .patch(restrictTo('admin', 'owner'), updateSite)
+  .delete(restrictTo('admin', 'owner'), deleteSite)
 
 export default siteRouter
