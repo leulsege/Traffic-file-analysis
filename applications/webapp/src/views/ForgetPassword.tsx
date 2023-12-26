@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TextField, Button, Typography, Container, Paper } from "@mui/material";
-import HomeNavbar from "../components/homeNavbar";
+import HomeNavbar from "../components/HomeNavbar";
 
 const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState("");

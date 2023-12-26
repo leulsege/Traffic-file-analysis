@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import HomeNavbar from "../components/homeNavbar";
+import HomeNavbar from "../components/HomeNavbar";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");

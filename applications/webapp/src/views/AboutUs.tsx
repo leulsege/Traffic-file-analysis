@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import LeulsegedPhoto from "../assets/leul-avater.jpg";
 import YafetPhoto from "../assets/yafet-avater.jpg";
-import HomeNavbar from "../components/homeNavbar";
+import HomeNavbar from "../components/HomeNavbar";
 
 const AboutUs = () => {
   return (
@@ -44,11 +44,15 @@ const AboutUs = () => {
 
           {/* <Paper elevation={0} sx={{ padding: 0 }}> */}
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6} justifyContent="end">
+            <Grid item xs={12} md={6} justifyContent="start">
               <Avatar
                 alt="Leulseged Gebremedhin"
                 src={LeulsegedPhoto}
-                sx={{ width: 120, height: 120, margin: "auto" }}
+                sx={{
+                  width: 220,
+                  height: 220,
+                  margin: 2,
+                }}
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -62,14 +66,21 @@ const AboutUs = () => {
               <Avatar
                 alt="Yafet Zerihun"
                 src={YafetPhoto}
-                sx={{ width: 120, height: 120, margin: "auto" }}
+                sx={{ width: 220, height: 220, margin: 2 }}
               />
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography variant="subtitle1">Yafet Zerihun</Typography>
-              <Typography variant="body2">
-                Electrical and Computer Engineering <br /> Full Stack Developer
-              </Typography>
+              <Grid container alignItems="flex-end">
+                <Grid xs={12}>
+                  <Typography variant="subtitle1">Yafet Zerihun</Typography>
+                </Grid>
+                <Grid xs={12}>
+                  <Typography variant="body2">
+                    Electrical and Computer Engineering <br /> Full Stack
+                    Developer
+                  </Typography>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </Paper>
