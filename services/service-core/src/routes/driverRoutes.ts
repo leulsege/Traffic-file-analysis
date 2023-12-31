@@ -5,7 +5,7 @@ import {
   getDriver,
   updateDriver,
   deleteDriver,
-} from '../controllers/userController'
+} from '../controllers/driverController'
 import { protect, restrictTo } from '../middleware/authMiddleware'
 
 const driverRouter = express.Router()

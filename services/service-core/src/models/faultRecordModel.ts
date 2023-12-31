@@ -13,15 +13,19 @@ const faultRecordSchema: Schema = new mongoose.Schema({
   },
   reducedPoint: {
     type: Number,
+    default: 0,
   },
   remainingPoint: {
     type: Number,
+    default: function (this: FaultRecord) {
+      return this.givenPoint || 0
+    },
   },
 })
 
-const FaultRecordModal = mongoose.model<FaultRecord>(
+const FaultRecordModel = mongoose.model<FaultRecord>(
   'FaultRecord',
   faultRecordSchema,
 )
 
-export default FaultRecordModal
+export default FaultRecordModel

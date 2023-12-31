@@ -55,6 +55,10 @@ const vehicleSchema: Schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  driver: {
+    type: Schema.Types.ObjectId,
+    ref: 'Driver',
+  },
 })
 
 const VehicleModal = mongoose.model<Vehicle>('Vehicle', vehicleSchema)

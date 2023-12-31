@@ -1,7 +1,14 @@
-import mongoose, { Schema, Document } from 'mongoose'
+import mongoose, { Document, Schema, Types, Query } from 'mongoose'
+
+interface FaultRecord {
+  givenPoint: number
+  reducedPoint: number
+  remainingPoint: number
+}
 
 interface Driver extends Document {
-  driverName: string
+  name: string
+  email?: string
   licenseLevel: string
   licenseNumber: string
   licenseExpiredDate: Date
@@ -9,17 +16,35 @@ interface Driver extends Document {
   commencementDate: Date
   age: number
   idNumber: string
-  startingPoint: String
-  destination: String
-  stayingPlace: String
+  startingPoint: string
+  destination: string
+  stayingPlace: string
+  faultRecord?: FaultRecord
+  vehicle?: Types.ObjectId | null
 }
 
-const driverSchema: Schema = new mongoose.Schema({
+const faultRecordSchema = new mongoose.Schema<FaultRecord>({
+  givenPoint: {
+    type: Number,
+    required: true,
+  },
+  reducedPoint: {
+    type: Number,
+    default: 0,
+  },
+})
+
+faultRecordSchema.virtual('remainingPoint').get(function (
+  this: FaultRecord & Document,
+) {
+  return this.givenPoint - this.reducedPoint
+})
+
+const driverSchema = new Schema<Driver>({
   name: {
     type: String,
     required: true,
   },
-
   email: {
     type: String,
     unique: true,
@@ -54,7 +79,35 @@ const driverSchema: Schema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  startingPoint: String,
+  destination: String,
+  stayingPlace: String,
+  faultRecord: {
+    type: faultRecordSchema,
+    default: null,
+  },
+  vehicle: {
+    type: Schema.Types.ObjectId,
+    ref: 'Vehicle',
+    default: null,
+  },
 })
+
+driverSchema.pre(
+  /^find/,
+  function (this: Query<Driver[], Driver, unknown>, next) {
+    this.populate('faultRecord').populate('vehicle')
+    next()
+  },
+)
+
+driverSchema.pre(
+  'save',
+  function (this: Query<Driver[], Driver, unknown>, next) {
+    this.populate('faultRecord').populate('vehicle')
+    next()
+  },
+)
 
 const DriverModel = mongoose.model<Driver>('Driver', driverSchema)
 
