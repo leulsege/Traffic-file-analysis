@@ -29,26 +29,92 @@ const createSendToken = (
   res.cookie('jwt', token, cookieOptions)
 
   user.password = undefined
-
-  res.status(statusCode).json({
-    status: 'success',
-    token,
-    data: {
-      user,
-    },
-  })
+  if (user.verified) {
+    res.status(statusCode).json({
+      status: 'success',
+      data: {
+        user,
+      },
+    })
+  } else {
+    res.status(403).json({
+      status: 'failed',
+      message: 'please verify your email account',
+    })
+  }
 }
 
 export const signup = asyncError(
   async (req: Request, res: Response, next: NextFunction) => {
-    // const { name, email, password, passwordConfirm } = req.body;
+    const newUser = await User.create({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password,
+      role: req.body.role,
+      verified: false,
+    })
 
-    const newUser = await User.create(req.body)
+    const resetToken = newUser.createPasswordResetToken()
+    await newUser.save({ validateBeforeSave: false })
+    console.log(newUser.passwordResetToken, newUser)
 
-    createSendToken(newUser, 201, res)
+    const verificationURL = `${req.protocol}://${req.get(
+      'host',
+    )}/admin/verify/${resetToken}`
+
+    const message = `welecome to PSTS, click the the link to verify your email: ${verificationURL}.\nIf you didn't signup, please ignore this email!`
+
+    try {
+      await sendEmail({
+        email: req.body.email,
+        subject: 'account verification (valid for 1 day)',
+        message,
+      })
+
+      res.status(200).json({
+        status: 'success',
+        message: 'we have sent a verification email!',
+      })
+    } catch (err) {
+      await newUser.deleteOne({ email: req.body.email })
+
+      return next(
+        new AppError(
+          'There was an error sending the email. Try again later!',
+          500,
+        ),
+        500,
+      )
+    }
   },
 )
 
+export const verification = asyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const hashedToken = crypto
+      .createHash('sha256')
+      .update(req.params.token)
+      .digest('hex')
+
+    const user = await User.findOne({
+      passwordResetToken: hashedToken,
+      passwordResetExpires: { $gt: Date.now() },
+    })
+
+    // 2) If the token has not expired, and there is a user, set the new password
+    if (!user) {
+      return next(new AppError('Token is invalid or has expired', 400))
+    }
+
+    user.verified = true
+    user.passwordResetToken = undefined
+    user.passwordResetExpires = undefined
+    await user.save({ validateBeforeSave: false })
+
+    createSendToken(user, 200, res)
+  },
+)
 export const signin = asyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body
@@ -152,7 +218,7 @@ export const forgotPassword = asyncError(
     try {
       await sendEmail({
         email: user.email,
-        subject: 'Your password reset token (valid for 10 min)',
+        subject: 'Your password reset token (valid for 1 day)',
         message,
       })
 

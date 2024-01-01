@@ -5,10 +5,12 @@ import {
   getDriver,
   updateDriver,
   deleteDriver,
+  updateDriverAndVehicle,
 } from '../controllers/driverController'
 import { protect, restrictTo } from '../middleware/authMiddleware'
 
 const driverRouter = express.Router()
+driverRouter.route('/updatedriverwithvehicle').patch(updateDriverAndVehicle)
 
 driverRouter
   .route('/')

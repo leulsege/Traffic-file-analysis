@@ -1,4 +1,5 @@
 import mongoose, { Document, Schema, Types, Query } from 'mongoose'
+import VehicleModel from './vehicleModel'
 
 interface FaultRecord {
   givenPoint: number
@@ -93,21 +94,37 @@ const driverSchema = new Schema<Driver>({
   },
 })
 
+driverSchema.pre('findOneAndUpdate', async function (this: any, next) {
+  if (this.isModified('vehicle') && this.vehicle) {
+    await VehicleModel.updateOne(
+      { _id: this.vehicle },
+      { $set: { driver: this._id } },
+    )
+  }
+
+  next()
+})
+
 driverSchema.pre(
   /^find/,
   function (this: Query<Driver[], Driver, unknown>, next) {
-    this.populate('faultRecord').populate('vehicle')
+    this.populate('vehicle')
     next()
   },
 )
 
-driverSchema.pre(
-  'save',
-  function (this: Query<Driver[], Driver, unknown>, next) {
-    this.populate('faultRecord').populate('vehicle')
-    next()
-  },
-)
+driverSchema.pre('findOneAndUpdate', async function (this: any, next) {
+  const originalVehicle = await this.model.findOne(this.getQuery(), 'vehicle')
+
+  if (this.isModified('vehicle') && originalVehicle) {
+    await VehicleModel.updateOne(
+      { _id: originalVehicle.vehicle },
+      { $set: { driver: null } },
+    )
+  }
+
+  next()
+})
 
 const DriverModel = mongoose.model<Driver>('Driver', driverSchema)
 

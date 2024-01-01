@@ -41,6 +41,7 @@ const userSchema: Schema = new Schema({
     type: String,
     required: [true, 'please provide a password'],
     minlength: 8,
+    select: false,
   },
   role: {
     type: String,
@@ -56,9 +57,13 @@ const userSchema: Schema = new Schema({
       },
       message: 'Passwords are not the same!',
     },
-    passwordChangedAt: Date,
-    passwordResetToken: String,
-    passwordResetExpires: Date,
+  },
+  passwordChangedAt: Date,
+  passwordResetToken: String,
+  passwordResetExpires: Date,
+  verified: {
+    type: Boolean,
+    default: false,
   },
 })
 
@@ -99,8 +104,7 @@ userSchema.methods.createPasswordResetToken = function () {
     .createHash('sha256')
     .update(resetToken)
     .digest('hex')
-
-  this.passwordResetExpires = Date.now() + 10 * 60 * 1000
+  this.passwordResetExpires = Date.now() + 24 * 60 * 60 * 1000
 
   return resetToken
 }

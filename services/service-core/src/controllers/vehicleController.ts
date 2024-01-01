@@ -1,4 +1,4 @@
-import asyncError from 'src/utils/asyncError'
+import asyncError from '../utils/asyncError'
 import VehicleModel from '../models/vehicleModel'
 import GenericController from './genericController'
 
