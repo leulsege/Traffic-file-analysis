@@ -18,18 +18,18 @@ const createSendToken = (
   statusCode: number,
   res: Response,
 ): void => {
-  const token = signToken(user._id)
-  const cookieOptions = {
-    expires: new Date(
-      Date.now() +
-        parseInt(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60 * 1000,
-    ),
-  }
-
-  res.cookie('jwt', token, cookieOptions)
-
-  user.password = undefined
   if (user.verified) {
+    const token = signToken(user._id)
+    const cookieOptions = {
+      expires: new Date(
+        Date.now() +
+          parseInt(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60 * 1000,
+      ),
+    }
+
+    res.cookie('jwt', token, cookieOptions)
+
+    user.password = undefined
     res.status(statusCode).json({
       status: 'success',
       data: {
@@ -51,13 +51,13 @@ export const signup = asyncError(
       lastName: req.body.lastName,
       email: req.body.email,
       password: req.body.password,
+      confirmPassword: req.body.confirmPassword,
       role: req.body.role,
       verified: false,
     })
 
     const resetToken = newUser.createPasswordResetToken()
     await newUser.save({ validateBeforeSave: false })
-    console.log(newUser.passwordResetToken, newUser)
 
     const verificationURL = `${req.protocol}://${req.get(
       'host',
@@ -124,7 +124,7 @@ export const signin = asyncError(
     }
 
     const user = await User.findOne({ email }).select('+password')
-    console.log(user)
+
     if (!user || !(await user.correctPassword(password, user.password))) {
       return next(new AppError('Incorrect email or password', 401))
     }

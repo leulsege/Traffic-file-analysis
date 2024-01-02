@@ -61,6 +61,7 @@ const userSchema: Schema = new Schema({
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
+
   verified: {
     type: Boolean,
     default: false,
