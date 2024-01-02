@@ -47,58 +47,59 @@ faultRecordSchema.virtual('remainingPoint').get(function (
   return this.givenPoint - this.reducedPoint
 })
 
-const driverSchema = new Schema<Driver>({
-  name: {
-    type: String,
-    required: true,
+const driverSchema = new Schema<Driver>(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      unique: true,
+    },
+    licenseLevel: {
+      type: String,
+      required: true,
+    },
+    licenseNumber: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    licenseExpiredDate: {
+      type: Date,
+      required: true,
+    },
+    gender: {
+      type: String,
+      required: true,
+    },
+    commencementDate: {
+      type: Date,
+      required: true,
+    },
+    age: {
+      type: Number,
+      required: true,
+    },
+    idNumber: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    startingPoint: String,
+    destination: String,
+    stayingPlace: String,
+    faultRecord: {
+      type: faultRecordSchema,
+      default: null,
+    },
   },
-  email: {
-    type: String,
-    unique: true,
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   },
-  licenseLevel: {
-    type: String,
-    required: true,
-  },
-  licenseNumber: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  licenseExpiredDate: {
-    type: Date,
-    required: true,
-  },
-  gender: {
-    type: String,
-    required: true,
-  },
-  commencementDate: {
-    type: Date,
-    required: true,
-  },
-  age: {
-    type: Number,
-    required: true,
-  },
-  idNumber: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  startingPoint: String,
-  destination: String,
-  stayingPlace: String,
-  faultRecord: {
-    type: faultRecordSchema,
-    default: null,
-  },
-  vehicle: {
-    type: Schema.Types.ObjectId,
-    ref: 'Vehicle',
-    default: null,
-  },
-})
+)
 
 driverSchema.pre(
   /^find/,
@@ -107,6 +108,12 @@ driverSchema.pre(
     next()
   },
 )
+
+driverSchema.virtual('vehicle', {
+  ref: 'Vehicle',
+  foreignField: 'driver',
+  localField: '_id',
+})
 
 const DriverModel = mongoose.model<Driver>('Driver', driverSchema)
 
