@@ -24,16 +24,22 @@ interface Driver extends Document {
   vehicle?: Types.ObjectId | null
 }
 
-const faultRecordSchema = new mongoose.Schema<FaultRecord>({
-  givenPoint: {
-    type: Number,
-    required: true,
+const faultRecordSchema = new mongoose.Schema<FaultRecord>(
+  {
+    givenPoint: {
+      type: Number,
+      required: true,
+    },
+    reducedPoint: {
+      type: Number,
+      default: 0,
+    },
   },
-  reducedPoint: {
-    type: Number,
-    default: 0,
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   },
-})
+)
 
 faultRecordSchema.virtual('remainingPoint').get(function (
   this: FaultRecord & Document,

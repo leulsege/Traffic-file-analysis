@@ -7,11 +7,11 @@ import {
   verification,
 } from '../middleware/authMiddleware'
 import {
-  createAdmin,
-  deleteAdmin,
-  getAdmin,
-  getAllAdmins,
-  updateAdmin,
+  createUser,
+  deleteUser,
+  getUser,
+  getAllUsers,
+  updateUser,
 } from '../controllers/adminController'
 
 const adminRoute = express.Router()
@@ -24,13 +24,13 @@ adminRoute.get('/verify/:token', verification)
 adminRoute
   .route('/')
   .all(protect, restrictTo('owner'))
-  .get(getAllAdmins)
-  .post(createAdmin)
+  .get(getAllUsers)
+  .post(createUser)
 adminRoute
   .route('/:id')
   .all(protect)
-  .get(getAdmin)
-  .patch(restrictTo('owner'), updateAdmin)
-  .delete(restrictTo('owner'), deleteAdmin)
+  .get(getUser)
+  .patch(restrictTo('owner'), updateUser)
+  .delete(restrictTo('owner'), deleteUser)
 
 export default adminRoute

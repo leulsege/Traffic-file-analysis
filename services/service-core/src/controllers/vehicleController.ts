@@ -1,21 +1,74 @@
 import asyncError from '../utils/asyncError'
 import VehicleModel from '../models/vehicleModel'
-import GenericController from './genericController'
 
-const VehicleController = new GenericController(VehicleModel)
+import { Request, Response, NextFunction } from 'express'
 
 export const createVehicle = asyncError(
-  VehicleController.create.bind(VehicleController),
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const newVehicle = await VehicleModel.create(req.body)
+
+    res.status(201).json({
+      status: 'success',
+      data: {
+        vehicle: newVehicle,
+      },
+    })
+  },
 )
+
 export const getAllVehicles = asyncError(
-  VehicleController.getAll.bind(VehicleController),
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const vehicles = await VehicleModel.find()
+
+    res.status(200).json({
+      status: 'success',
+      results: vehicles.length,
+      data: {
+        vehicles,
+      },
+    })
+  },
 )
+
 export const getVehicle = asyncError(
-  VehicleController.getOne.bind(VehicleController),
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const vehicle = await VehicleModel.findById(req.params.id)
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        vehicle,
+      },
+    })
+  },
 )
+
 export const updateVehicle = asyncError(
-  VehicleController.updateOne.bind(VehicleController),
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const updateVehicle = await VehicleModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      },
+    )
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        vehicle: updateVehicle,
+      },
+    })
+  },
 )
 export const deleteVehicle = asyncError(
-  VehicleController.deleteOne.bind(VehicleController),
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const deleteVehicle = await VehicleModel.findByIdAndDelete(req.params.id)
+
+    res.status(204).json({
+      status: 'success',
+      data: null,
+    })
+  },
 )
