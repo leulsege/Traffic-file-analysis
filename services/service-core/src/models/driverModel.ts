@@ -4,12 +4,10 @@ import VehicleModel from './vehicleModel'
 interface FaultRecord {
   givenPoint: number
   reducedPoint: number
-  remainingPoint: number
 }
 
 interface Driver extends Document {
   name: string
-  email?: string
   licenseLevel: string
   licenseNumber: string
   licenseExpiredDate: Date
@@ -21,41 +19,29 @@ interface Driver extends Document {
   destination: string
   stayingPlace: string
   faultRecord?: FaultRecord
-  vehicle?: Types.ObjectId | null
 }
 
-const faultRecordSchema = new mongoose.Schema<FaultRecord>(
-  {
-    givenPoint: {
-      type: Number,
-      required: true,
-    },
-    reducedPoint: {
-      type: Number,
-      default: 0,
-    },
-  },
-  {
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
-  },
-)
+// const faultRecordSchema = new mongoose.Schema<FaultRecord>(
+//   {
 
-faultRecordSchema.virtual('remainingPoint').get(function (
-  this: FaultRecord & Document,
-) {
-  return this.givenPoint - this.reducedPoint
-})
+//   },
+//   {
+//     toJSON: { virtuals: true },
+//     toObject: { virtuals: true },
+//   },
+// )
+
+// faultRecordSchema.virtual('remainingPoint').get(function (
+//   this: FaultRecord & Document,
+// ) {
+//   return this.givenPoint - this.reducedPoint
+// })
 
 const driverSchema = new Schema<Driver>(
   {
     name: {
       type: String,
       required: true,
-    },
-    email: {
-      type: String,
-      unique: true,
     },
     licenseLevel: {
       type: String,
@@ -87,25 +73,20 @@ const driverSchema = new Schema<Driver>(
       required: true,
       unique: true,
     },
-    startingPoint: String,
-    destination: String,
-    stayingPlace: String,
     faultRecord: {
-      type: faultRecordSchema,
-      default: null,
+      givenPoint: {
+        type: Number,
+        default: 20,
+      },
+      reducedPoint: {
+        type: Number,
+        default: 0,
+      },
     },
   },
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  },
-)
-
-driverSchema.pre(
-  /^find/,
-  function (this: Query<Driver[], Driver, unknown>, next) {
-    this.populate('vehicle')
-    next()
   },
 )
 

@@ -1,71 +1,75 @@
-// import { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction } from 'express'
+import VehicleAccidentModel from '../models/vehicleAccidentModel'
+import asyncError from '../utils/asyncError'
 
-// export const createDriver = asyncError(
-//   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//     const newDriver = await DriverModel.create(req.body)
+export const createVehicleAccident = asyncError(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const newVehicleAccident = await VehicleAccidentModel.create(req.body)
 
-//     res.status(201).json({
-//       status: 'success',
-//       data: {
-//         driver: newDriver,
-//       },
-//     })
-//   },
-// )
+    res.status(201).json({
+      status: 'success',
+      data: {
+        vehicleAccident: newVehicleAccident,
+      },
+    })
+  },
+)
 
-// export const getAllDrivers = asyncError(
-//   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//     const drivers = await DriverModel.find()
+export const getAllVehicleAccidents = asyncError(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const vehicleAccidents = await VehicleAccidentModel.find()
 
-//     res.status(200).json({
-//       status: 'success',
-//       results: drivers.length,
-//       data: {
-//         drivers,
-//       },
-//     })
-//   },
-// )
+    res.status(200).json({
+      status: 'success',
+      results: vehicleAccidents.length,
+      data: {
+        vehicleAccidents,
+      },
+    })
+  },
+)
 
-// export const getDriver = asyncError(
-//   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//     const record = await DriverModel.findById(req.params.id)
+export const getVehicleAccident = asyncError(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const vehicleAccident = await VehicleAccidentModel.findById(req.params.id)
 
-//     res.status(200).json({
-//       status: 'success',
-//       data: {
-//         record,
-//       },
-//     })
-//   },
-// )
+    res.status(200).json({
+      status: 'success',
+      data: {
+        vehicleAccident,
+      },
+    })
+  },
+)
 
-// export const updateDriver = asyncError(
-//   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//     const updateDriver = await DriverModel.findByIdAndUpdate(
-//       req.params.id,
-//       req.body,
-//       {
-//         new: true,
-//         runValidators: true,
-//       },
-//     )
+export const updateVehicleAccident = asyncError(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const updateVehicleAccident = await VehicleAccidentModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      },
+    )
 
-//     res.status(200).json({
-//       status: 'success',
-//       data: {
-//         driver: updateDriver,
-//       },
-//     })
-//   },
-// )
-// export const deleteDriver = asyncError(
-//   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//     const deleteDriver = await DriverModel.findByIdAndDelete(req.params.id)
+    res.status(200).json({
+      status: 'success',
+      data: {
+        vehicleAccident: updateVehicleAccident,
+      },
+    })
+  },
+)
+export const deleteVehicleAccident = asyncError(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const deleteVehicleAccident = await VehicleAccidentModel.findByIdAndDelete(
+      req.params.id,
+    )
 
-//     res.status(204).json({
-//       status: 'success',
-//       data: null,
-//     })
-//   },
-// )
+    res.status(204).json({
+      status: 'success',
+      data: null,
+    })
+  },
+)

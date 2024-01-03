@@ -31,7 +31,10 @@ export const getAllDrivers = asyncError(
 
 export const getDriver = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const record = await DriverModel.findById(req.params.id)
+    const record = await DriverModel.findById(req.params.id).populate({
+      path: 'vehicle',
+      select: '-driver -__v',
+    })
 
     res.status(200).json({
       status: 'success',
