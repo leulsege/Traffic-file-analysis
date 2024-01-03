@@ -21,22 +21,6 @@ interface Driver extends Document {
   faultRecord?: FaultRecord
 }
 
-// const faultRecordSchema = new mongoose.Schema<FaultRecord>(
-//   {
-
-//   },
-//   {
-//     toJSON: { virtuals: true },
-//     toObject: { virtuals: true },
-//   },
-// )
-
-// faultRecordSchema.virtual('remainingPoint').get(function (
-//   this: FaultRecord & Document,
-// ) {
-//   return this.givenPoint - this.reducedPoint
-// })
-
 const driverSchema = new Schema<Driver>(
   {
     name: {
@@ -72,16 +56,6 @@ const driverSchema = new Schema<Driver>(
       type: String,
       required: true,
       unique: true,
-    },
-    faultRecord: {
-      givenPoint: {
-        type: Number,
-        default: 20,
-      },
-      reducedPoint: {
-        type: Number,
-        default: 0,
-      },
     },
   },
   {

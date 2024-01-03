@@ -61,6 +61,7 @@ export const updateFaultRecord = asyncError(
     })
   },
 )
+
 export const deleteFaultRecord = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const deleteFaultRecord = await FaultRecordModel.findByIdAndDelete(
