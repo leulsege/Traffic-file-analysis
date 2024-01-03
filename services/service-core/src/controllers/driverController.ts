@@ -31,15 +31,20 @@ export const getAllDrivers = asyncError(
 
 export const getDriver = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const record = await DriverModel.findById(req.params.id).populate({
-      path: 'vehicle',
-      select: '-driver -__v',
-    })
+    const driver = await DriverModel.findById(req.params.id)
+      .populate({
+        path: 'vehicle',
+        select: '-driver -__v',
+      })
+      .populate({
+        path: 'faultRecord',
+        select: '-driver -__v',
+      })
 
     res.status(200).json({
       status: 'success',
       data: {
-        record,
+        driver,
       },
     })
   },
@@ -55,6 +60,14 @@ export const updateDriver = asyncError(
         runValidators: true,
       },
     )
+      .populate({
+        path: 'vehicle',
+        select: '-driver -__v',
+      })
+      .populate({
+        path: 'faultRecord',
+        select: '-driver -__v',
+      })
 
     res.status(200).json({
       status: 'success',

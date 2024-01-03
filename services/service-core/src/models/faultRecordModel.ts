@@ -16,6 +16,7 @@ const faultRecordSchema: Schema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    givenDecision: String,
     driver: {
       type: Schema.Types.ObjectId,
       ref: 'Driver',
