@@ -3,19 +3,6 @@ import { User } from '../models/adminModel'
 
 import { Request, Response, NextFunction } from 'express'
 
-export const createUser = asyncError(
-  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const newUser = await User.create(req.body)
-
-    res.status(201).json({
-      status: 'success',
-      data: {
-        user: newUser,
-      },
-    })
-  },
-)
-
 export const getAllUsers = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const users = await User.find()

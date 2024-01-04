@@ -14,11 +14,11 @@ app.use(cors())
 
 app.use(express.json())
 
-app.use('/admin', adminRoute)
+app.use('/admins', adminRoute)
 app.use('/drivers', driverRouter)
-app.use('/training', trainingRouter)
-app.use('/faultrecord', faultRecordRouter)
-app.use('/vehicleaccident', vehicleAccidentRouter)
+app.use('/trainings', trainingRouter)
+app.use('/faultrecords', faultRecordRouter)
+app.use('/vehicleaccidents', vehicleAccidentRouter)
 app.use('/vehicles', vehicleRouter)
 
 app.use(errorHandler)

@@ -66,6 +66,10 @@ const userSchema: Schema = new Schema({
     type: Boolean,
     default: false,
   },
+  approved: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 userSchema.pre('save', async function (next) {

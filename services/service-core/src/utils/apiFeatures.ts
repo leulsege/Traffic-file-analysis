@@ -17,14 +17,10 @@ class APIFeatures<T extends Document> {
     const excludedFields = ['page', 'sort', 'limit', 'fields']
     excludedFields.forEach((el) => delete queryObj[el])
 
-    // const nameSearch = this.queryString?.name as string
-
     let queryStr = JSON.stringify(queryObj)
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`)
-    queryStr = queryStr.replace(/_/g, ' ')
-    console.log(queryStr)
+    queryStr = queryStr.replace(/-/g, ' ')
     const finalQuery = JSON.parse(queryStr)
-    // finalQuery.name = nameRegex
     if (finalQuery.name) {
       const nameRegex = new RegExp(`^${finalQuery.name}`, 'i')
       finalQuery.name = nameRegex
@@ -40,7 +36,7 @@ class APIFeatures<T extends Document> {
       const sortBy = this.queryString.sort.split(',').join(' ')
       this.query = this.query.sort(sortBy)
     } else {
-      this.query = this.query.sort('-createdAt')
+      this.query = this.query.sort('-name')
     }
 
     return this
@@ -59,7 +55,7 @@ class APIFeatures<T extends Document> {
 
   paginate() {
     const page = (this.queryString.page as unknown as number) || 1
-    const limit = (this.queryString.limit as unknown as number) || 100
+    const limit = (this.queryString.limit as unknown as number) || 50
     const skip = (page - 1) * limit
 
     this.query = this.query.skip(skip).limit(limit)

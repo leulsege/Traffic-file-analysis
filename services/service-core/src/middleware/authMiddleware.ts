@@ -18,7 +18,7 @@ const createSendToken = (
   statusCode: number,
   res: Response,
 ): void => {
-  if (user.verified) {
+  if (user.verified && user.approved) {
     const token = signToken(user._id)
     const cookieOptions = {
       expires: new Date(
@@ -46,6 +46,14 @@ const createSendToken = (
 
 export const signup = asyncError(
   async (req: Request, res: Response, next: NextFunction) => {
+    const lengthOfUsers = await User.countDocuments()
+    if (lengthOfUsers === 0) {
+      req.body.role = 'owner'
+      req.body.approved = true
+    } else {
+      req.body.role = 'admin'
+      req.body.approved = false
+    }
     const newUser = await User.create({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -53,6 +61,7 @@ export const signup = asyncError(
       password: req.body.password,
       confirmPassword: req.body.confirmPassword,
       role: req.body.role,
+      approved: req.body.approved,
       verified: false,
     })
 
@@ -112,7 +121,11 @@ export const verification = asyncError(
     user.passwordResetExpires = undefined
     await user.save({ validateBeforeSave: false })
 
-    createSendToken(user, 200, res)
+    res.status(200).json({
+      status: 'success',
+      message:
+        'you have signed up succesfully. once the owner approved, you can sign in',
+    })
   },
 )
 export const signin = asyncError(

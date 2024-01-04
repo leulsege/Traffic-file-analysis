@@ -7,7 +7,6 @@ import {
   verification,
 } from '../middleware/authMiddleware'
 import {
-  createUser,
   deleteUser,
   getUser,
   getAllUsers,
@@ -21,11 +20,8 @@ adminRoute.post('/signin', signin)
 
 adminRoute.get('/verify/:token', verification)
 
-adminRoute
-  .route('/')
-  .all(protect, restrictTo('owner'))
-  .get(getAllUsers)
-  .post(createUser)
+adminRoute.route('/').all(protect, restrictTo('owner')).get(getAllUsers)
+
 adminRoute
   .route('/:id')
   .all(protect)
