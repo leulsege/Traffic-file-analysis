@@ -20,6 +20,13 @@ class User {
   @IsEnum(['admin', 'owner'])
   @IsNotEmpty()
   role: string
+
+  passwordChangedAt: Date
+  passwordResetToken: String
+  passwordResetExpires: Date
+
+  verified: Boolean
+  approved: Boolean
 }
 
 const userSchema: Schema = new Schema({
