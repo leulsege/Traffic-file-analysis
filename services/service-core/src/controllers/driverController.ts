@@ -1,6 +1,7 @@
 import asyncError from '../utils/asyncError'
 import DriverModel from '../models/driverModel'
 import { Request, Response, NextFunction } from 'express'
+import APIFeatures from '../utils/apiFeatures'
 
 export const createDriver = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -17,7 +18,16 @@ export const createDriver = asyncError(
 
 export const getAllDrivers = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const drivers = await DriverModel.find()
+    const features = new APIFeatures(DriverModel.find(), req.query)
+      .filter()
+      .limitFields()
+      .paginate()
+      .sort()
+
+    const drivers = await features.query
+
+    const searchString = 'eth'
+    const regex = new RegExp(`^${searchString}`, 'i')
 
     res.status(200).json({
       status: 'success',

@@ -1,8 +1,8 @@
 import { Document, Model, Query } from 'mongoose'
 
 class APIFeatures<T extends Document> {
-  private query: Query<T[], T, unknown>
-  private queryString: Record<string, string>
+  public query: Query<T[], T, unknown>
+  public queryString: Record<string, string>
 
   constructor(
     query: Query<T[], T, unknown>,
@@ -17,11 +17,20 @@ class APIFeatures<T extends Document> {
     const excludedFields = ['page', 'sort', 'limit', 'fields']
     excludedFields.forEach((el) => delete queryObj[el])
 
-    // Advanced filtering
+    // const nameSearch = this.queryString?.name as string
+
     let queryStr = JSON.stringify(queryObj)
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`)
+    queryStr = queryStr.replace(/_/g, ' ')
+    console.log(queryStr)
+    const finalQuery = JSON.parse(queryStr)
+    // finalQuery.name = nameRegex
+    if (finalQuery.name) {
+      const nameRegex = new RegExp(`^${finalQuery.name}`, 'i')
+      finalQuery.name = nameRegex
+    }
 
-    this.query = this.query.find(JSON.parse(queryStr))
+    this.query = this.query.find(finalQuery)
 
     return this
   }

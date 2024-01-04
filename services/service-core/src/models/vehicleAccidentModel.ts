@@ -49,6 +49,6 @@ accidentSchema.pre(
   },
 )
 
-const VehicleAccidentModel = model<VehicleAccident>('Accident', AccidentSchema)
+const VehicleAccidentModel = model<VehicleAccident>('Accident', accidentSchema)
 
 export default VehicleAccidentModel
