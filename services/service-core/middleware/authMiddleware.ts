@@ -305,3 +305,10 @@ export const updatePassword = asyncError(
     createSendToken(user, 200, res)
   },
 )
+
+export const logout = (req: Request, res: Response): void => {
+  res.cookie('jwt', 'loggedout', {
+    expires: new Date(Date.now() + 10 * 1000),
+  })
+  res.status(200).json({ status: 'success' })
+}
