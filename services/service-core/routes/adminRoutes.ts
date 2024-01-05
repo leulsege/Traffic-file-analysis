@@ -5,6 +5,8 @@ import {
   protect,
   restrictTo,
   verification,
+  logout,
+  updatePassword,
 } from '../middleware/authMiddleware'
 import {
   deleteUser,
@@ -18,8 +20,9 @@ const adminRoute = express.Router()
 
 adminRoute.post('/signup', signup)
 adminRoute.post('/signin', signin)
-
 adminRoute.get('/verify/:token', verification)
+adminRoute.get('/logout', logout)
+adminRoute.patch('/updatemypassword', updatePassword)
 
 adminRoute.route('/').all(protect, restrictTo('owner')).get(getAllUsers)
 adminRoute
