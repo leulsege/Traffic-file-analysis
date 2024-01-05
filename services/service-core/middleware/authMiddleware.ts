@@ -39,7 +39,7 @@ const createSendToken = (
   } else {
     res.status(403).json({
       status: 'failed',
-      message: 'please verify your email account',
+      message: 'please verify and/or approved your account',
     })
   }
 }
@@ -70,7 +70,7 @@ export const signup = asyncError(
 
     const verificationURL = `${req.protocol}://${req.get(
       'host',
-    )}/admin/verify/${resetToken}`
+    )}/admins/verify/${resetToken}`
 
     const message = `welecome to PSTS, click the the link to verify your email: ${verificationURL}.\nIf you didn't signup, please ignore this email!`
 
@@ -93,7 +93,6 @@ export const signup = asyncError(
           'There was an error sending the email. Try again later!',
           500,
         ),
-        500,
       )
     }
   },
@@ -120,6 +119,8 @@ export const verification = asyncError(
     user.passwordResetToken = undefined
     user.passwordResetExpires = undefined
     await user.save({ validateBeforeSave: false })
+
+    if (user.approved) return createSendToken(user, 200, res)
 
     res.status(200).json({
       status: 'success',
@@ -249,7 +250,6 @@ export const forgotPassword = asyncError(
           'There was an error sending the email. Try again later!',
           500,
         ),
-        500,
       )
     }
   },
@@ -286,7 +286,7 @@ export const resetPassword = asyncError(
 export const updatePassword = asyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     // 1) Get user from collection
-    const user = await User.findById(req.user.id).select('+password')
+    const user = await User.findById((req as any).user.id).select('+password')
 
     // 2) Check if POSTed current password is correct
     if (

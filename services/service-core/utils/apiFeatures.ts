@@ -4,10 +4,7 @@ class APIFeatures<T extends Document> {
   public query: Query<T[], T, unknown>
   public queryString: Record<string, string>
 
-  constructor(
-    query: Query<T[], T, unknown>,
-    queryString: Record<string, string>,
-  ) {
+  constructor(query: Query<T[], T, unknown>, queryString: any) {
     this.query = query
     this.queryString = queryString
   }

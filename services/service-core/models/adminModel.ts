@@ -27,6 +27,7 @@ class User {
 
   verified: Boolean
   approved: Boolean
+  photo?: string | null
 }
 
 const userSchema: Schema = new Schema({
@@ -76,6 +77,10 @@ const userSchema: Schema = new Schema({
   approved: {
     type: Boolean,
     default: false,
+  },
+  photo: {
+    type: String,
+    default: null,
   },
 })
 

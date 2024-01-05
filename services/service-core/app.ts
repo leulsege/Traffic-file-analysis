@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express'
 import cors from 'cors'
+import * as path from 'path'
 
 import driverRouter from './routes/driverRoutes'
 import trainingRouter from './routes/trainingRoutes'
@@ -11,9 +12,8 @@ import vehicleAccidentRouter from './routes/vehicleAccidentRoutes'
 
 const app = express()
 app.use(cors())
-
 app.use(express.json())
-
+app.use(express.static(path.join(__dirname, '../public')))
 app.use('/admins', adminRoute)
 app.use('/drivers', driverRouter)
 app.use('/trainings', trainingRouter)

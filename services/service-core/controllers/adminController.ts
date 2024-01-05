@@ -2,6 +2,7 @@ import asyncError from '../utils/asyncError'
 import { User } from '../models/adminModel'
 
 import { Request, Response, NextFunction } from 'express'
+import AppError from '../utils/appError'
 
 export const getAllUsers = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -32,6 +33,14 @@ export const getUser = asyncError(
 
 export const updateUser = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    if (req.body.password || req.body.passwordConfirm) {
+      return next(
+        new AppError(
+          'This route is not for password updates. Please use /updateMyPassword.',
+          400,
+        ),
+      )
+    }
     const updateUser = await User.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
