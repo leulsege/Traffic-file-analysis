@@ -7,6 +7,8 @@ import {
   verification,
   logout,
   updatePassword,
+  forgotPassword,
+  resetPassword,
 } from '../middleware/authMiddleware'
 import {
   deleteUser,
@@ -22,7 +24,9 @@ adminRoute.post('/signup', signup)
 adminRoute.post('/signin', signin)
 adminRoute.get('/verify/:token', verification)
 adminRoute.get('/logout', logout)
-adminRoute.patch('/updatemypassword', updatePassword)
+adminRoute.patch('/updatemypassword', protect, updatePassword)
+adminRoute.post('/forgetpassword', forgotPassword)
+adminRoute.patch('/resetpassword/:token', resetPassword)
 
 adminRoute.route('/').all(protect, restrictTo('owner')).get(getAllUsers)
 adminRoute
