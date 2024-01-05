@@ -225,7 +225,7 @@ export const forgotPassword = asyncError(
     // 3) Send it to the user's email
     const resetURL = `${req.protocol}://${req.get(
       'host',
-    )}/admin/resetPassword/${resetToken}`
+    )}/admins/resetpassword/${resetToken}`
 
     const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`
 
@@ -274,7 +274,7 @@ export const resetPassword = asyncError(
     }
 
     user.password = req.body.password
-    user.passwordConfirm = req.body.passwordConfirm
+    user.confirmPassword = req.body.confirmPassword
     user.passwordResetToken = undefined
     user.passwordResetExpires = undefined
     await user.save()
@@ -286,18 +286,18 @@ export const resetPassword = asyncError(
 export const updatePassword = asyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     // 1) Get user from collection
-    const user = await User.findById((req as any).user.id).select('+password')
+    const user = await User.findById((req as any).user._id).select('+password')
 
     // 2) Check if POSTed current password is correct
     if (
-      !(await user.correctPassword(req.body.passwordCurrent, user.password))
+      !(await user.correctPassword(req.body.currentPassword, user.password))
     ) {
       return next(new AppError('Your current password is wrong.', 401))
     }
 
     // 3) If so, update the password
     user.password = req.body.password
-    user.passwordConfirm = req.body.passwordConfirm
+    user.confirmPassword = req.body.confirmPassword
     await user.save()
     // User.findByIdAndUpdate will NOT work as intended!
 
