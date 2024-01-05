@@ -27,7 +27,7 @@ const createSendToken = (
       ),
     }
 
-    res.cookie('jwt', token, cookieOptions)
+    res.cookie('token', token, cookieOptions)
 
     user.password = undefined
     res.status(statusCode).json({
@@ -156,6 +156,8 @@ export const protect = asyncError(
       req.headers.authorization.startsWith('Bearer')
     ) {
       token = req.headers.authorization.split(' ')[1]
+    } else if (req.cookies && req.cookies.token) {
+      token = req.cookies.token
     }
 
     if (!token) {

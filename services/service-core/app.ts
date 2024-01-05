@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express'
 import cors from 'cors'
 import * as path from 'path'
+import cookieParser from 'cookie-parser'
 
 import driverRouter from './routes/driverRoutes'
 import trainingRouter from './routes/trainingRoutes'
@@ -11,6 +12,8 @@ import vehicleRouter from './routes/vehicleRoutes'
 import vehicleAccidentRouter from './routes/vehicleAccidentRoutes'
 
 const app = express()
+
+app.use(cookieParser())
 app.use(cors())
 app.use(express.json())
 app.use(express.static(path.join(__dirname, 'public')))
