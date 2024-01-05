@@ -17,7 +17,10 @@ const multerFilter = (
     cb(null, true)
   } else {
     cb(
-      new AppError('Not an image! Please upload only images.', 400) as null,
+      new AppError(
+        'Not an image! Please upload only images.',
+        400,
+      ) as unknown as null,
       false,
     )
   }
@@ -105,6 +108,8 @@ export const getDriver = asyncError(
 
 export const updateDriver = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    if (req.file) req.body.photo = req.file.filename
+    console.log(req.file)
     const updateDriver = await DriverModel.findByIdAndUpdate(
       req.params.id,
       req.body,

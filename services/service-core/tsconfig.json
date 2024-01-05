@@ -19,7 +19,7 @@
     "noFallthroughCasesInSwitch": false,
     "strict": true,
     "esModuleInterop": true,
-    "rootDir": "./src",
+    "rootDir": "./",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "types": ["node"]

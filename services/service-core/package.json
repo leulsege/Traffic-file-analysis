@@ -2,7 +2,7 @@
   "name": "service-core",
   "version": "1.0.0",
   "description": "",
-  "main": "src/app.js",
+  "main": "./app.js",
   "scripts": {
     "start:dev": "nodemon",
     "format": "prettier --write 'src/**/*.ts'",

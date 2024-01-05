@@ -1,9 +1,53 @@
+import multer from 'multer'
+import sharp from 'sharp'
 import asyncError from '../utils/asyncError'
 import { User } from '../models/adminModel'
 
 import { Request, Response, NextFunction } from 'express'
 import AppError from '../utils/appError'
 
+const multerStorage = multer.memoryStorage()
+
+const multerFilter = (
+  req: Request,
+  file: Express.Multer.File,
+  cb: multer.FileFilterCallback,
+) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true)
+  } else {
+    cb(
+      new AppError(
+        'Not an image! Please upload only images.',
+        400,
+      ) as unknown as null,
+      false,
+    )
+  }
+}
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+})
+
+export const uploadUserPhoto = upload.single('photo')
+
+export const resizeUserPhoto = asyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    if (!req.file) return next()
+    console.log((req as any).user._id)
+    req.file.filename = `admin-${(req as any).user._id}-${Date.now()}.jpeg`
+
+    await sharp(req.file.buffer)
+      .resize(500, 500)
+      .toFormat('jpeg')
+      .jpeg({ quality: 90 })
+      .toFile(`public/img/admins/${req.file.filename}`)
+
+    next()
+  },
+)
 export const getAllUsers = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const users = await User.find()
@@ -41,6 +85,8 @@ export const updateUser = asyncError(
         ),
       )
     }
+    req.params.id = (req as any).user._id
+    if (req.file) req.body.photo = req.file.filename
     const updateUser = await User.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
