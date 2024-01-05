@@ -18,7 +18,7 @@ const createSendToken = (
   statusCode: number,
   res: Response,
 ): void => {
-  if (user.verified) {
+  if (user.verified && user.approved) {
     const token = signToken(user._id)
     const cookieOptions = {
       expires: new Date(
@@ -39,13 +39,21 @@ const createSendToken = (
   } else {
     res.status(403).json({
       status: 'failed',
-      message: 'please verify your email account',
+      message: 'please verify and/or approved your account',
     })
   }
 }
 
 export const signup = asyncError(
   async (req: Request, res: Response, next: NextFunction) => {
+    const lengthOfUsers = await User.countDocuments()
+    if (lengthOfUsers === 0) {
+      req.body.role = 'owner'
+      req.body.approved = true
+    } else {
+      req.body.role = 'admin'
+      req.body.approved = false
+    }
     const newUser = await User.create({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -53,6 +61,7 @@ export const signup = asyncError(
       password: req.body.password,
       confirmPassword: req.body.confirmPassword,
       role: req.body.role,
+      approved: req.body.approved,
       verified: false,
     })
 
@@ -61,7 +70,7 @@ export const signup = asyncError(
 
     const verificationURL = `${req.protocol}://${req.get(
       'host',
-    )}/admin/verify/${resetToken}`
+    )}/admins/verify/${resetToken}`
 
     const message = `welecome to PSTS, click the the link to verify your email: ${verificationURL}.\nIf you didn't signup, please ignore this email!`
 
@@ -84,7 +93,6 @@ export const signup = asyncError(
           'There was an error sending the email. Try again later!',
           500,
         ),
-        500,
       )
     }
   },
@@ -112,7 +120,13 @@ export const verification = asyncError(
     user.passwordResetExpires = undefined
     await user.save({ validateBeforeSave: false })
 
-    createSendToken(user, 200, res)
+    if (user.approved) return createSendToken(user, 200, res)
+
+    res.status(200).json({
+      status: 'success',
+      message:
+        'you have signed up succesfully. once the owner approved, you can sign in',
+    })
   },
 )
 export const signin = asyncError(
@@ -236,7 +250,6 @@ export const forgotPassword = asyncError(
           'There was an error sending the email. Try again later!',
           500,
         ),
-        500,
       )
     }
   },
@@ -273,7 +286,7 @@ export const resetPassword = asyncError(
 export const updatePassword = asyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     // 1) Get user from collection
-    const user = await User.findById(req.user.id).select('+password')
+    const user = await User.findById((req as any).user.id).select('+password')
 
     // 2) Check if POSTed current password is correct
     if (

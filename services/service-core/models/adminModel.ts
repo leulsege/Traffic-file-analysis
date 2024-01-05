@@ -20,6 +20,14 @@ class User {
   @IsEnum(['admin', 'owner'])
   @IsNotEmpty()
   role: string
+
+  passwordChangedAt: Date
+  passwordResetToken: String
+  passwordResetExpires: Date
+
+  verified: Boolean
+  approved: Boolean
+  photo?: string | null
 }
 
 const userSchema: Schema = new Schema({
@@ -65,6 +73,14 @@ const userSchema: Schema = new Schema({
   verified: {
     type: Boolean,
     default: false,
+  },
+  approved: {
+    type: Boolean,
+    default: false,
+  },
+  photo: {
+    type: String,
+    default: null,
   },
 })
 

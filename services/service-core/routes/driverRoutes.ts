@@ -5,10 +5,16 @@ import {
   getDriver,
   updateDriver,
   deleteDriver,
+  uploadUserPhoto,
+  resizeUserPhoto,
 } from '../controllers/driverController'
 import { protect, restrictTo } from '../middleware/authMiddleware'
 
 const driverRouter = express.Router()
+
+driverRouter
+  .route('/uploadphoto/:id')
+  .patch(protect, uploadUserPhoto, resizeUserPhoto, updateDriver)
 
 driverRouter
   .route('/')

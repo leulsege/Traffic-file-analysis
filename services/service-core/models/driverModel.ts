@@ -18,7 +18,7 @@ interface Driver extends Document {
   startingPoint: string
   destination: string
   stayingPlace: string
-  faultRecord?: FaultRecord
+  photo?: string | null
 }
 
 const driverSchema = new Schema<Driver>(
@@ -56,6 +56,10 @@ const driverSchema = new Schema<Driver>(
       type: String,
       required: true,
       unique: true,
+    },
+    photo: {
+      type: String,
+      default: null,
     },
   },
   {

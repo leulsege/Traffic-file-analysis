@@ -1,13 +1,10 @@
 import { Document, Model, Query } from 'mongoose'
 
 class APIFeatures<T extends Document> {
-  private query: Query<T[], T, unknown>
-  private queryString: Record<string, string>
+  public query: Query<T[], T, unknown>
+  public queryString: Record<string, string>
 
-  constructor(
-    query: Query<T[], T, unknown>,
-    queryString: Record<string, string>,
-  ) {
+  constructor(query: Query<T[], T, unknown>, queryString: any) {
     this.query = query
     this.queryString = queryString
   }
@@ -17,11 +14,16 @@ class APIFeatures<T extends Document> {
     const excludedFields = ['page', 'sort', 'limit', 'fields']
     excludedFields.forEach((el) => delete queryObj[el])
 
-    // Advanced filtering
     let queryStr = JSON.stringify(queryObj)
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`)
+    queryStr = queryStr.replace(/-/g, ' ')
+    const finalQuery = JSON.parse(queryStr)
+    if (finalQuery.name) {
+      const nameRegex = new RegExp(`^${finalQuery.name}`, 'i')
+      finalQuery.name = nameRegex
+    }
 
-    this.query = this.query.find(JSON.parse(queryStr))
+    this.query = this.query.find(finalQuery)
 
     return this
   }
@@ -31,7 +33,7 @@ class APIFeatures<T extends Document> {
       const sortBy = this.queryString.sort.split(',').join(' ')
       this.query = this.query.sort(sortBy)
     } else {
-      this.query = this.query.sort('-createdAt')
+      this.query = this.query.sort('-name')
     }
 
     return this
@@ -50,7 +52,7 @@ class APIFeatures<T extends Document> {
 
   paginate() {
     const page = (this.queryString.page as unknown as number) || 1
-    const limit = (this.queryString.limit as unknown as number) || 100
+    const limit = (this.queryString.limit as unknown as number) || 50
     const skip = (page - 1) * limit
 
     this.query = this.query.skip(skip).limit(limit)

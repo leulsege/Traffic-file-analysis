@@ -44,11 +44,11 @@ const accidentSchema: Schema = new Schema({
 accidentSchema.pre(
   /^find/,
   function (this: Query<VehicleAccident[], VehicleAccident, unknown>, next) {
-    this.populate('driver').populate('vehicle')
+    this.populate('driver').populate({ path: 'vehicle', select: '-driver' })
     next()
   },
 )
 
-const VehicleAccidentModel = model<VehicleAccident>('Accident', AccidentSchema)
+const VehicleAccidentModel = model<VehicleAccident>('Accident', accidentSchema)
 
 export default VehicleAccidentModel
