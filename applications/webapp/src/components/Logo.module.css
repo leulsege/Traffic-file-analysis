@@ -1,0 +1,14 @@
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+}
+
+.logoContainer img {
+  width: 6.4rem;
+}
+
+h4 {
+  font-size: 1.2rem;
+}
