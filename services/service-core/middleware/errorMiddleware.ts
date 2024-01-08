@@ -25,8 +25,9 @@ const errorHandler = (
 const sendErrorDev = (err: any, res: Response) => {
   res.status(err.statusCode).json({
     status: err.status,
-    error: err,
-    stack: err.stack,
+    message: err.message,
+    // error: err,
+    // stack: err.stack,
   })
 }
 

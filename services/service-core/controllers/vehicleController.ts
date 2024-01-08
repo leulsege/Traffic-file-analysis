@@ -45,7 +45,20 @@ export const getVehicle = asyncError(
 
 export const updateVehicle = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const updateVehicle = await VehicleModel.findByIdAndUpdate(
+    const currentVehicle = await VehicleModel.findById(req.params.id)
+
+    if (req.body.driver !== undefined) {
+      currentVehicle.history.push({
+        date: Date.now(),
+        driver: currentVehicle.driver,
+        user: (req as any).user._id,
+      })
+
+      await currentVehicle.save()
+    }
+
+    // Update the document with the provided data
+    const updatedVehicle = await VehicleModel.findByIdAndUpdate(
       req.params.id,
       req.body,
       {
@@ -57,7 +70,7 @@ export const updateVehicle = asyncError(
     res.status(200).json({
       status: 'success',
       data: {
-        vehicle: updateVehicle,
+        vehicle: updatedVehicle,
       },
     })
   },

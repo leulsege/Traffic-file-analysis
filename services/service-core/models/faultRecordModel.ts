@@ -4,6 +4,13 @@ interface FaultRecord extends Document {
   givenPoint: Number
   reducedPoint: Number
   remainingPoint: Number
+  driver: Schema.Types.ObjectId
+  history: Array<{
+    date: any
+    givenPoint: Number
+    reducedPoint: Number
+    user: Schema.Types.ObjectId | null
+  }>
 }
 
 const faultRecordSchema: Schema = new mongoose.Schema(
@@ -22,6 +29,27 @@ const faultRecordSchema: Schema = new mongoose.Schema(
       ref: 'Driver',
       required: [true, 'a fault belongs to a driver'],
     },
+    history: [
+      {
+        date: {
+          type: Date,
+          default: Date.now,
+        },
+        givenPoint: {
+          type: Number,
+          required: true,
+        },
+        reducedPoint: {
+          type: Number,
+          required: true,
+        },
+        user: {
+          type: Schema.Types.ObjectId,
+          ref: 'User',
+          default: null,
+        },
+      },
+    ],
   },
   {
     toJSON: { virtuals: true },
@@ -36,7 +64,7 @@ faultRecordSchema.virtual('remainingPoint').get(function () {
 faultRecordSchema.pre(
   /^find/,
   function (this: Query<FaultRecord[], FaultRecord, unknown>, next) {
-    this.populate('driver')
+    this.populate('driver').populate({ path: 'history.user' })
     next()
   },
 )

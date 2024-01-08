@@ -10,7 +10,12 @@ interface Vehicle extends Document {
   pmServiceTime: Number
   bmServiceTime: Number
   others: String
-  driver?: Types.ObjectId | null
+  driver?: Schema.Types.ObjectId | null
+  history: Array<{
+    date: any
+    driver: Schema.Types.ObjectId | null
+    user: Schema.Types.ObjectId | null
+  }> | null
 }
 
 const vehicleSchema: Schema = new mongoose.Schema({
@@ -62,6 +67,23 @@ const vehicleSchema: Schema = new mongoose.Schema({
     ref: 'Driver',
     default: null,
   },
+  history: [
+    {
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+      driver: {
+        type: Schema.Types.ObjectId,
+        default: null,
+      },
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        default: null,
+      },
+    },
+  ],
 })
 
 vehicleSchema.pre(

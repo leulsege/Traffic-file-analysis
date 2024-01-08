@@ -2,7 +2,7 @@ import mongoose, { ConnectOptions } from 'mongoose'
 import dotenv from 'dotenv'
 import app from './app'
 
-dotenv.config({ path: `${__dirname}/.env` })
+dotenv.config()
 
 const DB = process.env.DATABASE
 
