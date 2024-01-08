@@ -3,8 +3,8 @@ import DriverModel from './driverModel'
 
 interface Vehicle extends Document {
   vehicleType: String
-  PlateNumber: Number
-  MoterNumber: Number
+  plateNumber: Number
+  moterNumber: Number
   chanciNumber: Number
   sideNumber: Number
   pmServiceTime: Number
@@ -23,11 +23,11 @@ const vehicleSchema: Schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  PlateNumber: {
+  plateNumber: {
     type: Number,
     required: true,
   },
-  MoterNumber: {
+  moterNumber: {
     type: Number,
     required: true,
   },
@@ -75,6 +75,7 @@ const vehicleSchema: Schema = new mongoose.Schema({
       },
       driver: {
         type: Schema.Types.ObjectId,
+        ref: 'Driver',
         default: null,
       },
       user: {
@@ -89,7 +90,7 @@ const vehicleSchema: Schema = new mongoose.Schema({
 vehicleSchema.pre(
   /^find/,
   function (this: Query<Vehicle[], Vehicle, unknown>, next) {
-    this.populate('driver')
+    this.populate('driver').populate('history.driver').populate('history.user')
     next()
   },
 )
