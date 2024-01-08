@@ -5,6 +5,7 @@ import HomePage from "./views/HomePage";
 import ForgotPassword from "./views/ForgetPassword";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
+import AppLayout from "./views/AppLayout";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
+        <Route path="/app" element={<AppLayout />}></Route>
         <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
     </BrowserRouter>

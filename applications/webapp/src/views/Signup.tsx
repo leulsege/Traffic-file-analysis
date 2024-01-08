@@ -65,7 +65,7 @@ export default function Login() {
         </div>
 
         <div>
-          <Link className={styles.ctaLink}>Login</Link>
+          <Link className={styles.ctaLink}>Sign Up</Link>
         </div>
       </form>
     </main>
