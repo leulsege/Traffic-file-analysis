@@ -10,6 +10,7 @@ import adminRoute from './routes/adminRoutes'
 import faultRecordRouter from './routes/faultRecordRoutes'
 import vehicleRouter from './routes/vehicleRoutes'
 import vehicleAccidentRouter from './routes/vehicleAccidentRoutes'
+import AppError from './utils/appError'
 
 const app = express()
 
@@ -23,6 +24,10 @@ app.use('/trainings', trainingRouter)
 app.use('/faultrecords', faultRecordRouter)
 app.use('/vehicleaccidents', vehicleAccidentRouter)
 app.use('/vehicles', vehicleRouter)
+
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404))
+})
 
 app.use(errorHandler)
 

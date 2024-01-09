@@ -42,3 +42,16 @@ a:visited {
   font-size: 1.2rem;
   font-weight: 600;
 }
+
+.logButton {
+  background-color: var(--color-brand--2);
+  color: var(--color-light--2);
+  color: var(--color-dark--0);
+  padding: 0.8rem 2rem;
+  border-radius: 7px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: 80px;
+}

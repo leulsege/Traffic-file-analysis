@@ -7,23 +7,21 @@ interface Training extends Document {
   trainingPassPoint: Number
   trainingResult: Number
   checkUp: String
+  driver: Schema.Types.ObjectId
 }
 
 const trainingSchema: Schema = new mongoose.Schema({
   trainingType: {
     type: String,
-    required: true,
   },
   trainingStartDate: {
     type: Date,
-    required: true,
   },
   trainingEndDate: {
     type: Date,
   },
   trainingPassPoint: {
     type: Number,
-    required: true,
   },
   trainingResult: {
     type: Number,
@@ -34,7 +32,7 @@ const trainingSchema: Schema = new mongoose.Schema({
   driver: {
     type: Schema.Types.ObjectId,
     ref: 'Driver',
-    required: [true, 'training belongs to a user'],
+    required: [true, 'training belongs to a driver'],
   },
 })
 

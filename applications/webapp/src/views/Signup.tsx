@@ -1,14 +1,54 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PageNav from "../components/Navbar";
 import styles from "./Login.module.css";
 import { useState } from "react";
-export default function Login() {
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+
+export default function Signup() {
   // PRE-FILL FOR DEV PURPOSES
   const [email, setEmail] = useState("jack@example.com");
   const [password, setPassword] = useState("qwerty");
   const [firstName, setFirstName] = useState("Abebe");
   const [lastName, setLastName] = useState("Kebede");
   const [confirmPassword, setConfirmPassword] = useState("qwerty");
+  const [error, setError] = useState(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:8000/admins/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          password,
+          firstName,
+          lastName,
+          confirmPassword,
+        }),
+      });
+      if (response.ok) {
+        const userData = await response.json();
+        navigate("/login");
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || "Login failed");
+        setSnackbarOpen(true);
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setError("An error occurred while logging in" as any);
+      setSnackbarOpen(true);
+    }
+  };
 
   return (
     <main className={styles.login}>
@@ -64,10 +104,30 @@ export default function Login() {
           />
         </div>
 
-        <div>
-          <Link className={styles.ctaLink}>Login</Link>
-        </div>
+        <button
+          type="submit"
+          className={styles.logButton}
+          onClick={handleSubmit}
+        >
+          signup
+        </button>
       </form>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          severity="error"
+          onClose={handleSnackbarClose}
+          style={{ width: "300px", fontSize: "16px" }}
+        >
+          {error}
+        </MuiAlert>
+      </Snackbar>
     </main>
   );
 }

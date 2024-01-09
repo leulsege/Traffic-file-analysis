@@ -48,12 +48,12 @@ const userSchema: Schema = new Schema({
   password: {
     type: String,
     required: [true, 'please provide a password'],
-    minlength: 8,
+    minlength: 6,
     select: false,
   },
   role: {
     type: String,
-    required: [true, 'please assign a role'],
+    default: 'admin',
     enum: ['admin', 'owner'],
   },
   confirmPassword: {
