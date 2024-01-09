@@ -1,0 +1,44 @@
+/* DriverProfile.module.css */
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rem;
+  width: 100vw; /* Adjust this value to control the height of the container */
+}
+
+/* Add additional styling for other elements as needed */
+
+.imgholder {
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15rem 0;
+}
+
+.phoneNumber {
+  color: #444;
+}
+
+.driverImg {
+  height: 9.2rem;
+  width: 9.2rem;
+  border-radius: 50%;
+  border: 3px solid #fdf2e9;
+  margin-bottom: 1.2rem;
+}
+
+.name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: black;
+}
+
+.profileSettings {
+  border-left: 0.1px solid rgba(0, 0, 0, 0.1);
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}

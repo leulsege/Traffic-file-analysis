@@ -1,0 +1,30 @@
+.name {
+  font-size: 1.6rem;
+  color: #264653;
+}
+
+img {
+  overflow-clip-margin: content-box;
+  overflow: clip;
+}
+
+.driverImg {
+  height: 4.8rem;
+  width: 4.8rem;
+  border-radius: 50%;
+  margin-right: -1.6rem;
+  border: 3px solid #fdf2e9;
+}
+
+.container {
+  display: flex;
+  gap: 3.2rem;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 2px;
+  padding: 0.3rem 2rem;
+  border-radius: 9px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 10px rgba(110, 100, 100, 0.1);
+  transition: box-shadow 0.3s ease-in-out; /* Optional: Add transition for a smoother effect */
+}
