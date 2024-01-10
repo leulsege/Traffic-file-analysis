@@ -68,9 +68,7 @@ export const signup = asyncError(
     const resetToken = newUser.createPasswordResetToken()
     await newUser.save({ validateBeforeSave: false })
 
-    const verificationURL = `${req.protocol}://${req.get(
-      'host',
-    )}/admins/verify/${resetToken}`
+    const verificationURL = `${process.env.FRONTENDURL}/verify/${resetToken}`
 
     const message = `welecome to PSTS, click the the link to verify your email: ${verificationURL}.\nIf you didn't signup, please ignore this email!`
 
@@ -83,7 +81,8 @@ export const signup = asyncError(
 
       res.status(200).json({
         status: 'success',
-        message: 'we have sent a verification email!',
+        message:
+          'we have sent a verification email!, please verify your account',
       })
     } catch (err) {
       await newUser.deleteOne({ email: req.body.email })

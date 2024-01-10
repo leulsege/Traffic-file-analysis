@@ -5,6 +5,7 @@ import HomePage from "./views/HomePage";
 import ForgotPassword from "./views/ForgetPassword";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
+import Verify from "./views/Verify";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/verify/:token" element={<Verify />} />
       </Routes>
     </BrowserRouter>
   );

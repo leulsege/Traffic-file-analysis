@@ -1,0 +1,6 @@
+.main {
+  background-color: var(--color-dark--1);
+  width: 100vw;
+  padding: 2px;
+  height: 98vh;
+}
