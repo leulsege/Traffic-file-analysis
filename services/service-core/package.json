@@ -4,7 +4,8 @@
   "description": "",
   "main": "./app.js",
   "scripts": {
-    "start:dev": "NODE_ENV=production nodemon",
+    "start:dev": "nodemon",
+    "start:prod": "NODE_ENV=production nodemon",
     "format": "prettier --write 'src/**/*.ts'",
     "lint": "eslint . --fix",
     "build": "npm run copy-static && tsc",

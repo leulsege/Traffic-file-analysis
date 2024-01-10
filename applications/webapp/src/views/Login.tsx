@@ -27,7 +27,7 @@ export default function Login() {
       });
       if (response.ok) {
         const userData = await response.json();
-        navigate("/signup");
+        navigate("/app");
       } else {
         const errorData = await response.json();
         setError(errorData.message || "Login failed");

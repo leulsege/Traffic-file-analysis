@@ -13,11 +13,13 @@ const errorHandler = (
   if (process.env.NODE_ENV === 'development') {
     sendErrorDev(err, res)
   } else if (process.env.NODE_ENV === 'production') {
+    console.log(err.name)
     if (err.name === 'CastError') err = handleCastErrorDB(err)
-    if (err.code === 11000) err = handleDuplicateFieldsDB(err)
-    if (err.name === 'ValidationError') err = handleValidationErrorDB(err)
-    if (err.name === 'JsonWebTokenError') err = handleJWTError()
-    if (err.name === 'TokenExpiredError') err = handleJWTExpiredError()
+    else if (err.code === 11000) err = handleDuplicateFieldsDB(err)
+    else if (err.name === 'ValidationError') {
+      err = handleValidationErrorDB(err)
+    } else if (err.name === 'JsonWebTokenError') err = handleJWTError()
+    else if (err.name === 'TokenExpiredError') err = handleJWTExpiredError()
 
     sendErrorProd(err, res)
   }
@@ -26,9 +28,8 @@ const errorHandler = (
 const sendErrorDev = (err: any, res: Response) => {
   res.status(err.statusCode).json({
     status: err.status,
-    message: err.message,
-    // error: err,
-    // stack: err.stack,
+    error: err,
+    stack: err.stack,
   })
 }
 
@@ -63,9 +64,10 @@ const handleDuplicateFieldsDB = (err: any) => {
 }
 
 const handleValidationErrorDB = (err: any) => {
-  const errors = Object.values(err.errors).map((el: any) => el.message)
-  const message = `Invalid input data. ${errors.join('. ')}`
-  return new Error(message)
+  // const errors = Object.values(err.errors).map((el: any) => el.message)
+  console.log(err.message)
+  const message = `Invalid input data for${err.message.split(':')[1]}`
+  return new AppError(message, 401)
 }
 
 const handleJWTError = () =>

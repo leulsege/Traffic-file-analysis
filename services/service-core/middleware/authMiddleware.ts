@@ -54,6 +54,15 @@ export const signup = asyncError(
       req.body.role = 'admin'
       req.body.approved = false
     }
+    const existingUnverifiedUser = await User.findOne({
+      email: req.body.email,
+      verified: false,
+    })
+
+    if (existingUnverifiedUser) {
+      await User.deleteOne({ _id: existingUnverifiedUser._id })
+    }
+
     const newUser = await User.create({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -75,14 +84,13 @@ export const signup = asyncError(
     try {
       await sendEmail({
         email: req.body.email,
-        subject: 'account verification (valid for 1 day)',
+        subject: 'account verification (valid for an hour)',
         message,
       })
 
       res.status(200).json({
         status: 'success',
-        message:
-          'we have sent a verification email!, please verify your account',
+        message: `we have sent a verification email to ${req.body.email}, please verify your account`,
       })
     } catch (err) {
       await newUser.deleteOne({ email: req.body.email })
@@ -233,7 +241,7 @@ export const forgotPassword = asyncError(
     try {
       await sendEmail({
         email: user.email,
-        subject: 'Your password reset token (valid for 1 day)',
+        subject: 'Your password reset token (valid for an hour)',
         message,
       })
 
