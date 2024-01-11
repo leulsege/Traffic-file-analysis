@@ -1,8 +1,6 @@
 import { useState } from "react";
 import styles from "./AppNav.module.css";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBus } from "@fortawesome/free-solid-svg-icons";
 
 function AppNav() {
   const [driverName, setDriverName] = useState("");
@@ -22,27 +20,21 @@ function AppNav() {
 
       <div className={styles.grid}>
         <div className={styles.item}>
-          <FontAwesomeIcon icon={faBus} />
           <p>አሽከርካሪ መመዝገቢያ</p>
         </div>
         <div className={styles.item}>
-          <FontAwesomeIcon icon={faBus} />
           <p>ተሽከርካሪ መመዝገቢያ</p>
         </div>
         <div className={styles.item}>
-          <FontAwesomeIcon icon={faBus} />
           <p>ሪከርድ መመዝገቢያ</p>
         </div>
         <div className={styles.item}>
-          <FontAwesomeIcon icon={faBus} />
           <p>ስልጠና መመዝገቢያ</p>
         </div>
         <div className={styles.item}>
-          <FontAwesomeIcon icon={faBus} />
           <p>ስልጠና መመዝገቢያ</p>
         </div>
         <div className={styles.item}>
-          <FontAwesomeIcon icon={faBus} />
           <p>ስልጠና መመዝገቢያ</p>
         </div>
       </div>

@@ -1,6 +1,5 @@
-import { Link, useNavigate } from "react-router-dom";
 import PageNav from "../components/Navbar";
-import styles from "./Login.module.css";
+import styles from "./Signup.module.css";
 import { useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
@@ -17,7 +16,6 @@ export default function Signup() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState();
-  const navigate = useNavigate();
 
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
@@ -27,17 +25,20 @@ export default function Signup() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8000/admins/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          password,
-          firstName,
-          lastName,
-          confirmPassword,
-        }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API}/admins/signup`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            password,
+            firstName,
+            lastName,
+            confirmPassword,
+          }),
+        }
+      );
       if (response.ok) {
         const data = await response.json();
         setMessage((data as any).message);

@@ -7,6 +7,7 @@ import Login from "./views/Login";
 import Signup from "./views/Signup";
 import Verify from "./views/Verify";
 import AppLayout from "./views/AppLayout";
+import ResetPassword from "./views/ResetPassword";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/app" element={<AppLayout />}></Route>
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verify/:token" element={<Verify />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
     </BrowserRouter>
   );

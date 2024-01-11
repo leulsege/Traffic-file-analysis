@@ -8,6 +8,8 @@ import styles from "./Verify.module.css";
 
 const Verify = () => {
   const [message, setMessage] = useState();
+
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const { token } = useParams();
@@ -16,11 +18,12 @@ const Verify = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/admins/verify/${token}`
+          `${import.meta.env.VITE_BACKEND_API}/admins/verify/${token}`
         );
         if (response.ok) {
           const responseData = await response.json();
           setMessage(responseData.message);
+          setSuccess(true);
         } else {
           const errorData = await response.json();
           setError(errorData.message || "Verification failed");
@@ -43,23 +46,26 @@ const Verify = () => {
   return (
     <main className={styles.main}>
       <Navbar />
-      <Message message={message} />
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={6000}
-        onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <MuiAlert
-          elevation={6}
-          variant="filled"
-          severity="error"
+      {success ? (
+        <Message message={message} />
+      ) : (
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={6000}
           onClose={handleSnackbarClose}
-          style={{ width: "300px", fontSize: "16px" }}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
-          {error}
-        </MuiAlert>
-      </Snackbar>
+          <MuiAlert
+            elevation={6}
+            variant="filled"
+            severity="error"
+            onClose={handleSnackbarClose}
+            style={{ width: "300px", fontSize: "16px" }}
+          >
+            {error}
+          </MuiAlert>
+        </Snackbar>
+      )}
     </main>
   );
 };

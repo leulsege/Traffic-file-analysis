@@ -1,16 +1,17 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import PageNav from "../components/Navbar";
 import styles from "./Login.module.css";
 import { useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
-export default function Login() {
-  const [email, setEmail] = useState("jack@example.com");
-  const [password, setPassword] = useState("qwerty");
+export default function ResetPassword() {
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
   const [error, setError] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const navigate = useNavigate();
+  const { token } = useParams();
 
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
@@ -21,11 +22,11 @@ export default function Login() {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_API}/admins/signin`,
+        `${import.meta.env.VITE_BACKEND_API}/admins/reset-password/${token}`,
         {
-          method: "POST",
+          method: "PATCH",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
+          body: JSON.stringify({ password, confirmPassword }),
         }
       );
       if (response.ok) {
@@ -33,12 +34,12 @@ export default function Login() {
         navigate("/app");
       } else {
         const errorData = await response.json();
-        setError(errorData.message || "Login failed");
+        setError(errorData.message || "reset password failed");
         setSnackbarOpen(true);
       }
     } catch (error) {
-      console.error("Login error:", error);
-      setError("An error occurred while logging in" as any);
+      console.error("reset password error:", error);
+      setError("An error occurred while reseting password " as any);
       setSnackbarOpen(true);
     }
   };
@@ -47,17 +48,6 @@ export default function Login() {
     <main className={styles.login}>
       <PageNav />
       <form className={styles.form}>
-        <div className={styles.row}>
-          <label htmlFor="email">Email address</label>
-          <input
-            type="email"
-            required
-            id="email"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-          />
-        </div>
-
         <div className={styles.row}>
           <label htmlFor="password">Password</label>
           <input
@@ -69,16 +59,24 @@ export default function Login() {
           />
         </div>
 
+        <div className={styles.row}>
+          <label htmlFor="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            required
+            id="confirmPassword"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            value={confirmPassword}
+          />
+        </div>
+
         <button
           type="submit"
           className={styles.logButton}
           onClick={handleSubmit}
         >
-          Login
+          Submit
         </button>
-        <Link to="/forgot-password">
-          <div className={styles.forget}>forgot password?</div>
-        </Link>
       </form>
       <Snackbar
         open={snackbarOpen}

@@ -77,7 +77,7 @@ export const signup = asyncError(
     const resetToken = newUser.createPasswordResetToken()
     await newUser.save({ validateBeforeSave: false })
 
-    const verificationURL = `${process.env.FRONTENDURL}/verify/${resetToken}`
+    const verificationURL = `${process.env.FRONTEND_URL}/verify/${resetToken}`
 
     const message = `welecome to PSTS, click the the link to verify your email: ${verificationURL}.\nIf you didn't signup, please ignore this email!`
 
@@ -232,9 +232,7 @@ export const forgotPassword = asyncError(
     await user.save({ validateBeforeSave: false })
 
     // 3) Send it to the user's email
-    const resetURL = `${req.protocol}://${req.get(
-      'host',
-    )}/admins/resetpassword/${resetToken}`
+    const resetURL = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`
 
     const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`
 
@@ -247,7 +245,7 @@ export const forgotPassword = asyncError(
 
       res.status(200).json({
         status: 'success',
-        message: 'Token sent to email!',
+        message: `we have sent a verification token to ${req.body.email}`,
       })
     } catch (err) {
       user.passwordResetToken = undefined

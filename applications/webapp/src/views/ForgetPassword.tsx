@@ -1,56 +1,93 @@
-// ForgotPassword.tsx
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { TextField, Button, Typography, Container, Paper } from "@mui/material";
-import HomeNavbar from "../components/HomeNavbar";
+import PageNav from "../components/Navbar";
+import styles from "./ForgetPassword.module.css";
+import { useState } from "react";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import Message from "../components/Message";
 
-const ForgotPassword: React.FC = () => {
-  const [email, setEmail] = useState("");
+export default function ForgetPassword() {
+  const [email, setEmail] = useState();
+  const [error, setError] = useState(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [message, setMessage] = useState();
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
 
-  const handleForgotPassword = () => {
-    console.log(`Forgot password for email: ${email}`);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API}/admins/forget-password`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        }
+      );
+      if (response.ok) {
+        const userData = await response.json();
+        setMessage((userData as any).message);
+        setSuccess(true);
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || "sending email failed");
+        setSnackbarOpen(true);
+      }
+    } catch (error) {
+      console.error("sending email error:", error);
+      setError("An error occurred while sending email" as any);
+      setSnackbarOpen(true);
+    }
   };
 
   return (
-    <>
-      <HomeNavbar />
-      <Container component="main" maxWidth="xs">
-        <Paper sx={{ marginTop: 5, height: "60vh", padding: 2 }}>
-          <Typography component="h1" variant="h5">
-            Forgot Password
-          </Typography>
-          <form>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <Button
-              type="button"
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={handleForgotPassword}
-              sx={{ marginTop: 2, marginBottom: 1 }}
-            >
-              Reset Password
-            </Button>
-            <Typography variant="body2" align="center">
-              <Link to="/login">Remembered your password? Login</Link>
-            </Typography>
-          </form>
-        </Paper>
-      </Container>
-    </>
-  );
-};
+    <main className={styles.login}>
+      <PageNav />
+      {success ? (
+        <Message message={message} />
+      ) : (
+        <>
+          <form className={styles.form}>
+            <div className={styles.row}>
+              <label htmlFor="email">Email address</label>
+              <input
+                type="email"
+                required
+                id="email"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+              />
+            </div>
 
-export default ForgotPassword;
+            <button
+              type="submit"
+              className={styles.logButton}
+              onClick={handleSubmit}
+            >
+              Next
+            </button>
+          </form>
+          <Snackbar
+            open={snackbarOpen}
+            autoHideDuration={6000}
+            onClose={handleSnackbarClose}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          >
+            <MuiAlert
+              elevation={6}
+              variant="filled"
+              severity="error"
+              onClose={handleSnackbarClose}
+              style={{ width: "300px", fontSize: "16px" }}
+            >
+              {error}
+            </MuiAlert>
+          </Snackbar>
+        </>
+      )}
+    </main>
+  );
+}

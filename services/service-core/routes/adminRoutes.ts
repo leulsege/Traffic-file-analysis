@@ -25,8 +25,8 @@ adminRoute.post('/signin', signin)
 adminRoute.get('/verify/:token', verification)
 adminRoute.get('/logout', logout)
 adminRoute.patch('/updatemypassword', protect, updatePassword)
-adminRoute.post('/forgetpassword', forgotPassword)
-adminRoute.patch('/resetpassword/:token', resetPassword)
+adminRoute.post('/forget-password', forgotPassword)
+adminRoute.patch('/reset-password/:token', resetPassword)
 
 adminRoute.route('/').all(protect, restrictTo('owner')).get(getAllUsers)
 adminRoute
