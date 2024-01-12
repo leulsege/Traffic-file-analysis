@@ -10,7 +10,6 @@ import ResetPassword from "./views/ResetPassword";
 import { useState } from "react";
 import ProtectedRoute from "./views/ProtectedRoute";
 import DriverProfile from "./views/DriverProfile";
-import { useState } from "react";
 
 function App() {
   const [user, setUser] = useState();

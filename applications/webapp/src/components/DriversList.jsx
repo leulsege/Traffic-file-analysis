@@ -2,7 +2,7 @@
 
 import Driver from "./Driver";
 import Spinner from "./Spinner";
-import styles from "./driversList.module.css";
+import styles from "./DriversList.module.css";
 
 function DriversList({ drivers, isLoading }) {
   if (isLoading) return <Spinner />;

@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./DriverProfile.module.css";
 import UserForm from "../components/UserForm";
-import { useState } from "react";
 
 const driver = {
   status: "success",
