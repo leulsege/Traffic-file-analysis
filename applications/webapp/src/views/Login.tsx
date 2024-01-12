@@ -5,7 +5,7 @@ import { useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
-export default function Login() {
+export default function Login({ setUser, setIsAuthenticated }) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [error, setError] = useState(null);
@@ -30,6 +30,18 @@ export default function Login() {
       );
       if (response.ok) {
         const userData = await response.json();
+        setUser(userData);
+        setIsAuthenticated(true);
+
+        const expirationTime = new Date();
+        expirationTime.setMonth(expirationTime.getMonth() + 2);
+
+        const authData = {
+          expirationTime: expirationTime.getTime(),
+        };
+
+        localStorage.setItem("authData", JSON.stringify(authData));
+
         navigate("/app");
       } else {
         const errorData = await response.json();
