@@ -49,7 +49,7 @@ export default function ResetPassword() {
       <PageNav />
       <form className={styles.form}>
         <div className={styles.row}>
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">New Password</label>
           <input
             type="password"
             required

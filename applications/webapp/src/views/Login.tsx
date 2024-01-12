@@ -6,8 +6,8 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
 export default function Login() {
-  const [email, setEmail] = useState("jack@example.com");
-  const [password, setPassword] = useState("qwerty");
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
   const [error, setError] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const navigate = useNavigate();
@@ -48,24 +48,26 @@ export default function Login() {
       <PageNav />
       <form className={styles.form}>
         <div className={styles.row}>
-          <label htmlFor="email">Email address</label>
+          <label htmlFor="email"></label>
           <input
             type="email"
             required
             id="email"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
+            placeholder="Email address"
           />
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password"></label>
           <input
             type="password"
             required
             id="password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
+            placeholder="Password"
           />
         </div>
 

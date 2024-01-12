@@ -7,11 +7,11 @@ import Message from "../components/Message";
 
 export default function Signup() {
   // PRE-FILL FOR DEV PURPOSES
-  const [email, setEmail] = useState("jack@example.com");
-  const [password, setPassword] = useState("qwerty");
-  const [firstName, setFirstName] = useState("Abebe");
-  const [lastName, setLastName] = useState("Kebede");
-  const [confirmPassword, setConfirmPassword] = useState("qwerty");
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
   const [error, setError] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -45,12 +45,12 @@ export default function Signup() {
         setSuccess(true);
       } else {
         const errorData = await response.json();
-        setError(errorData.message || "Login failed");
+        setError(errorData.message || "Sign up failed");
         setSnackbarOpen(true);
       }
     } catch (error) {
-      console.error("Login error:", error);
-      setError("An error occurred while logging in" as any);
+      console.error("Sign up error:", error);
+      setError("An error occurred while signing up" as any);
       setSnackbarOpen(true);
     }
   };
@@ -64,52 +64,62 @@ export default function Signup() {
         <>
           <form className={styles.form}>
             <div className={styles.row}>
-              <label htmlFor="text">First Name</label>
+              <label htmlFor="text"></label>
               <input
                 type="text"
                 id="firstName"
                 onChange={(e) => setFirstName(e.target.value)}
                 value={firstName}
+                required
+                placeholder="First Name"
               />
             </div>
 
             <div className={styles.row}>
-              <label htmlFor="text">Last Name</label>
+              <label htmlFor="text"></label>
               <input
                 type="text"
                 id="lastName"
                 onChange={(e) => setLastName(e.target.value)}
                 value={lastName}
+                required
+                placeholder="Last Name"
               />
             </div>
 
             <div className={styles.row}>
-              <label htmlFor="email">Email address</label>
+              <label htmlFor="email"></label>
               <input
                 type="email"
                 id="email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
+                required
+                placeholder="Email address"
               />
             </div>
 
             <div className={styles.row}>
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password"></label>
               <input
                 type="password"
                 id="password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
+                required
+                placeholder="Password"
               />
             </div>
 
             <div className={styles.row}>
-              <label htmlFor="password">Comfirm Password</label>
+              <label htmlFor="password"></label>
               <input
                 type="password"
                 id="confirmPassword"
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 value={confirmPassword}
+                required
+                placeholder="Comfirm Password"
               />
             </div>
 

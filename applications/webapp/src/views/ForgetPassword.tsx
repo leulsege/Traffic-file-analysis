@@ -52,13 +52,14 @@ export default function ForgetPassword() {
         <>
           <form className={styles.form}>
             <div className={styles.row}>
-              <label htmlFor="email">Email address</label>
+              <label htmlFor="email"></label>
               <input
                 type="email"
                 required
                 id="email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
+                placeholder="Email address"
               />
             </div>
 
