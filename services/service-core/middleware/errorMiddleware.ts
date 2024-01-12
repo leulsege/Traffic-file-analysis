@@ -13,7 +13,6 @@ const errorHandler = (
   if (process.env.NODE_ENV === 'development') {
     sendErrorDev(err, res)
   } else if (process.env.NODE_ENV === 'production') {
-    console.log(err.name)
     if (err.name === 'CastError') err = handleCastErrorDB(err)
     else if (err.code === 11000) err = handleDuplicateFieldsDB(err)
     else if (err.name === 'ValidationError') {
@@ -65,7 +64,6 @@ const handleDuplicateFieldsDB = (err: any) => {
 
 const handleValidationErrorDB = (err: any) => {
   // const errors = Object.values(err.errors).map((el: any) => el.message)
-  console.log(err.message)
   const message = `Invalid input data for${err.message.split(':')[1]}`
   return new AppError(message, 401)
 }
