@@ -1,0 +1,15 @@
+/* driversList.module.css */
+
+.container {
+  text-align: center;
+}
+
+.title {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  color: #264653;
+}
+
+.driver-list {
+  display: grid;
+}
