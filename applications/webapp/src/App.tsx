@@ -12,7 +12,7 @@ import ProtectedRoute from "./views/ProtectedRoute";
 
 function App() {
   const [user, setUser] = useState();
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   return (
     <BrowserRouter>
       <Routes>
