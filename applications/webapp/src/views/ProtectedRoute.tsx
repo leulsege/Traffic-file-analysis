@@ -11,8 +11,6 @@ function ProtectedRoute({ children, isAuthenticated, setIsAuthenticated }) {
     if (authDataString) {
       const authData = JSON.parse(authDataString);
 
-      console.log(authData.expirationTime);
-      console.log(currentTime);
       if (authData.expirationTime < currentTime) {
         localStorage.removeItem("authData");
         setIsAuthenticated(() => false); // Set isAuthenticated to false
