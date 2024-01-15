@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from 'express'
 import cors from 'cors'
 import * as path from 'path'
 import cookieParser from 'cookie-parser'
+import dotenv from 'dotenv'
 
 import driverRouter from './routes/driverRoutes'
 import trainingRouter from './routes/trainingRoutes'
@@ -12,10 +13,17 @@ import vehicleRouter from './routes/vehicleRoutes'
 import vehicleAccidentRouter from './routes/vehicleAccidentRoutes'
 import AppError from './utils/appError'
 
-const app = express()
+dotenv.config()
 
+const app = express()
 app.use(cookieParser())
-app.use(cors())
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  }),
+)
+
 app.use(express.json())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use('/api/admins', adminRoute)

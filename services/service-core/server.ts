@@ -2,8 +2,6 @@ import mongoose, { ConnectOptions } from 'mongoose'
 import dotenv from 'dotenv'
 import app from './app'
 
-dotenv.config()
-
 const DB = process.env.DATABASE
 
 const connectDB = async (): Promise<void> => {
