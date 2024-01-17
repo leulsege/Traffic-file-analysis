@@ -39,3 +39,20 @@ a:visited {
   font-size: 1.2rem;
   font-weight: 600;
 }
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.delbtn {
+  background-color: red;
+  align-self: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  padding: 0.8rem 2rem;
+  border-radius: 7px;
+}

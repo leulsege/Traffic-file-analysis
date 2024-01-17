@@ -10,6 +10,7 @@ import ResetPassword from "./views/ResetPassword";
 import { useState } from "react";
 import ProtectedRoute from "./views/ProtectedRoute";
 import DriverProfile from "./views/DriverProfile";
+import NotFound from "./components/NotFound";
 
 function App() {
   const [user, setUser] = useState();
@@ -38,6 +39,7 @@ function App() {
           }
         ></Route>
         <Route path="/driverprofile" element={<DriverProfile />} />
+        <Route path="*" element={<NotFound />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verify/:token" element={<Verify />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
