@@ -4,6 +4,7 @@ import UserForm from "../components/UserForm";
 import AccidentTrack from "../components/accidentTrack";
 import { useState } from "react";
 import PhotoUpload from "../components/photoUpload";
+import AccidentForm from "../components/AccidentForm";
 
 const driver = {
   status: "success",
@@ -68,10 +69,16 @@ function DriverProfile() {
           <UserForm driver={driverinf} />
         </div>
         <div>
-          <button onClick={toggleAccidentForm} className={styles.addButton}>
-            Add Accident
-          </button>
-          <AccidentTrack />
+          {showAccidentForm ? (
+            <AccidentForm onCancel={toggleAccidentForm} />
+          ) : (
+            <>
+              <button onClick={toggleAccidentForm} className={styles.addButton}>
+                Add Accident
+              </button>
+              <AccidentTrack />
+            </>
+          )}
         </div>
       </main>
     </>
