@@ -1,6 +1,52 @@
 import { Request, Response, NextFunction } from 'express'
 import VehicleAccidentModel from '../models/vehicleAccidentModel'
+import multer from 'multer'
+import sharp from 'sharp'
 import asyncError from '../utils/asyncError'
+import AppError from '../utils/appError'
+
+const multerStorage = multer.memoryStorage()
+
+const multerFilter = (
+  req: Request,
+  file: Express.Multer.File,
+  cb: multer.FileFilterCallback,
+) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true)
+  } else {
+    cb(
+      new AppError(
+        'Not an image! Please upload only images.',
+        400,
+      ) as unknown as null,
+      false,
+    )
+  }
+}
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+})
+
+export const uploadAccidentPhoto = upload.single('photo')
+
+export const resizeAccidentPhoto = asyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    if (!req.file) return next()
+
+    req.file.filename = `accident-${req.params.id}-${Date.now()}.jpeg`
+
+    await sharp(req.file.buffer)
+      .resize(500, 500)
+      .toFormat('jpeg')
+      .jpeg({ quality: 90 })
+      .toFile(`public/img/accidents/${req.file.filename}`)
+
+    next()
+  },
+)
 
 export const createVehicleAccident = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -44,6 +90,7 @@ export const getVehicleAccident = asyncError(
 
 export const updateVehicleAccident = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    if (req.file) req.body.photo = req.file.filename
     const updateVehicleAccident = await VehicleAccidentModel.findByIdAndUpdate(
       req.params.id,
       req.body,

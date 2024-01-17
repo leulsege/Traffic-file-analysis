@@ -9,26 +9,31 @@ interface VehicleAccident extends Document {
   guilty: string
   damageEstimation: number
   insuranceSentDate: Date
+  excessLetterDate: Date
   maintenanceProcess: string
   preformDate: Date
-  ክፍያ_የተጠየቀበት_ቀን_የደብዳቤ_ቁጥር: string
+  paymentDateLetterNumber: string
   paymentRequestLetterDate: Date
 }
 
 // Define the mongoose schema
 const accidentSchema: Schema = new Schema({
-  accident_date: { type: Date },
-  accident_place: { type: String },
+  accidentDate: { type: Date },
+  accidentPlace: { type: String },
   damages: { type: String },
   cause: { type: String },
   guilty: { type: String },
   damageEstimation: { type: Number },
   insuranceSentDate: { type: Date },
-  ኤክሰስ_የተቆረጠበት_ደብዳ_ቁጥር: { type: String },
+  excessLetterDate: { type: String },
   maintenanceProcess: { type: String },
   preformDate: { type: Date },
-  ክፍያ_የተጠየቀበት_ቀን_የደብዳቤ_ቁጥር: { type: String },
+  paymentDateLetterNumber: { type: String },
   paymentRequestLetterDate: { type: Date },
+  photo: {
+    type: String,
+    default: null,
+  },
   vehicle: {
     type: Schema.Types.ObjectId,
     ref: 'Vehicle',

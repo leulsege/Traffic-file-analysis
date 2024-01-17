@@ -5,10 +5,21 @@ import {
   updateVehicleAccident,
   deleteVehicleAccident,
   createVehicleAccident,
+  uploadAccidentPhoto,
+  resizeAccidentPhoto,
 } from '../controllers/vehicleAccidentController'
 import { protect, restrictTo } from '../middleware/authMiddleware'
 
 const vehicleAccidentRouter = express.Router()
+
+vehicleAccidentRouter
+  .route('/uploadphoto/:id')
+  .patch(
+    protect,
+    uploadAccidentPhoto,
+    resizeAccidentPhoto,
+    updateVehicleAccident,
+  )
 
 vehicleAccidentRouter
   .route('/')

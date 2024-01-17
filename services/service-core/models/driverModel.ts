@@ -79,6 +79,12 @@ driverSchema.virtual('faultRecord', {
   foreignField: 'driver',
   localField: '_id',
 })
+
+driverSchema.virtual('accidentRecord', {
+  ref: 'Accident',
+  foreignField: 'driver',
+  localField: '_id',
+})
 const DriverModel = mongoose.model<Driver>('Driver', driverSchema)
 
 export default DriverModel

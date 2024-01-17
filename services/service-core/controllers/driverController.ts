@@ -96,6 +96,10 @@ export const getDriver = asyncError(
         path: 'faultRecord',
         select: '-driver -__v',
       })
+      .populate({
+        path: 'accidentRecord',
+        select: '-driver -__v',
+      })
 
     res.status(200).json({
       status: 'success',
@@ -109,7 +113,6 @@ export const getDriver = asyncError(
 export const updateDriver = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     if (req.file) req.body.photo = req.file.filename
-    console.log(req.file)
     const updateDriver = await DriverModel.findByIdAndUpdate(
       req.params.id,
       req.body,
