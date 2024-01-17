@@ -7,6 +7,7 @@ import Login from "./views/Login";
 import Signup from "./views/Signup";
 import AppLayout from "./views/AppLayout";
 import DriverProfile from "./views/DriverProfile";
+import NotFound from "./components/NotFound";
 import { useState } from "react";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/app" element={<AppLayout />}></Route>
         <Route path="/driverprofile" element={<DriverProfile />} />
+        <Route path="*" element={<NotFound />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
     </BrowserRouter>

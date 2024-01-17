@@ -1,7 +1,9 @@
 import React from "react";
 import styles from "./DriverProfile.module.css";
 import UserForm from "../components/UserForm";
+import AccidentTrack from "../components/accidentTrack";
 import { useState } from "react";
+import PhotoUpload from "../components/photoUpload";
 
 const driver = {
   status: "success",
@@ -45,11 +47,18 @@ const driver = {
 const driverinf = driver.data.driver;
 
 function DriverProfile() {
+  const [showAccidentForm, setShowAccidentForm] = useState(false);
+
+  const toggleAccidentForm = () => {
+    setShowAccidentForm(!showAccidentForm);
+  };
+
   return (
     <>
       <main className={styles.container}>
         <div className={styles.imgholder}>
           <img src="driver.jpg" className={styles.driverImg} />
+          <PhotoUpload />
           <p className={styles.name}>
             {driverinf.firstName} {driverinf.lastName}
           </p>
@@ -58,7 +67,12 @@ function DriverProfile() {
         <div className={styles.profileSettings}>
           <UserForm driver={driverinf} />
         </div>
-        <div>Another User Details</div>
+        <div>
+          <button onClick={toggleAccidentForm} className={styles.addButton}>
+            Add Accident
+          </button>
+          <AccidentTrack />
+        </div>
       </main>
     </>
   );

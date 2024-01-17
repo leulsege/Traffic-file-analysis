@@ -1,11 +1,14 @@
 /* DriverProfile.module.css */
 
 .container {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   align-items: center;
   justify-content: center;
-  gap: 12rem;
-  width: 100vw; /* Adjust this value to control the height of the container */
+  gap: 1rem;
+  width: calc(
+    100vw - 2rem
+  ); /* Adjust this value to control the height of the container */
 }
 
 /* Add additional styling for other elements as needed */
@@ -41,4 +44,11 @@
   border-left: 0.1px solid rgba(0, 0, 0, 0.1);
   border-right: 1px solid rgba(0, 0, 0, 0.1);
   padding: 2rem;
+  align-self: start;
+}
+
+.addButton {
+  background-color: var(--color-brand--2);
+  color: #333;
+  padding: 0.8rem 1.6rem;
 }

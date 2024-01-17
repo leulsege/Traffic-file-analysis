@@ -86,8 +86,9 @@ function UserForm({ driver }) {
           />
         </div>
 
-        <div>
+        <div className={styles.buttons}>
           <Link className={styles.ctaLink}>Save Profile</Link>
+          <button className={styles.delbtn}>Delete Driver</button>
         </div>
       </form>
     </main>
