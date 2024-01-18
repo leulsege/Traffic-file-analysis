@@ -14,7 +14,9 @@ function Driver({ driver }) {
         className={styles.driverImg}
         src={
           driver.photo
-            ? `http://localhost:8000/img/drivers/${driver.photo}`
+            ? `${import.meta.env.VITE_BACKEND_STATIC_FILE}/img/drivers/${
+                driver.photo
+              }`
             : "/default-user-profile.jpg"
         }
       />
