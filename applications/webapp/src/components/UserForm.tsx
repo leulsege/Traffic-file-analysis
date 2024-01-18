@@ -1,37 +1,51 @@
 import { Link } from "react-router-dom";
 import styles from "./UserForm.module.css";
 import { useState } from "react";
+import { useStepContext } from "@mui/material";
 
 function UserForm({ driver }) {
   // PRE-FILL FOR DEV PURPOSES
   const [licenseLevel, setLicenseLevel] = useState(driver.licenseLevel);
-  const [firstName, setFirstName] = useState(driver.firstName);
-  const [lastName, setLastName] = useState(driver.lastName);
+  const [name, setName] = useState(driver.firstName);
   const [licenseNumber, setLicenseNumber] = useState(driver.licenseNumber);
   const [idNumber, setIdNumber] = useState(driver.idNumber);
+  const [birthDate, setBirthDate] = useState(driver.birthDate);
   const [phoneNumber, setPhoneNumber] = useState(driver.phoneNumber);
+  const [gender, setGender] = useState(driver.gender);
+  const [licenseExpiredDate, setlicenseExpiredDate] = useState(
+    driver.licenseExpiredDate
+  );
   const [PlateNumber, setPlateNumber] = useState(driver.vehicle.plateNumber);
   return (
     <main className={styles.login}>
       <form className={styles.form}>
         <div className={styles.row}>
-          <label htmlFor="text">First Name</label>
+          <label htmlFor="text">Full Name</label>
           <input
             type="text"
-            id="firstName"
-            onChange={(e) => setFirstName(e.target.value)}
-            value={firstName}
+            id="fullName"
+            onChange={(e) => setName(e.target.value)}
+            value={name}
             required
           />
         </div>
-
         <div className={styles.row}>
-          <label htmlFor="text">Last Name</label>
+          <label htmlFor="text">Gender</label>
           <input
             type="text"
-            id="lastName"
-            onChange={(e) => setLastName(e.target.value)}
-            value={lastName}
+            id="gender"
+            onChange={(e) => setGender(e.target.value)}
+            value={gender}
+            required
+          />
+        </div>
+        <div className={styles.row}>
+          <label htmlFor="text">BirthDate</label>
+          <input
+            type="date"
+            id="birthDate"
+            onChange={(e) => setBirthDate(e.target.value)}
+            value={birthDate}
             required
           />
         </div>
@@ -53,6 +67,17 @@ function UserForm({ driver }) {
             id="licenseNumber"
             onChange={(e) => setLicenseNumber(e.target.value)}
             value={licenseNumber}
+          />
+        </div>
+
+        <div className={styles.row}>
+          <label htmlFor="text">license Expired Date</label>
+          <input
+            type="date"
+            id="licenseExpiredDate"
+            onChange={(e) => setlicenseExpiredDate(e.target.value)}
+            value={licenseExpiredDate}
+            required
           />
         </div>
 
