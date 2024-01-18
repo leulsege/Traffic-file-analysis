@@ -16,7 +16,7 @@ export default function HomePage() {
           የማሽን እና የመኪና አገልግሎት መተግበሪ ተጠቃሚ ሆኖ የመንገድ መከተልና የቀመር አገልግሎት ለተያይዞ የቀረበ
           እና አንድነት እንዲቀይሩ፣ የሰላም ዝርዝር እና እርከን መንገድ ይከተላል።
         </h2>
-        <Link to="app" className="cta">
+        <Link to="/drivers" className="cta">
           Go to App
         </Link>
       </section>

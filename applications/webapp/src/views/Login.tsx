@@ -43,7 +43,7 @@ export default function Login({ setUser, setIsAuthenticated }) {
 
         localStorage.setItem("authData", JSON.stringify(authData));
 
-        navigate("/app");
+        navigate("/drivers");
       } else {
         const errorData = await response.json();
         setError(errorData.message || "Login failed");

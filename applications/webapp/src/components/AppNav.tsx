@@ -1,9 +1,26 @@
 import { useState } from "react";
 import styles from "./AppNav.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function AppNav() {
   const [driverName, setDriverName] = useState("");
+  const navigate = useNavigate();
+
+  const handleDriver = () => {
+    navigate("/drivers");
+  };
+
+  const handleVehicle = () => {
+    navigate("/vehicles");
+  };
+
+  const handleRecord = () => {
+    navigate("/accidents");
+  };
+
+  const handleTraining = () => {
+    navigate("/trainings");
+  };
   return (
     <>
       <nav className={styles.nav}>
@@ -19,22 +36,22 @@ function AppNav() {
       </nav>
 
       <div className={styles.grid}>
-        <div className={styles.item}>
+        <div onClick={handleDriver} className={styles.item}>
           <p>አሽከርካሪ መመዝገቢያ</p>
         </div>
-        <div className={styles.item}>
+        <div onClick={handleVehicle} className={styles.item}>
           <p>ተሽከርካሪ መመዝገቢያ</p>
         </div>
-        <div className={styles.item}>
+        <div onClick={handleRecord} className={styles.item}>
           <p>ሪከርድ መመዝገቢያ</p>
         </div>
-        <div className={styles.item}>
+        <div onClick={handleTraining} className={styles.item}>
           <p>ስልጠና መመዝገቢያ</p>
         </div>
-        <div className={styles.item}>
+        <div onClick={handleDriver} className={styles.item}>
           <p>ስልጠና መመዝገቢያ</p>
         </div>
-        <div className={styles.item}>
+        <div onClick={handleDriver} className={styles.item}>
           <p>ስልጠና መመዝገቢያ</p>
         </div>
       </div>

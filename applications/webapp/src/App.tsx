@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import AboutUs from "./views/AboutUs";
 import HomePage from "./views/HomePage";
 import ForgotPassword from "./views/ForgetPassword";
@@ -27,8 +27,9 @@ function App() {
           }
         ></Route>
         <Route path="/signup" element={<Signup />}></Route>
+        <Route index element={<Navigate replace to="drivers" />} />
         <Route
-          path="/app"
+          path="drivers"
           element={
             <ProtectedRoute
               isAuthenticated={isAuthenticated}
@@ -37,12 +38,24 @@ function App() {
               <AppLayout />
             </ProtectedRoute>
           }
-        ></Route>
-        <Route path="/driverprofile" element={<DriverProfile />} />
-        <Route path="*" element={<NotFound />} />
+        />
+        <Route
+          path="drivers/:id"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              setIsAuthenticated={setIsAuthenticated}
+            >
+              <DriverProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="vehicles" element={<AppLayout />} />
+        <Route path="vehicles/:id" element={<DriverProfile />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verify/:token" element={<Verify />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

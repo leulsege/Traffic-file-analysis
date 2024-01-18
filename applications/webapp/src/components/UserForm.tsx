@@ -3,14 +3,12 @@ import styles from "./UserForm.module.css";
 import { useState } from "react";
 
 function UserForm({ driver }) {
-  // PRE-FILL FOR DEV PURPOSES
   const [licenseLevel, setLicenseLevel] = useState(driver.licenseLevel);
-  const [firstName, setFirstName] = useState(driver.firstName);
-  const [lastName, setLastName] = useState(driver.lastName);
+  const [fullName, setFullName] = useState(driver.name);
   const [licenseNumber, setLicenseNumber] = useState(driver.licenseNumber);
   const [idNumber, setIdNumber] = useState(driver.idNumber);
   const [phoneNumber, setPhoneNumber] = useState(driver.phoneNumber);
-  const [PlateNumber, setPlateNumber] = useState(driver.vehicle.plateNumber);
+  const [PlateNumber, setPlateNumber] = useState(driver.vehicle[0].plateNumber);
   return (
     <main className={styles.login}>
       <form className={styles.form}>
@@ -18,20 +16,9 @@ function UserForm({ driver }) {
           <label htmlFor="text">First Name</label>
           <input
             type="text"
-            id="firstName"
-            onChange={(e) => setFirstName(e.target.value)}
-            value={firstName}
-            required
-          />
-        </div>
-
-        <div className={styles.row}>
-          <label htmlFor="text">Last Name</label>
-          <input
-            type="text"
-            id="lastName"
-            onChange={(e) => setLastName(e.target.value)}
-            value={lastName}
+            id="fullName"
+            onChange={(e) => setFullName(e.target.value)}
+            value={fullName}
             required
           />
         </div>

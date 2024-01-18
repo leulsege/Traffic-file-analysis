@@ -1,61 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./DriverProfile.module.css";
 import UserForm from "../components/UserForm";
-
-const driver = {
-  status: "success",
-  data: {
-    driver: {
-      photo: null,
-      _id: "6597068f1e689e5864529829",
-      firstName: "Daniel",
-      lastName: "Kim",
-      phoneNumber: "0962626212",
-      licenseLevel: "Class A",
-      licenseNumber: "ABC789",
-      licenseExpiredDate: "2022-08-14T00:00:00.000Z",
-      gender: "Male",
-      commencementDate: "2019-11-10T00:00:00.000Z",
-      age: 33,
-      idNumber: "567890234",
-      __v: 0,
-      vehicle: [
-        {
-          _id: "6597200fddd2d5c29a602a9e",
-          vehicleType: "Moped",
-          PlateNumber: 123,
-          MoterNumber: 456,
-          chanciNumber: 789,
-          sideNumber: 191,
-          pmServiceTime: 14000,
-          bmServiceTime: 28000,
-          startingPoint: "City Z",
-          destination: "City A",
-          stayingPlace: "City B",
-          history: [],
-        },
-      ],
-      faultRecord: [],
-      id: "6597068f1e689e5864529829",
-    },
-  },
-};
-
-const driverinf = driver.data.driver;
+import { useParams } from "react-router-dom";
+import Spinner from "../components/Spinner";
 
 function DriverProfile() {
+  const [driver, setDriver] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
+  const driverId = useParams();
+  useEffect(function () {
+    async function fetchDriver() {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_API}/drivers/${driverId.id}`,
+          {
+            credentials: "include",
+          }
+        );
+        if (response.ok) {
+          const driverInfo = await response.json();
+          setDriver(driverInfo.data.driver);
+        } else {
+          const errorData = await response.json();
+          console.log(errorData);
+        }
+      } catch (error) {
+        console.error("Error fetching driver:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchDriver();
+  }, []);
+
+  if (isLoading) return <Spinner />;
+
   return (
     <>
       <main className={styles.container}>
         <div className={styles.imgholder}>
-          <img src="driver.jpg" className={styles.driverImg} />
-          <p className={styles.name}>
-            {driverinf.firstName} {driverinf.lastName}
-          </p>
-          <p className={styles.phoneNumber}>{driverinf.phoneNumber}</p>
+          <img
+            src={
+              driver.photo
+                ? `http://localhost:8000/img/drivers/${driver.photo}`
+                : "/default-user-profile.jpg"
+            }
+            className={styles.driverImg}
+          />
+          <p className={styles.name}>{driver.name}</p>
+          <p className={styles.phoneNumber}>{driver.phoneNumber}</p>
         </div>
         <div className={styles.profileSettings}>
-          <UserForm driver={driverinf} />
+          <UserForm driver={driver} />
         </div>
         <div>Another User Details</div>
       </main>
