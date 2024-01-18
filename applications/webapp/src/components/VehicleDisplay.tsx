@@ -29,7 +29,7 @@ function Display({ vehicles, isLoading }) {
       ) : (
         <div className={styles.display}>
           <button className={styles.buttonAdd} onClick={handleAddDriversClick}>
-            Add Drivers
+            Add Vehicle
           </button>
           <VehicleList vehicles={vehicles} isLoading={isLoading} />
 
