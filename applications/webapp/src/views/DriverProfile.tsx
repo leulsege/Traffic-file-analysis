@@ -7,8 +7,8 @@ import Spinner from "../components/Spinner";
 function DriverProfile() {
   const [driver, setDriver] = useState();
   const [isLoading, setIsLoading] = useState(true);
-
   const driverId = useParams();
+
   useEffect(function () {
     async function fetchDriver() {
       try {
@@ -52,7 +52,7 @@ function DriverProfile() {
           <p className={styles.phoneNumber}>{driver.phoneNumber}</p>
         </div>
         <div className={styles.profileSettings}>
-          <UserForm driver={driver} />
+          <UserForm driver={driver} setDriver={setDriver} />
         </div>
         <div>Another User Details</div>
       </main>

@@ -7,54 +7,49 @@ interface FaultRecord {
 }
 
 interface Driver extends Document {
-  name: string
+  fullName: string
   licenseLevel: string
   licenseNumber: string
   licenseExpiredDate: Date
   gender: string
+  phoneNumber: string
   commencementDate: Date
   age: number
   idNumber: string
-  startingPoint: string
-  destination: string
-  stayingPlace: string
+  birthDate: Date
   photo?: string | null
 }
 
 const driverSchema = new Schema<Driver>(
   {
-    name: {
+    fullName: {
       type: String,
       required: true,
     },
     licenseLevel: {
       type: String,
-      required: true,
     },
     licenseNumber: {
       type: String,
-      required: true,
       unique: true,
     },
     licenseExpiredDate: {
       type: Date,
-      required: true,
     },
     gender: {
       type: String,
-      required: true,
+    },
+    phoneNumber: {
+      type: String,
     },
     commencementDate: {
       type: Date,
-      required: true,
     },
-    age: {
-      type: Number,
-      required: true,
+    birthDate: {
+      type: Date,
     },
     idNumber: {
       type: String,
-      required: true,
       unique: true,
     },
     photo: {
