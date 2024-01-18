@@ -1,6 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./UserForm.module.css";
 import { useState } from "react";
+import { useStepContext } from "@mui/material";
 import Spinner from "./Spinner";
 
 function UserForm({ driver, setDriver }) {
@@ -12,7 +13,12 @@ function UserForm({ driver, setDriver }) {
     driver.licenseExpiredDate
   );
   const [idNumber, setIdNumber] = useState(driver.idNumber);
+  const [birthDate, setBirthDate] = useState(driver.birthDate);
   const [phoneNumber, setPhoneNumber] = useState(driver.phoneNumber);
+  const [gender, setGender] = useState(driver.gender);
+  const [licenseExpiredDate, setlicenseExpiredDate] = useState(
+    driver.licenseExpiredDate
+  );
   const [PlateNumber, setPlateNumber] = useState(driver.vehicle[0].plateNumber);
 
   const driverId = useParams();
@@ -83,7 +89,6 @@ function UserForm({ driver, setDriver }) {
             required
           />
         </div>
-
         <div className={styles.row}>
           <label htmlFor="number">Phone Number</label>
           <input
@@ -101,6 +106,17 @@ function UserForm({ driver, setDriver }) {
             id="gender"
             onChange={(e) => setGender(e.target.value)}
             value={gender}
+            required
+          />
+        </div>
+        <div className={styles.row}>
+          <label htmlFor="text">BirthDate</label>
+          <input
+            type="date"
+            id="birthDate"
+            onChange={(e) => setBirthDate(e.target.value)}
+            value={birthDate}
+            required
           />
         </div>
 

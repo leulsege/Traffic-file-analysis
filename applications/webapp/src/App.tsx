@@ -11,6 +11,7 @@ import { useState } from "react";
 import ProtectedRoute from "./views/ProtectedRoute";
 import DriverProfile from "./views/DriverProfile";
 import NotFound from "./components/NotFound";
+import VehiclesApplayout from "./views/VehiclesApplayout";
 
 function App() {
   const [user, setUser] = useState();

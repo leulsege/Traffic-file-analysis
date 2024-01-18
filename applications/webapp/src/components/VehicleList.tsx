@@ -1,0 +1,29 @@
+// driversList.jsx
+
+import Spinner from "./Spinner";
+import styles from "./driversList.module.css";
+import Vehicle from "./Vehicle";
+
+function DriversList({ vehicles, isLoading }) {
+  if (isLoading) return <Spinner />;
+
+  return (
+    <>
+      <div className={styles.container}>
+        <h1 className={styles.title}>Vehicles List</h1>
+      </div>
+      <div className={styles.driverList}>
+        {vehicles.map((vehicle) => {
+          if (!vehicle._id) {
+            console.error("Vehicle id is missing:", vehicle);
+            return null;
+          }
+
+          return <Vehicle key={vehicle._id} vehicle={vehicle} />;
+        })}
+      </div>
+    </>
+  );
+}
+
+export default DriversList;
