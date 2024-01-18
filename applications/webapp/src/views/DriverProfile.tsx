@@ -3,6 +3,9 @@ import styles from "./DriverProfile.module.css";
 import UserForm from "../components/UserForm";
 import { useParams } from "react-router-dom";
 import Spinner from "../components/Spinner";
+import AccidentForm from "../components/AccidentForm";
+import AccidentTrack from "../components/accidentTrack";
+import PhotoUpload from "../components/photoUpload";
 
 function DriverProfile() {
   const [driver, setDriver] = useState();
@@ -34,6 +37,12 @@ function DriverProfile() {
     fetchDriver();
   }, []);
 
+  const [showAccidentForm, setShowAccidentForm] = useState(false);
+
+  const toggleAccidentForm = () => {
+    setShowAccidentForm(!showAccidentForm);
+  };
+
   if (isLoading) return <Spinner />;
 
   return (
@@ -50,13 +59,25 @@ function DriverProfile() {
             }
             className={styles.driverImg}
           />
+          <PhotoUpload />
           <p className={styles.name}>{driver.name}</p>
           <p className={styles.phoneNumber}>{driver.phoneNumber}</p>
         </div>
         <div className={styles.profileSettings}>
           <UserForm driver={driver} setDriver={setDriver} />
         </div>
-        <div>Another User Details</div>
+        <div>
+          {showAccidentForm ? (
+            <AccidentForm onCancel={toggleAccidentForm} />
+          ) : (
+            <>
+              <button onClick={toggleAccidentForm} className={styles.addButton}>
+                Add Accident
+              </button>
+              <AccidentTrack />
+            </>
+          )}
+        </div>
       </main>
     </>
   );

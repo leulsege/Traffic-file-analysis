@@ -15,10 +15,6 @@ function UserForm({ driver, setDriver }) {
   const [idNumber, setIdNumber] = useState(driver.idNumber);
   const [birthDate, setBirthDate] = useState(driver.birthDate);
   const [phoneNumber, setPhoneNumber] = useState(driver.phoneNumber);
-  const [gender, setGender] = useState(driver.gender);
-  const [licenseExpiredDate, setlicenseExpiredDate] = useState(
-    driver.licenseExpiredDate
-  );
   const [PlateNumber, setPlateNumber] = useState(driver.vehicle[0].plateNumber);
 
   const driverId = useParams();
