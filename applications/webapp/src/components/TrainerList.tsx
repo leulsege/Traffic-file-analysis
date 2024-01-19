@@ -2,9 +2,9 @@
 
 import Spinner from "./Spinner";
 import styles from "./driversList.module.css";
-import Vehicle from "./Vehicle";
+import Trainer from "./Trainer";
 
-function VehicleList({ vehicles, isLoading }) {
+function TrainerList({ trainers, isLoading }) {
   if (isLoading) return <Spinner />;
 
   return (
@@ -13,17 +13,17 @@ function VehicleList({ vehicles, isLoading }) {
         <h1 className={styles.title}>Vehicles List</h1>
       </div>
       <div className={styles.driverList}>
-        {vehicles.map((vehicle) => {
-          if (!vehicle._id) {
-            console.error("Vehicle id is missing:", vehicle);
+        {trainers.map((trainer) => {
+          if (!trainer._id) {
+            console.error("Vehicle id is missing:", trainer);
             return null;
           }
 
-          return <Vehicle key={vehicle._id} vehicle={vehicle} />;
+          return <Trainer key={trainer.id} trainer={trainer} />;
         })}
       </div>
     </>
   );
 }
 
-export default VehicleList;
+export default TrainerList;
