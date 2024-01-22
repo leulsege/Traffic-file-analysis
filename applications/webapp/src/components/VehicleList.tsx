@@ -1,7 +1,7 @@
 // driversList.jsx
 
 import Spinner from "./Spinner";
-import styles from "./driversList.module.css";
+import styles from "./DriversList.module.css";
 import Vehicle from "./Vehicle";
 
 function DriversList({ vehicles, isLoading }) {

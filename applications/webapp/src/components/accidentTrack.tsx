@@ -5,7 +5,7 @@ function accidentTrack() {
     <div className={styles.accidentTrack}>
       <img
         className={styles.accidentImg}
-        src="accident.png"
+        src="/accident.png"
         alt="accident picture"
       />
       <div className={styles.accidentContent}>

@@ -2,11 +2,11 @@ import mongoose, { Schema, Document, Query, Types } from 'mongoose'
 import DriverModel from './driverModel'
 
 interface Vehicle extends Document {
-  vehicleType: String
-  plateNumber: Number
-  moterNumber: Number
-  chanciNumber: Number
-  sideNumber: Number
+  vehicleType: string
+  plateNumber: string
+  moterNumber: string
+  chanciNumber: string
+  sideNumber: string
   pmServiceTime: Number
   bmServiceTime: Number
   others: String
@@ -24,19 +24,19 @@ const vehicleSchema: Schema = new mongoose.Schema({
     required: true,
   },
   plateNumber: {
-    type: Number,
+    type: String,
     required: true,
   },
   moterNumber: {
-    type: Number,
+    type: String,
     required: true,
   },
   chanciNumber: {
-    type: Number,
+    type: String,
     required: true,
   },
   sideNumber: {
-    type: Number,
+    type: String,
     required: true,
   },
   pmServiceTime: {
@@ -50,50 +50,13 @@ const vehicleSchema: Schema = new mongoose.Schema({
   others: {
     type: String,
   },
-  startingPoint: {
-    type: String,
-    required: true,
-  },
-  destination: {
-    type: String,
-    required: true,
-  },
-  stayingPlace: {
-    type: String,
-    required: true,
-  },
-  driver: {
-    type: Schema.Types.ObjectId,
-    ref: 'Driver',
-    default: null,
-  },
-  history: [
-    {
-      date: {
-        type: Date,
-        default: Date.now,
-      },
-      driver: {
-        type: Schema.Types.ObjectId,
-        ref: 'Driver',
-        default: null,
-      },
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        default: null,
-      },
-    },
-  ],
 })
 
-vehicleSchema.pre(
-  /^find/,
-  function (this: Query<Vehicle[], Vehicle, unknown>, next) {
-    this.populate('driver').populate('history.driver').populate('history.user')
-    next()
-  },
-)
+vehicleSchema.virtual('driver', {
+  ref: 'Driver',
+  foreignField: 'vehicle',
+  localField: '_id',
+})
 
 const VehicleModel = mongoose.model<Vehicle>('Vehicle', vehicleSchema)
 

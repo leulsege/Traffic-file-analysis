@@ -1,24 +1,92 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Form.module.css";
 import { useState } from "react";
 
 function Form() {
-  // PRE-FILL FOR DEV PURPOSES
-  const [licenseLevel, setLicenseLevel] = useState("");
-  const [name, setName] = useState("");
-  const [licenseNumber, setLicenseNumber] = useState("");
-  const [idNumber, setIdNumber] = useState("");
+  const [fullName, setFullName] = useState();
+  const [gender, setGender] = useState();
+  const [licenseLevel, setLicenseLevel] = useState();
+  const [licenseNumber, setLicenseNumber] = useState();
+  const [licenseExpiredDate, setLicenseExpiredDate] = useState();
+  const [idNumber, setIdNumber] = useState();
+  const [birthDate, setBirthDate] = useState();
+  const [phoneNumber, setPhoneNumber] = useState();
+  const [plateNumber, setPlateNumber] = useState();
+
+  const navigate = useNavigate();
+
+  async function handleCreate() {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API}/drivers`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            fullName,
+            phoneNumber,
+            gender,
+            licenseLevel,
+            licenseNumber,
+            licenseExpiredDate,
+            idNumber,
+            plateNumber,
+          }),
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        navigate("/drivers");
+      } else {
+        const errorData = await response.json();
+        console.log(errorData);
+      }
+    } catch (error) {
+      console.error("Error fetching driver:", error);
+    }
+  }
 
   return (
     <main className={styles.login}>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
         <div className={styles.row}>
-          <label htmlFor="text">Name</label>
+          <label htmlFor="text">Full Name</label>
           <input
             type="text"
-            id="name"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
+            id="fullName"
+            onChange={(e) => setFullName(e.target.value)}
+            value={fullName}
+            required
+          />
+        </div>
+        <div className={styles.row}>
+          <label htmlFor="number">Phone Number</label>
+          <input
+            type="tel"
+            id="phoneNumber"
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            value={phoneNumber}
+            required
+          />
+        </div>
+
+        <div className={styles.row}>
+          <label htmlFor="text">Gender</label>
+          <input
+            type="text"
+            id="gender"
+            onChange={(e) => setGender(e.target.value)}
+            value={gender}
+            required
+          />
+        </div>
+        <div className={styles.row}>
+          <label htmlFor="text">BirthDate</label>
+          <input
+            type="date"
+            id="birthDate"
+            onChange={(e) => setBirthDate(e.target.value)}
+            value={birthDate}
             required
           />
         </div>
@@ -44,6 +112,16 @@ function Form() {
         </div>
 
         <div className={styles.row}>
+          <label htmlFor="number">License Expired Date</label>
+          <input
+            type="Date"
+            id="licenseExpiredDate"
+            onChange={(e) => setLicenseExpiredDate(e.target.value)}
+            value={licenseExpiredDate}
+          />
+        </div>
+
+        <div className={styles.row}>
           <label htmlFor="text">id Number</label>
           <input
             type="text"
@@ -53,8 +131,20 @@ function Form() {
           />
         </div>
 
+        <div className={styles.row}>
+          <label htmlFor="number">Vehicle plate Number</label>
+          <input
+            type="text"
+            id="plateNumber"
+            onChange={(e) => setPlateNumber(e.target.value)}
+            value={plateNumber}
+          />
+        </div>
+
         <div>
-          <Link className={styles.ctaLink}>Add Driver</Link>
+          <button className={styles.crtbtn} onClick={handleCreate}>
+            Add Driver
+          </button>
         </div>
       </form>
     </main>

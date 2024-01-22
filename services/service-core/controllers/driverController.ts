@@ -5,6 +5,7 @@ import DriverModel from '../models/driverModel'
 import { Request, Response, NextFunction } from 'express'
 import APIFeatures from '../utils/apiFeatures'
 import AppError from '../utils/appError'
+import VehicleModel from '../models/vehicleModel'
 
 const multerStorage = multer.memoryStorage()
 
@@ -72,9 +73,6 @@ export const getAllDrivers = asyncError(
 
     const drivers = await features.query
 
-    const searchString = 'eth'
-    const regex = new RegExp(`^${searchString}`, 'i')
-
     res.status(200).json({
       status: 'success',
       results: drivers.length,
@@ -88,10 +86,6 @@ export const getAllDrivers = asyncError(
 export const getDriver = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const driver = await DriverModel.findById(req.params.id)
-      .populate({
-        path: 'vehicle',
-        select: '-driver -__v',
-      })
       .populate({
         path: 'faultRecord',
         select: '-driver -__v',
@@ -113,6 +107,10 @@ export const getDriver = asyncError(
 export const updateDriver = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     if (req.file) req.body.photo = req.file.filename
+    if (req.body.vehicle) {
+      const vehicle = await VehicleModel.find({ plateNumber: req.body.vehicle })
+      req.body.vehicle = (vehicle as any)._id
+    }
     const updateDriver = await DriverModel.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -122,7 +120,7 @@ export const updateDriver = asyncError(
       },
     )
       .populate({
-        path: 'vehicle',
+        path: 'faultRecord',
         select: '-driver -__v',
       })
       .populate({

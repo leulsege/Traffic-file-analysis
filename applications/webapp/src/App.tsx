@@ -11,6 +11,8 @@ import { useState } from "react";
 import ProtectedRoute from "./views/ProtectedRoute";
 import DriverProfile from "./views/DriverProfile";
 import NotFound from "./components/NotFound";
+import VehiclesAppLayout from "./views/VehiclesApplayout";
+import VehicleProfile from "./views/VehicleProfile";
 
 function App() {
   const [user, setUser] = useState();
@@ -50,8 +52,8 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="vehicles" element={<AppLayout />} />
-        <Route path="vehicles/:id" element={<DriverProfile />} />
+        <Route path="/vehicles" element={<VehiclesAppLayout />} />
+        <Route path="/vehicles/:id" element={<VehicleProfile />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verify/:token" element={<Verify />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />

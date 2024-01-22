@@ -26,7 +26,7 @@ export default function AppLayout() {
           console.log(errorData);
         }
       } catch (error) {
-        console.error("Login error:", error);
+        console.error("Error fetching driver:", error);
       }
     }
     fetchDrivers();

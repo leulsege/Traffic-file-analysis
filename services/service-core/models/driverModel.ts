@@ -18,6 +18,7 @@ interface Driver extends Document {
   idNumber: string
   birthDate: Date
   photo?: string | null
+  vehicle?: Schema.Types.ObjectId | null
 }
 
 const driverSchema = new Schema<Driver>(
@@ -56,18 +57,17 @@ const driverSchema = new Schema<Driver>(
       type: String,
       default: null,
     },
+    vehicle: {
+      type: Schema.Types.ObjectId,
+      ref: 'Vehicle',
+      default: null,
+    },
   },
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
   },
 )
-
-driverSchema.virtual('vehicle', {
-  ref: 'Vehicle',
-  foreignField: 'driver',
-  localField: '_id',
-})
 
 driverSchema.virtual('faultRecord', {
   ref: 'FaultRecord',
@@ -80,6 +80,14 @@ driverSchema.virtual('accidentRecord', {
   foreignField: 'driver',
   localField: '_id',
 })
+
+driverSchema.pre(
+  /^find/,
+  function (this: Query<Driver[], Driver, unknown>, next) {
+    this.populate('vehicle')
+    next()
+  },
+)
 const DriverModel = mongoose.model<Driver>('Driver', driverSchema)
 
 export default DriverModel

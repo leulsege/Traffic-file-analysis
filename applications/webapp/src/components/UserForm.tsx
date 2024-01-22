@@ -15,7 +15,7 @@ function UserForm({ driver, setDriver }) {
   const [idNumber, setIdNumber] = useState(driver.idNumber);
   const [birthDate, setBirthDate] = useState(driver.birthDate);
   const [phoneNumber, setPhoneNumber] = useState(driver.phoneNumber);
-  const [PlateNumber, setPlateNumber] = useState(driver.vehicle[0].plateNumber);
+  const [plateNumber, setPlateNumber] = useState(driver.vehicle?.plateNumber);
 
   const driverId = useParams();
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ function UserForm({ driver, setDriver }) {
             licenseNumber,
             licenseExpiredDate,
             idNumber,
-            PlateNumber,
+            plateNumber,
           }),
           credentials: "include",
         }
@@ -92,6 +92,7 @@ function UserForm({ driver, setDriver }) {
             id="phoneNumber"
             onChange={(e) => setPhoneNumber(e.target.value)}
             value={phoneNumber}
+            required
           />
         </div>
 
@@ -162,7 +163,7 @@ function UserForm({ driver, setDriver }) {
             type="text"
             id="plateNumber"
             onChange={(e) => setPlateNumber(e.target.value)}
-            value={PlateNumber}
+            value={plateNumber}
           />
         </div>
 
