@@ -11,6 +11,7 @@ import NotFound from "./components/NotFound";
 import { useState } from "react";
 import VehiclesApplayout from "./views/VehiclesApplayout";
 import TrainingAppLayout from "./views/TrainingAppLayout";
+import TrainerProfile from "./views/TrainerProfile";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/app" element={<AppLayout />}></Route>
         <Route path="/driverprofile" element={<DriverProfile />} />
+        <Route path="/trainerprofile" element={<TrainerProfile />} />
         <Route path="/vehicles" element={<VehiclesApplayout />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/training" element={<TrainingAppLayout />} />
