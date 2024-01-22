@@ -3,7 +3,7 @@
 import VehicleList from "./VehicleList";
 import styles from "./Display.module.css";
 import { useState } from "react";
-import Form from "../components/Form";
+import TrainersForm from "./TrainersForm";
 import TrainerList from "./TrainerList";
 
 function TrainersDisplay({ trainers, isLoading }) {
@@ -24,7 +24,7 @@ function TrainersDisplay({ trainers, isLoading }) {
           <button className={styles.back} onClick={handleBack}>
             Back
           </button>
-          <Form />
+          <TrainersForm />
         </div>
       ) : (
         <div className={styles.display}>
