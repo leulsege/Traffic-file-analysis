@@ -68,9 +68,14 @@ function DriverProfile() {
         <div className={styles.profileSettings}>
           <UserForm driver={driverinf} />
         </div>
-        <div>
+        <div className={styles.formHolder}>
           {showAccidentForm ? (
-            <AccidentForm onCancel={toggleAccidentForm} />
+            <>
+              <button onClick={toggleAccidentForm} className={styles.addButton}>
+                Back
+              </button>
+              <AccidentForm onCancel={toggleAccidentForm} />
+            </>
           ) : (
             <>
               <button onClick={toggleAccidentForm} className={styles.addButton}>
