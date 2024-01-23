@@ -49,18 +49,30 @@ function DriverProfile() {
     <>
       <main className={styles.container}>
         <div className={styles.imgholder}>
-          <img
-            src={
-              driver.photo
-                ? `${import.meta.env.VITE_BACKEND_STATIC_FILE}/img/drivers/${
-                    driver.photo
-                  }`
-                : "/default-user-profile.jpg"
+          <a
+            href={
+              driver.photo &&
+              `${import.meta.env.VITE_BACKEND_STATIC_FILE}/img/drivers/${
+                driver.photo
+              }`
             }
-            className={styles.driverImg}
+          >
+            <img
+              src={
+                driver.photo
+                  ? `${import.meta.env.VITE_BACKEND_STATIC_FILE}/img/drivers/${
+                      driver.photo
+                    }`
+                  : "/default-user-profile.jpg"
+              }
+              className={styles.driverImg}
+            />
+          </a>
+          <PhotoUpload
+            url={`drivers/uploadphoto/${driverId.id}`}
+            setProfile={setDriver}
           />
-          <PhotoUpload />
-          <p className={styles.name}>{driver.name}</p>
+          <p className={styles.name}>{driver.fullName}</p>
           <p className={styles.phoneNumber}>{driver.phoneNumber}</p>
         </div>
         <div className={styles.profileSettings}>

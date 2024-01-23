@@ -36,7 +36,9 @@ function Form() {
         }
       );
       if (response.ok) {
-        navigate("/drivers");
+        const driver = await response.json();
+        console.log(driver);
+        navigate(`/drivers/${driver.data.driver}`);
       } else {
         const errorData = await response.json();
         console.log(errorData);

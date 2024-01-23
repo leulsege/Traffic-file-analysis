@@ -7,7 +7,6 @@ import Form from "../components/Form";
 
 function Display({ drivers, isLoading }) {
   const [isFormVisible, setIsFormVisible] = useState(false);
-  console.log(isFormVisible);
 
   function handleAddDriversClick() {
     setIsFormVisible(true);

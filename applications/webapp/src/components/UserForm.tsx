@@ -5,17 +5,17 @@ import { useStepContext } from "@mui/material";
 import Spinner from "./Spinner";
 
 function UserForm({ driver, setDriver }) {
-  const [fullName, setFullName] = useState(driver.name);
+  const [fullName, setFullName] = useState(driver.fullName);
   const [gender, setGender] = useState(driver.gender);
   const [licenseLevel, setLicenseLevel] = useState(driver.licenseLevel);
   const [licenseNumber, setLicenseNumber] = useState(driver.licenseNumber);
   const [licenseExpiredDate, setLicenseExpiredDate] = useState(
-    driver.licenseExpiredDate
+    driver.licenseExpiredDate?.split("T")[0]
   );
   const [idNumber, setIdNumber] = useState(driver.idNumber);
-  const [birthDate, setBirthDate] = useState(driver.birthDate);
+  const [birthDate, setBirthDate] = useState(driver.birthDate?.split("T")[0]);
   const [phoneNumber, setPhoneNumber] = useState(driver.phoneNumber);
-  const [plateNumber, setPlateNumber] = useState(driver.vehicle?.plateNumber);
+  const [vehicle, setVehicle] = useState(driver.vehicle?.plateNumber);
 
   const driverId = useParams();
   const navigate = useNavigate();
@@ -31,11 +31,12 @@ function UserForm({ driver, setDriver }) {
             fullName,
             phoneNumber,
             gender,
+            birthDate,
             licenseLevel,
             licenseNumber,
             licenseExpiredDate,
             idNumber,
-            plateNumber,
+            vehicle,
           }),
           credentials: "include",
         }
@@ -161,9 +162,9 @@ function UserForm({ driver, setDriver }) {
           <label htmlFor="number">Vehicle plate Number</label>
           <input
             type="text"
-            id="plateNumber"
-            onChange={(e) => setPlateNumber(e.target.value)}
-            value={plateNumber}
+            id="vehicle"
+            onChange={(e) => setVehicle(e.target.value)}
+            value={vehicle}
           />
         </div>
 

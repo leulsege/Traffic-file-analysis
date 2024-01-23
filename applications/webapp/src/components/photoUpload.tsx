@@ -2,16 +2,45 @@
 import React, { useState } from "react";
 import styles from "./PhotoUpload.module.css";
 
-function PhotoUpload() {
-  const [selectedFile, setSelectedFile] = useState(null);
+function PhotoUpload({ url, setProfile }) {
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    setSelectedFile(file);
+    setSelectedImage(file);
+    console.log(selectedImage);
   };
 
-  const handleUpload = () => {
-    // Your upload logic here
+  const handleUpload = async () => {
+    if (!selectedImage) {
+      alert("Please select an image before uploading.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("photo", selectedImage);
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API}/${url}`,
+        {
+          method: "PATCH",
+          body: formData,
+          credentials: "include",
+        }
+      );
+
+      if (response.ok) {
+        const driverInfo = await response.json();
+        setProfile(driverInfo.data.driver);
+      } else {
+        const errorData = await response.json();
+        console.log(errorData);
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      alert("Error uploading image. Please try again.");
+    }
   };
 
   return (

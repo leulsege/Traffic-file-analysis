@@ -20,7 +20,7 @@ function Driver({ driver }) {
             : "/default-user-profile.jpg"
         }
       />
-      <span className={styles.name}>{driver.name}</span>
+      <span className={styles.name}>{driver.fullName}</span>
     </div>
   );
 }

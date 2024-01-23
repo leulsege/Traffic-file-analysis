@@ -52,6 +52,12 @@ export const resizeUserPhoto = asyncError(
 
 export const createDriver = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    if (req.body.vehicle) {
+      const vehicle = await VehicleModel.findOne({
+        plateNumber: req.body.vehicle,
+      })
+      req.body.vehicle = (vehicle as any)._id
+    }
     const newDriver = await DriverModel.create(req.body)
 
     res.status(201).json({
@@ -108,8 +114,12 @@ export const updateDriver = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     if (req.file) req.body.photo = req.file.filename
     if (req.body.vehicle) {
-      const vehicle = await VehicleModel.find({ plateNumber: req.body.vehicle })
-      req.body.vehicle = (vehicle as any)._id
+      const vehicle = await VehicleModel.findOne({
+        plateNumber: req.body.vehicle,
+      })
+      if (!vehicle)
+        new AppError('there is no vehicle with this PlateNumber', 404)
+      req.body.vehicle = (vehicle as any)?._id
     }
     const updateDriver = await DriverModel.findByIdAndUpdate(
       req.params.id,

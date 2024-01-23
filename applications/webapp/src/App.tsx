@@ -52,8 +52,28 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/vehicles" element={<VehiclesAppLayout />} />
-        <Route path="/vehicles/:id" element={<VehicleProfile />} />
+        <Route
+          path="/vehicles"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              setIsAuthenticated={setIsAuthenticated}
+            >
+              <VehiclesAppLayout />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/vehicles/:id"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              setIsAuthenticated={setIsAuthenticated}
+            >
+              <VehicleProfile />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verify/:token" element={<Verify />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />

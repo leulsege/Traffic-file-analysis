@@ -10,7 +10,7 @@ function Vehicles({ vehicle }) {
   return (
     <div className={styles.container} onClick={handleVehicle}>
       <img className={styles.driverImg} src="/vehicle.jpg" />
-      <span className={styles.name}>{vehicle.PlateNumber}</span>
+      <span className={styles.name}>{vehicle.plateNumber}</span>
     </div>
   );
 }

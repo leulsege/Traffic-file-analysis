@@ -1,13 +1,12 @@
 // Display.jsx
 
 import VehicleList from "./VehicleList";
-import styles from "./Display.module.css";
+import styles from "./VehiclesDisplay.module.css";
 import { useState } from "react";
 import Form from "../components/Form";
 
 function Display({ vehicles, isLoading }) {
   const [isFormVisible, setIsFormVisible] = useState(false);
-  console.log(isFormVisible);
 
   function handleAddDriversClick() {
     setIsFormVisible(true);
