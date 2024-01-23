@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "./AccidentForm.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function AccidentForm() {
   const [accidentDate, setAccidentDate] = useState("");
@@ -8,6 +8,22 @@ function AccidentForm() {
   const [damages, setDamages] = useState("");
   const [causes, setCauses] = useState("");
   const [guilty, setGuilty] = useState("");
+  const [damageEstimation, setDamageEstimation] = useState("");
+  const [insuranceSentDate, setInsuranceSentDate] = useState("");
+  const [excessLetterDate, setExcessLetterDate] = useState("");
+  const [maintenanceProcess, setMaintenanceProcess] = useState("");
+  const [preformDate, setPreformDate] = useState("");
+  const [paymentDateLetterNumber, setPaymentDateLetterNumber] = useState("");
+  const [paymentRequestLetterDate, setPaymentRequestLetterDate] = useState("");
+  const [givenPoint, setGivenPoint] = useState();
+  const [reducedPoint, setReducedPoint] = useState();
+  const [givenDecision, setGivenDecision] = useState();
+  const [currentPoint, setCurrentPoint] = useState(0);
+
+  useEffect(() => {
+    // Calculate the difference and update currentPoint when either givenPoint or reducedPoint changes
+    setCurrentPoint(givenPoint - reducedPoint);
+  }, [givenPoint, reducedPoint]);
 
   return (
     <main className={styles.login}>
@@ -62,6 +78,116 @@ function AccidentForm() {
             onChange={(e) => setGuilty(e.target.value)}
             value={guilty}
             required
+          />
+        </div>
+
+        <div className={styles.row}>
+          <label htmlFor="text">Damage Estimation</label>
+          <input
+            type="text"
+            id="damageEstimation"
+            onChange={(e) => setDamageEstimation(e.target.value)}
+            value={damageEstimation}
+          />
+        </div>
+
+        <div className={styles.row}>
+          <label htmlFor="text">Insurance Sent Date</label>
+          <input
+            type="date"
+            id="insuranceSentDate"
+            onChange={(e) => setInsuranceSentDate(e.target.value)}
+            value={insuranceSentDate}
+          />
+        </div>
+
+        <div className={styles.row}>
+          <label htmlFor="text">Excess Letter Date</label>
+          <input
+            type="date"
+            id="iexcessLetterDate"
+            onChange={(e) => setExcessLetterDate(e.target.value)}
+            value={excessLetterDate}
+          />
+        </div>
+
+        <div className={styles.row}>
+          <label htmlFor="text">Maintenance Process</label>
+          <input
+            type="texts"
+            id="maintenanceProcess"
+            onChange={(e) => setMaintenanceProcess(e.target.value)}
+            value={maintenanceProcess}
+          />
+        </div>
+
+        <div className={styles.row}>
+          <label htmlFor="text">Preform Date</label>
+          <input
+            type="date"
+            id="preform Date"
+            onChange={(e) => setPreformDate(e.target.value)}
+            value={preformDate}
+          />
+        </div>
+
+        <div className={styles.row}>
+          <label htmlFor="text">payment Date Letter Number</label>
+          <input
+            type="text"
+            id="paymentDateLetterNumber"
+            onChange={(e) => setPaymentDateLetterNumber(e.target.value)}
+            value={paymentDateLetterNumber}
+          />
+        </div>
+
+        <div className={styles.row}>
+          <label htmlFor="text">Payment Request Letter Date</label>
+          <input
+            type="text"
+            id="paymentRequestLetterDate"
+            onChange={(e) => setPaymentRequestLetterDate(e.target.value)}
+            value={paymentRequestLetterDate}
+          />
+        </div>
+
+        <div className={styles.row}>
+          <label htmlFor="Number">Given Point</label>
+          <input
+            type="Number"
+            id="givenPoint"
+            onChange={(e) => setGivenPoint(e.target.value)}
+            value={givenPoint}
+          />
+        </div>
+
+        <div className={styles.row}>
+          <label htmlFor="Number">Reduced Point</label>
+          <input
+            type="Number"
+            id="reducedPoint"
+            onChange={(e) => setReducedPoint(e.target.value)}
+            value={reducedPoint}
+          />
+        </div>
+
+        <div className={styles.row}>
+          <label htmlFor="Number">Current Point</label>
+          <input
+            type="number"
+            id="currentPoint"
+            value={currentPoint}
+            readOnly
+          />
+        </div>
+
+        <div className={styles.row}>
+          <label htmlFor="text">Given Decision</label>
+          <input
+            type="text"
+            id="givenDecision"
+            onChange={(e) => setGivenDecision(e.target.value)}
+            value={givenDecision}
           />
         </div>
 
