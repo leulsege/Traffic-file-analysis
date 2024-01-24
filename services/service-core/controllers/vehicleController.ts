@@ -1,7 +1,7 @@
+import { Request, Response, NextFunction } from 'express'
 import asyncError from '../utils/asyncError'
 import VehicleModel from '../models/vehicleModel'
-
-import { Request, Response, NextFunction } from 'express'
+import APIFeatures from '../utils/apiFeatures'
 
 export const createVehicle = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -18,7 +18,13 @@ export const createVehicle = asyncError(
 
 export const getAllVehicles = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const vehicles = await VehicleModel.find()
+    const features = new APIFeatures(VehicleModel.find(), req.query)
+      .filter()
+      .limitFields()
+      .paginate()
+      .sort()
+
+    const vehicles = await features.query
 
     res.status(200).json({
       status: 'success',

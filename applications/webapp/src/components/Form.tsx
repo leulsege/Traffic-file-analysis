@@ -11,7 +11,7 @@ function Form() {
   const [idNumber, setIdNumber] = useState();
   const [birthDate, setBirthDate] = useState();
   const [phoneNumber, setPhoneNumber] = useState();
-  const [plateNumber, setPlateNumber] = useState();
+  const [vehicle, setVehicle] = useState();
 
   const navigate = useNavigate();
 
@@ -26,11 +26,12 @@ function Form() {
             fullName,
             phoneNumber,
             gender,
+            birthDate,
             licenseLevel,
             licenseNumber,
             licenseExpiredDate,
             idNumber,
-            plateNumber,
+            vehicle,
           }),
           credentials: "include",
         }
@@ -38,7 +39,7 @@ function Form() {
       if (response.ok) {
         const driver = await response.json();
         console.log(driver);
-        navigate(`/drivers/${driver.data.driver}`);
+        navigate(`/drivers/${driver.data.driver._id}`);
       } else {
         const errorData = await response.json();
         console.log(errorData);
@@ -137,9 +138,9 @@ function Form() {
           <label htmlFor="number">Vehicle plate Number</label>
           <input
             type="text"
-            id="plateNumber"
-            onChange={(e) => setPlateNumber(e.target.value)}
-            value={plateNumber}
+            id="vehicle"
+            onChange={(e) => setVehicle(e.target.value)}
+            value={vehicle}
           />
         </div>
 

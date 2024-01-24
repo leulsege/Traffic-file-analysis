@@ -34,7 +34,7 @@ export default function VehiclesAppLayout() {
 
   return (
     <div className={styles.app}>
-      <Sidebar />
+      <Sidebar setVehicles={setVehicles} />
       {<VehiclesDisplay vehicles={vehicles} isLoading={isLoading} />}
     </div>
   );

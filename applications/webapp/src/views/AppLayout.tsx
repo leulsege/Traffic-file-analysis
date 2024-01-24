@@ -34,7 +34,7 @@ export default function AppLayout() {
 
   return (
     <div className={styles.app}>
-      <Sidebar />
+      <Sidebar setDrivers={setDrivers} />
       <Display drivers={drivers} isLoading={isLoading} />
     </div>
   );
