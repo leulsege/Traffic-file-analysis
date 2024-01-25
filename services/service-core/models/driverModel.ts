@@ -1,5 +1,6 @@
 import mongoose, { Document, Schema, Types, Query } from 'mongoose'
 import VehicleModel from './vehicleModel'
+import VehicleAccidentModel from './vehicleAccidentModel'
 
 interface FaultRecord {
   givenPoint: number
@@ -17,6 +18,7 @@ interface Driver extends Document {
   age: number
   idNumber: string
   birthDate: Date
+  givenPoint: number
   photo?: string | null
   vehicle?: Schema.Types.ObjectId | null
 }
@@ -53,6 +55,10 @@ const driverSchema = new Schema<Driver>(
       type: String,
       unique: true,
     },
+    givenPoint: {
+      type: Number,
+      required: true,
+    },
     photo: {
       type: String,
       default: null,
@@ -69,11 +75,35 @@ const driverSchema = new Schema<Driver>(
   },
 )
 
-driverSchema.virtual('faultRecord', {
-  ref: 'FaultRecord',
-  foreignField: 'driver',
-  localField: '_id',
+driverSchema.virtual('currentPoint').get(async function () {
+  try {
+    // Find all accidents related to this driver and calculate the sum of reduced points
+    const totalReducedPoints = await VehicleAccidentModel.aggregate([
+      {
+        $match: { driver: this._id },
+      },
+      {
+        $group: {
+          _id: null,
+          totalReducedPoints: { $sum: '$reducedPoint' },
+        },
+      },
+    ])
+    console.log(this.givenPoint - totalReducedPoints[0]?.totalReducedPoints)
+
+    // If there are accidents, subtract the total reduced points from the givenPoint
+    return this.givenPoint - (totalReducedPoints[0]?.totalReducedPoints || 0)
+  } catch (error) {
+    console.error('Error calculating currentPoint:', error)
+    return this.givenPoint // Return default givenPoint in case of an error
+  }
 })
+
+// driverSchema.virtual('faultRecord', {
+//   ref: 'FaultRecord',
+//   foreignField: 'driver',
+//   localField: '_id',
+// })
 
 driverSchema.virtual('accidentRecord', {
   ref: 'Accident',

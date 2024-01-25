@@ -91,25 +91,25 @@ export const getAllDrivers = asyncError(
 
 export const getDriver = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const driver = await DriverModel.findById(req.params.id)
-      .populate({
-        path: 'faultRecord',
-        select: '-driver -__v',
-      })
-      .populate({
-        path: 'accidentRecord',
-        select: '-driver -__v',
-      })
+    const driver = await DriverModel.findById(req.params.id).populate({
+      path: 'accidentRecord',
+      select: '-driver -__v',
+    })
+
+    // Await currentPoint calculation
+    const currentPoint = await (driver as any).currentPoint
 
     res.status(200).json({
       status: 'success',
       data: {
-        driver,
+        driver: {
+          ...driver.toJSON(),
+          currentPoint,
+        },
       },
     })
   },
 )
-
 export const updateDriver = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     if (req.file) req.body.photo = req.file.filename
@@ -128,20 +128,20 @@ export const updateDriver = asyncError(
         new: true,
         runValidators: true,
       },
-    )
-      .populate({
-        path: 'faultRecord',
-        select: '-driver -__v',
-      })
-      .populate({
-        path: 'faultRecord',
-        select: '-driver -__v',
-      })
+    ).populate({
+      path: 'faultRecord',
+      select: '-driver -__v',
+    })
+
+    const currentPoint = await (updateDriver as any).currentPoint
 
     res.status(200).json({
       status: 'success',
       data: {
-        driver: updateDriver,
+        driver: {
+          ...updateDriver.toJSON(),
+          currentPoint,
+        },
       },
     })
   },
