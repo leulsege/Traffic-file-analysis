@@ -12,6 +12,8 @@ import { useState } from "react";
 import VehiclesApplayout from "./views/VehiclesApplayout";
 import TrainingAppLayout from "./views/TrainingAppLayout";
 import TrainerProfile from "./views/TrainerProfile";
+import AccidentView from "./views/accidentView";
+import Approve from "./views/owner/approve";
 
 function App() {
   return (
@@ -24,7 +26,9 @@ function App() {
         <Route path="/app" element={<AppLayout />}></Route>
         <Route path="/driverprofile" element={<DriverProfile />} />
         <Route path="/trainerprofile" element={<TrainerProfile />} />
+        <Route path="/viewaccident" element={<AccidentView />} />
         <Route path="/vehicles" element={<VehiclesApplayout />} />
+        <Route path="/approveadmins" element={<Approve />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/training" element={<TrainingAppLayout />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
