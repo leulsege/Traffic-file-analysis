@@ -11,42 +11,113 @@ const driver = {
   status: "success",
   data: {
     driver: {
-      photo: null,
-      _id: "6597068f1e689e5864529829",
-      firstName: "Daniel",
-      lastName: "Kim",
-      phoneNumber: "0962626212",
+      _id: "65b1a919841ea75e78f986fb",
+      fullName: "John Doe",
       licenseLevel: "Class A",
-      licenseNumber: "ABC789",
-      licenseExpiredDate: "2022-08-14T00:00:00.000Z",
+      licenseNumber: "ABC123",
+      licenseExpiredDate: "2024-12-31T23:59:59.999Z",
       gender: "Male",
-      commencementDate: "2019-11-10T00:00:00.000Z",
-      age: 33,
-      idNumber: "567890234",
+      phoneNumber: "1234567890",
+      commencementDate: "2020-01-01T00:00:00.000Z",
+      birthDate: "1990-01-01T00:00:00.000Z",
+      idNumber: "123456789",
+      givenPoint: 10,
+      photo: null,
+      vehicle: {
+        _id: "65971e72ddd2d5c29a602a8c",
+        vehicleType: "Car",
+        MoterNumber: 456,
+        chanciNumber: "789",
+        sideNumber: "101",
+        pmServiceTime: 5001,
+        bmServiceTime: 10000,
+        others: "Additional informati",
+        startingPoint: "City A",
+        destination: "City B",
+        stayingPlace: "City C",
+        __v: 0,
+        moterNumber: "5768976",
+        plateNumber: "123",
+      },
       __v: 0,
-      vehicle: [
+      currentPoint: 4,
+      accidentRecord: [
         {
-          _id: "6597200fddd2d5c29a602a9e",
-          vehicleType: "Moped",
-          PlateNumber: 123,
-          MoterNumber: 456,
-          chanciNumber: 789,
-          sideNumber: 191,
-          pmServiceTime: 14000,
-          bmServiceTime: 28000,
-          startingPoint: "City Z",
-          destination: "City A",
-          stayingPlace: "City B",
-          history: [],
+          _id: "65b1aa8fd25d3e3b31bc1190",
+          accidentDate: "2023-01-15T12:30:00.000Z",
+          accidentPlace: "City Center",
+          damages: "Minor damages to the front bumper",
+          cause: "Traffic collision",
+          guilty: "Other driver",
+          damageEstimation: 1000,
+          insuranceSentDate: "2023-01-20T00:00:00.000Z",
+          excessLetterDate: "2023-01-25",
+          maintenanceProcess: "Body repair and paint",
+          preformDate: "2023-02-01T08:00:00.000Z",
+          paymentDateLetterNumber: "ABC123",
+          paymentRequestLetterDate: "2023-02-10T00:00:00.000Z",
+          reducedPoint: 2,
+          givenDecision: "Compensation granted",
+          photo: "accident.png",
+          vehicle: {
+            _id: "65971e72ddd2d5c29a602a8c",
+            vehicleType: "Car",
+            MoterNumber: 456,
+            chanciNumber: "789",
+            sideNumber: "101",
+            pmServiceTime: 5001,
+            bmServiceTime: 10000,
+            others: "Additional informati",
+            startingPoint: "City A",
+            destination: "City B",
+            stayingPlace: "City C",
+            __v: 0,
+            moterNumber: "5768976",
+            plateNumber: "123",
+          },
+        },
+        {
+          _id: "65b1bfd110be33f5278d7298",
+          accidentDate: "2023-01-15T12:30:00.000Z",
+          accidentPlace: "City Center",
+          damages: "Minor damages to the front bumper",
+          cause: "Traffic collision",
+          guilty: "Other driver",
+          damageEstimation: 1000,
+          insuranceSentDate: "2023-01-20T00:00:00.000Z",
+          excessLetterDate: "2023-01-25",
+          maintenanceProcess: "Body repair and paint",
+          preformDate: "2023-02-01T08:00:00.000Z",
+          paymentDateLetterNumber: "ABC123",
+          paymentRequestLetterDate: "2023-02-10T00:00:00.000Z",
+          reducedPoint: 4,
+          givenDecision: "Compensation granted",
+          photo: "accident.png",
+          vehicle: {
+            _id: "65971e72ddd2d5c29a602a8c",
+            vehicleType: "Car",
+            MoterNumber: 456,
+            chanciNumber: "789",
+            sideNumber: "101",
+            pmServiceTime: 5001,
+            bmServiceTime: 10000,
+            others: "Additional informati",
+            startingPoint: "City A",
+            destination: "City B",
+            stayingPlace: "City C",
+            __v: 0,
+            moterNumber: "5768976",
+            plateNumber: "123",
+          },
         },
       ],
-      faultRecord: [],
-      id: "6597068f1e689e5864529829",
+      id: "65b1a919841ea75e78f986fb",
     },
   },
 };
 
 const driverinf = driver.data.driver;
+const accidents = driver.data.driver.accidentRecord;
 
 function DriverProfile() {
   const [showAccidentForm, setShowAccidentForm] = useState(false);
@@ -62,10 +133,13 @@ function DriverProfile() {
         <div className={styles.imgholder}>
           <img src="driver.jpg" className={styles.driverImg} />
           <PhotoUpload />
-          <p className={styles.name}>
-            {driverinf.firstName} {driverinf.lastName}
-          </p>
+          <p className={styles.name}>{driverinf.fullName}</p>
           <p className={styles.phoneNumber}>{driverinf.phoneNumber}</p>
+          <div>
+            <span className={styles.currentPoint}>
+              {driverinf.currentPoint}
+            </span>
+          </div>
         </div>
         <div className={styles.profileSettings}>
           <UserForm driver={driverinf} />
@@ -83,7 +157,7 @@ function DriverProfile() {
               <button onClick={toggleAccidentForm} className={styles.addButton}>
                 Add Accident
               </button>
-              <AccidentTrack />
+              <AccidentTrack accidents={accidents} />
             </>
           )}
         </div>
