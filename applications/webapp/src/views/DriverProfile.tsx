@@ -3,6 +3,7 @@ import styles from "./DriverProfile.module.css";
 import UserForm from "../components/UserForm";
 import AccidentTrack from "../components/accidentTrack";
 import { useState } from "react";
+import LoggedinNavBar from "../components/LoggedinNavBar";
 import PhotoUpload from "../components/photoUpload";
 import AccidentForm from "../components/AccidentForm";
 
@@ -56,6 +57,7 @@ function DriverProfile() {
 
   return (
     <>
+      <LoggedinNavBar />
       <main className={styles.container}>
         <div className={styles.imgholder}>
           <img src="driver.jpg" className={styles.driverImg} />

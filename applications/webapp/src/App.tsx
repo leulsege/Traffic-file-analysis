@@ -13,7 +13,9 @@ import VehiclesApplayout from "./views/VehiclesApplayout";
 import TrainingAppLayout from "./views/TrainingAppLayout";
 import TrainerProfile from "./views/TrainerProfile";
 import AccidentView from "./views/accidentView";
-import Approve from "./views/owner/approve";
+import AdminProfile from "./views/AdminProfile";
+import Approve from "./views/owner/Approve";
+import AdminApprove from "./views/owner/AdminApprove";
 
 function App() {
   return (
@@ -28,7 +30,10 @@ function App() {
         <Route path="/trainerprofile" element={<TrainerProfile />} />
         <Route path="/viewaccident" element={<AccidentView />} />
         <Route path="/vehicles" element={<VehiclesApplayout />} />
-        <Route path="/approveadmins" element={<Approve />} />
+        <Route path="/adminlist" element={<Approve />} />
+        <Route path="/approveadmins" element={<AdminApprove />} />
+        <Route path="/profile" element={<AdminProfile />} />
+
         <Route path="*" element={<NotFound />} />
         <Route path="/training" element={<TrainingAppLayout />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />

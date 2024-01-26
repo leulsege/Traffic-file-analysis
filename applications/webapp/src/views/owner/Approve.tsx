@@ -1,6 +1,13 @@
-import styles from "./approve.module.css";
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from "react";
+import Sidebar from "../../components/Sidebar";
+import styles from "./Approve.module.css";
+import AdminDisplay from "../../components/owner/AdminDisplay";
 
-function Approve() {
+export default function AppLayout() {
+  const [admins, setAdmins] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   const res = {
     status: "success",
     results: 5,
@@ -14,7 +21,7 @@ function Approve() {
           role: "owner",
           verified: true,
           approved: true,
-          photo: null,
+          photo: "driver.jpg",
           __v: 0,
         },
         {
@@ -25,7 +32,7 @@ function Approve() {
           role: "admin",
           verified: false,
           approved: false,
-          photo: null,
+          photo: "driver-1.jpg",
           __v: 0,
         },
         {
@@ -36,7 +43,7 @@ function Approve() {
           role: "admin",
           verified: true,
           approved: true,
-          photo: null,
+          photo: "driver-2.jpg",
           __v: 0,
         },
         {
@@ -47,7 +54,7 @@ function Approve() {
           role: "admin",
           verified: false,
           approved: false,
-          photo: null,
+          photo: "driver-3.jpg",
           __v: 0,
         },
         {
@@ -58,16 +65,18 @@ function Approve() {
           role: "admin",
           verified: true,
           approved: false,
-          photo: null,
+          photo: "driver.jpg",
           __v: 0,
         },
       ],
     },
   };
+  console.log(res.data, "from admin Approve");
 
-  console.log(res.data, "from admin approve");
-
-  return <div></div>;
+  return (
+    <div className={styles.app}>
+      <Sidebar />
+      <AdminDisplay admins={res.data.users} isLoading={isLoading} />
+    </div>
+  );
 }
-
-export default Approve;

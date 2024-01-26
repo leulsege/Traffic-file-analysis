@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./DriverProfile.module.css";
 import { useState } from "react";
 import TrainerForm from "../components/TrainerForm";
-
+import LoggedinNavBar from "../components/LoggedinNavBar";
 const res = {
   data: {
     trainings: {
@@ -38,6 +38,7 @@ console.log(driverinf, "from training inf");
 function TrainerProfile() {
   return (
     <>
+      <LoggedinNavBar />
       <main className={styles.container}>
         <div className={styles.imgholder}>
           <img src="driver.jpg" className={styles.driverImg} />
