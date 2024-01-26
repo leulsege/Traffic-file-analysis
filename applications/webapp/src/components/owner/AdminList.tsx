@@ -2,7 +2,7 @@
 
 import Admin from "./Admin";
 import Spinner from "../Spinner";
-import styles from "../driversList.module.css";
+import styles from "../DriversList.module.css";
 
 function AdminList({ admins, isLoading }) {
   if (isLoading) return <Spinner />;

@@ -6,7 +6,7 @@ import { useStepContext } from "@mui/material";
 function UserForm({ trainings }) {
   // PRE-FILL FOR DEV PURPOSES
 
-  const [name, setName] = useState(trainings.driver.name);
+  const [name, setName] = useState(trainings.driver.fullName);
   const [trainingStartDate, setTrainingStartDate] = useState(
     trainings.trainingStartDate.split("T")[0]
   );

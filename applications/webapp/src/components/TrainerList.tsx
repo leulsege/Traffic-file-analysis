@@ -1,11 +1,12 @@
 // driversList.jsx
 
 import Spinner from "./Spinner";
-import styles from "./driversList.module.css";
+import styles from "./DriversList.module.css";
 import Trainer from "./Trainer";
 
 function TrainerList({ trainers, isLoading }) {
   if (isLoading) return <Spinner />;
+  console.log(trainers);
 
   return (
     <>
@@ -19,7 +20,7 @@ function TrainerList({ trainers, isLoading }) {
             return null;
           }
 
-          return <Trainer key={trainer.id} trainer={trainer} />;
+          return <Trainer key={trainer._id} trainer={trainer} />;
         })}
       </div>
     </>

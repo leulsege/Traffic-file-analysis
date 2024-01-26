@@ -1,52 +1,72 @@
-import React from "react";
 import styles from "./DriverProfile.module.css";
-import { useState } from "react";
 import TrainerForm from "../components/TrainerForm";
 import LoggedinNavBar from "../components/LoggedinNavBar";
-const res = {
-  data: {
-    trainings: {
-      _id: "659722c69235c356e0646486",
-      trainingType: "Hazardous Materials",
-      trainingStartDate: "2023-06-18T00:00:00.000Z",
-      trainingEndDate: "2023-06-20T00:00:00.000Z",
-      trainingPassPoint: 85,
-      trainingResult: 92,
-      checkUp: "Passed",
-      driver: {
-        photo: null,
-        phoneNumber: "0912121212",
-        _id: "659706571e689e586452981d",
-        name: "Charlie Brown",
-        licenseLevel: "Class C",
-        licenseNumber: "GHI123",
-        licenseExpiredDate: "2022-06-18T00:00:00.000Z",
-        gender: "Male",
-        commencementDate: "2018-11-30T00:00:00.000Z",
-        age: 38,
-        idNumber: "678901234",
-        __v: 0,
-        id: "659706571e689e586452981d",
-      },
-      __v: 0,
-    },
-  },
-};
-const driverinf = res.data.trainings.driver;
-console.log(driverinf, "from training inf");
+import { useEffect, useState } from "react";
+import { useParams } from "react-router";
+import Spinner from "../components/Spinner";
 
 function TrainerProfile() {
+  const trainerId = useParams();
+  const [trainer, setTrainer] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const driver = (trainer as any)?.driver;
+
+  useEffect(function () {
+    async function fetchTrainer() {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_API}/trainings/${trainerId.id}`,
+          {
+            credentials: "include",
+          }
+        );
+        if (response.ok) {
+          const trainerInfo = await response.json();
+          setTrainer(trainerInfo.data.training);
+        } else {
+          const errorData = await response.json();
+          console.log(errorData);
+        }
+      } catch (error) {
+        console.error("Error fetching trainer:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchTrainer();
+  }, []);
+
+  if (isLoading) return <Spinner />;
+  console.log(trainer);
   return (
     <>
       <LoggedinNavBar />
       <main className={styles.container}>
         <div className={styles.imgholder}>
-          <img src="driver.jpg" className={styles.driverImg} />
-          <p className={styles.name}>{driverinf.name}</p>
-          <p className={styles.phoneNumber}>{driverinf.phoneNumber}</p>
+          <a
+            href={
+              driver.photo &&
+              `${import.meta.env.VITE_BACKEND_STATIC_FILE}/img/drivers/${
+                driver.photo
+              }`
+            }
+          >
+            <img
+              src={
+                driver.photo
+                  ? `${import.meta.env.VITE_BACKEND_STATIC_FILE}/img/drivers/${
+                      driver.photo
+                    }`
+                  : "/default-user-profile.jpg"
+              }
+              className={styles.driverImg}
+            />
+          </a>
+          <p className={styles.name}>{driver.fullName}</p>
+          <p className={styles.phoneNumber}>{driver.phoneNumber}</p>
         </div>
         <div className={styles.profileSettings}>
-          <TrainerForm trainings={res.data.trainings} />
+          <TrainerForm trainings={trainer} />
         </div>
         <div>other display</div>
       </main>

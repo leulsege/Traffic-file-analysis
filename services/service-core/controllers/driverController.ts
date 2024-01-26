@@ -56,7 +56,9 @@ export const createDriver = asyncError(
       const vehicle = await VehicleModel.findOne({
         plateNumber: req.body.vehicle,
       })
-      req.body.vehicle = (vehicle as any)._id
+      if (!vehicle)
+        new AppError('there is no vehicle with this PlateNumber', 404)
+      req.body.vehicle = (vehicle as any)?._id
     }
     const newDriver = await DriverModel.create(req.body)
 

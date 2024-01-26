@@ -1,12 +1,16 @@
-// Display.jsx
-
-import VehicleList from "./VehicleList";
 import styles from "./Display.module.css";
 import { useState } from "react";
 import TrainersForm from "./TrainersForm";
 import TrainerList from "./TrainerList";
 
-function TrainersDisplay({ trainers, isLoading }) {
+function TrainersDisplay({
+  trainers,
+  isLoading,
+  handlePrevPage,
+  handleNextPage,
+  page,
+  results,
+}) {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   function handleAddDriversClick() {
@@ -35,8 +39,16 @@ function TrainersDisplay({ trainers, isLoading }) {
 
           {!isLoading && (
             <div className={styles.buttons}>
-              <button className={styles.button}>Back</button>
-              <button className={styles.button}>Next</button>
+              {page > 1 && (
+                <button className={styles.button} onClick={handlePrevPage}>
+                  Back
+                </button>
+              )}
+              {results != 0 && (
+                <button className={styles.button} onClick={handleNextPage}>
+                  Next
+                </button>
+              )}
             </div>
           )}
         </div>
