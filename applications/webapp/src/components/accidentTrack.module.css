@@ -24,3 +24,14 @@
   margin-top: 2rem;
   cursor: pointer;
 }
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.reducedPoint {
+  color: red;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
