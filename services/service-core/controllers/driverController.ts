@@ -129,7 +129,7 @@ export const updateDriver = asyncError(
         runValidators: true,
       },
     ).populate({
-      path: 'faultRecord',
+      path: 'accidentRecord',
       select: '-driver -__v',
     })
 

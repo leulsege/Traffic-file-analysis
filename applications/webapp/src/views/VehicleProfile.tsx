@@ -40,7 +40,7 @@ function VehicleProfile() {
     <>
       <main className={styles.container}>
         <div className={styles.imgholder}>
-          <img src="/vehicle.jpg" className={styles.vehicleImg} />
+          <img src="/vehicle.jpg" className={styles.driverImg} />
           <p className={styles.name}>{vehicle.name}</p>
           <p className={styles.phoneNumber}>{vehicle.phoneNumber}</p>
         </div>

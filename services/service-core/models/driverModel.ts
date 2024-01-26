@@ -89,7 +89,6 @@ driverSchema.virtual('currentPoint').get(async function () {
         },
       },
     ])
-    console.log(this.givenPoint - totalReducedPoints[0]?.totalReducedPoints)
 
     // If there are accidents, subtract the total reduced points from the givenPoint
     return this.givenPoint - (totalReducedPoints[0]?.totalReducedPoints || 0)

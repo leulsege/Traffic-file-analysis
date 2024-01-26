@@ -3,9 +3,16 @@
 import VehicleList from "./VehicleList";
 import styles from "./VehiclesDisplay.module.css";
 import { useState } from "react";
-import Form from "../components/Form";
+import AddVehicleForm from "./AddVehicleForm";
 
-function Display({ vehicles, isLoading }) {
+function Display({
+  vehicles,
+  isLoading,
+  handleNextPage,
+  handlePrevPage,
+  page,
+  results,
+}) {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   function handleAddDriversClick() {
@@ -23,7 +30,7 @@ function Display({ vehicles, isLoading }) {
           <button className={styles.back} onClick={handleBack}>
             Back
           </button>
-          <Form />
+          <AddVehicleForm />
         </div>
       ) : (
         <div className={styles.display}>
@@ -34,8 +41,16 @@ function Display({ vehicles, isLoading }) {
 
           {!isLoading && (
             <div className={styles.buttons}>
-              <button className={styles.button}>Back</button>
-              <button className={styles.button}>Next</button>
+              {page > 1 && (
+                <button className={styles.button} onClick={handlePrevPage}>
+                  Back
+                </button>
+              )}
+              {results != 0 && (
+                <button className={styles.button} onClick={handleNextPage}>
+                  Next
+                </button>
+              )}
             </div>
           )}
         </div>

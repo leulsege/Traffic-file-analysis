@@ -10,42 +10,31 @@ interface Vehicle extends Document {
   pmServiceTime: Number
   bmServiceTime: Number
   others: String
-  driver?: Schema.Types.ObjectId | null
-  history: Array<{
-    date: any
-    driver: Schema.Types.ObjectId | null
-    user: Schema.Types.ObjectId | null
-  }> | null
 }
 
 const vehicleSchema: Schema = new mongoose.Schema({
   vehicleType: {
     type: String,
-    required: true,
   },
   plateNumber: {
     type: String,
     required: true,
+    unique:true
   },
   moterNumber: {
     type: String,
-    required: true,
   },
   chanciNumber: {
     type: String,
-    required: true,
   },
   sideNumber: {
     type: String,
-    required: true,
   },
   pmServiceTime: {
     type: Number,
-    required: true,
   },
   bmServiceTime: {
     type: Number,
-    required: true,
   },
   others: {
     type: String,

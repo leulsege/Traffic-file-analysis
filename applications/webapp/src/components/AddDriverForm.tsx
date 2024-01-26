@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./Form.module.css";
 import { useState } from "react";
 
-function Form() {
+function AddDriverForm() {
   const [fullName, setFullName] = useState();
   const [gender, setGender] = useState();
   const [licenseLevel, setLicenseLevel] = useState();
@@ -154,4 +154,4 @@ function Form() {
   );
 }
 
-export default Form;
+export default AddDriverForm;

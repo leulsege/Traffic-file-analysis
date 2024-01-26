@@ -3,9 +3,15 @@
 import DriversList from "./DriversList";
 import styles from "./Display.module.css";
 import { useState } from "react";
-import Form from "../components/Form";
-
-function Display({ drivers, isLoading }) {
+import AddDriverForm from "./AddDriverForm";
+function Display({
+  drivers,
+  isLoading,
+  handleNextPage,
+  handlePrevPage,
+  page,
+  results,
+}) {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   function handleAddDriversClick() {
@@ -23,7 +29,7 @@ function Display({ drivers, isLoading }) {
           <button className={styles.back} onClick={handleBack}>
             Back
           </button>
-          <Form />
+          <AddDriverForm />
         </div>
       ) : (
         <div className={styles.display}>
@@ -34,8 +40,16 @@ function Display({ drivers, isLoading }) {
 
           {!isLoading && (
             <div className={styles.buttons}>
-              <button className={styles.button}>Back</button>
-              <button className={styles.button}>Next</button>
+              {page > 1 && (
+                <button className={styles.button} onClick={handlePrevPage}>
+                  Back
+                </button>
+              )}
+              {results != 0 && (
+                <button className={styles.button} onClick={handleNextPage}>
+                  Next
+                </button>
+              )}
             </div>
           )}
         </div>
