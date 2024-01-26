@@ -35,6 +35,7 @@ const driverSchema = new Schema<Driver>(
     licenseNumber: {
       type: String,
       unique: true,
+      required: true,
     },
     licenseExpiredDate: {
       type: Date,
