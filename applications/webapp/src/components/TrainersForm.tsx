@@ -10,12 +10,13 @@ function Form() {
   const [trainingEndDate, setTrainingEndDate] = useState("");
   const [trainingPassPoint, setTrainingPassPoint] = useState("");
   const [trainingResult, setTrainingResult] = useState("");
+  const [checkUp, setCheckUP] = useState("");
 
   return (
     <main className={styles.login}>
       <form className={styles.form}>
         <div className={styles.row}>
-          <label htmlFor="text">License Number of Trainer</label>
+          <label htmlFor="text">መንጃ ፈቃድ ቁጥር</label>
           <input
             type="text"
             id="licenseNumber"
@@ -26,7 +27,7 @@ function Form() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Training Type</label>
+          <label htmlFor="text">የስልጠናው አይነት</label>
           <input
             type="text"
             id="trainingType"
@@ -37,7 +38,7 @@ function Form() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">training Start Date</label>
+          <label htmlFor="text">ስልጠናው የጀመረበት ቀን </label>
           <input
             type="date"
             id="trainingStartDate"
@@ -47,7 +48,7 @@ function Form() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">training EndDate</label>
+          <label htmlFor="text">ስልጠና ያለቀበት ቀን</label>
           <input
             type="date"
             id="training End Date"
@@ -57,7 +58,7 @@ function Form() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">training Pass Point</label>
+          <label htmlFor="text">የስልጠናው ማለፊያ ነጥብ</label>
           <input
             type="text"
             id="idNumber"
@@ -67,12 +68,22 @@ function Form() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Training Result</label>
+          <label htmlFor="text">የተገኘ ውጤት</label>
           <input
             type="text"
             id="trainingResult"
             onChange={(e) => setTrainingResult(e.target.value)}
             value={trainingResult}
+          />
+        </div>
+
+        <div className={styles.row}>
+          <label htmlFor="text">ምርመራ</label>
+          <input
+            type="text"
+            id="checkup"
+            onChange={(e) => setCheckUp(e.target.value)}
+            value={checkUp}
           />
         </div>
 

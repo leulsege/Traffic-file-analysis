@@ -3,11 +3,14 @@ import styles from "./AccidentViewForm.module.css";
 import { useState, useEffect } from "react";
 
 function AccidentForm({ accidentData }) {
+  const [plateNumber, setPlateNumber] = useState(
+    accidentData.vehicle.plateNumber
+  );
   const [accidentDate, setAccidentDate] = useState(
-    accidentData.accident_date.split("T")[0]
+    accidentData.accidentDate.split("T")[0]
   );
   const [accidentPlace, setAccidentPlace] = useState(
-    accidentData.accident_place
+    accidentData.accidentPlace
   );
   const [damages, setDamages] = useState(accidentData.damages);
   const [causes, setCauses] = useState(accidentData.cause);
@@ -33,7 +36,7 @@ function AccidentForm({ accidentData }) {
   const [paymentRequestLetterDate, setPaymentRequestLetterDate] = useState(
     accidentData.paymentRequestLetterDate.split("T")[0]
   );
-  const [givenPoint, setGivenPoint] = useState(accidentData.givenPoint);
+
   const [reducedPoint, setReducedPoint] = useState(accidentData.reducedPoint);
   const [givenDecision, setGivenDecision] = useState(
     accidentData.givenDecision
@@ -42,6 +45,16 @@ function AccidentForm({ accidentData }) {
   return (
     <main className={styles.login}>
       <form className={styles.form}>
+        <div className={styles.row}>
+          <label htmlFor="text">Vehicle Plate Number</label>
+          <input
+            type="text"
+            id="accidentPlace"
+            onChange={(e) => setPlateNumber(e.target.value)}
+            value={plateNumber}
+            required
+          />
+        </div>
         <div className={styles.row}>
           <label htmlFor="text">Accident Place</label>
           <input
@@ -162,16 +175,6 @@ function AccidentForm({ accidentData }) {
             id="paymentRequestLetterDate"
             onChange={(e) => setPaymentRequestLetterDate(e.target.value)}
             value={paymentRequestLetterDate}
-          />
-        </div>
-
-        <div className={styles.row}>
-          <label htmlFor="Number">Given Point</label>
-          <input
-            type="Number"
-            id="givenPoint"
-            onChange={(e) => setGivenPoint(e.target.value)}
-            value={givenPoint}
           />
         </div>
 

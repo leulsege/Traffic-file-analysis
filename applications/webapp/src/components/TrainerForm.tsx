@@ -7,6 +7,7 @@ function UserForm({ trainings }) {
   // PRE-FILL FOR DEV PURPOSES
 
   const [name, setName] = useState(trainings.driver.name);
+  const [trainingType, setTrainingType] = useState(trainings.trainingType);
   const [trainingStartDate, setTrainingStartDate] = useState(
     trainings.trainingStartDate.split("T")[0]
   );
@@ -25,7 +26,7 @@ function UserForm({ trainings }) {
     <main className={styles.login}>
       <form className={styles.form}>
         <div className={styles.row}>
-          <label htmlFor="text">Full Name</label>
+          <label htmlFor="text">ሙሉ ስም</label>
           <input
             type="text"
             id="fullName"
@@ -34,9 +35,19 @@ function UserForm({ trainings }) {
             required
           />
         </div>
+        <div className={styles.row}>
+          <label htmlFor="text">የስልጠናው አይነት</label>
+          <input
+            type="text"
+            id="trainingType"
+            onChange={(e) => setTrainingType(e.target.value)}
+            value={trainingType}
+            required
+          />
+        </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Training Start Date</label>
+          <label htmlFor="text">ስልጠናው የተጀመረበት ቀን</label>
           <input
             type="date"
             id="trainingStartDate"
@@ -47,7 +58,7 @@ function UserForm({ trainings }) {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Training End Date</label>
+          <label htmlFor="text">ስልጠናው የሚያልቅበት ቀን</label>
           <input
             type="date"
             id="trainingEndDate"
@@ -58,7 +69,7 @@ function UserForm({ trainings }) {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Training Pass Point</label>
+          <label htmlFor="text">የስልጠናው ማለፊያ ነጥብ</label>
           <input
             type="text"
             id="trainingPassPoint"
@@ -68,7 +79,7 @@ function UserForm({ trainings }) {
           />
         </div>
         <div className={styles.row}>
-          <label htmlFor="text">Training Resultt</label>
+          <label htmlFor="text">የስልጠናው ውጤት</label>
           <input
             type="text"
             id="trainingResult"
@@ -79,7 +90,7 @@ function UserForm({ trainings }) {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">checkUp</label>
+          <label htmlFor="text">ምርመራ</label>
           <input
             type="text"
             id="checkUp"
