@@ -10,7 +10,7 @@ function TrainerList({ trainers, isLoading }) {
   return (
     <>
       <div className={styles.container}>
-        <h1 className={styles.title}>Vehicles List</h1>
+        <h1 className={styles.title}>Trainer List</h1>
       </div>
       <div className={styles.driverList}>
         {trainers.map((trainer) => {
