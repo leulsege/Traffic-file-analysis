@@ -1,11 +1,12 @@
 import styles from "./LoggedinNavBar.module.css";
 import { NavLink } from "react-router-dom";
-import Logo1 from "./Logo1";
+
+import LogoLoggedin from "./LogoLoggedin";
 
 function Navbar() {
   return (
     <nav className={styles.nav}>
-      <Logo1 />
+      <LogoLoggedin />
       <ul>
         <li>
           <NavLink to="/profile" className={styles.ctaLink}>

@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../DriverProfile.module.css";
 import { useState } from "react";
 import LoggedinNavBar from "../../components/LoggedinNavBar";
-import AdminForm from "../../components/owner/AdminForm";
+import ApproveAdminForm from "../../components/owner/ApproveAdminForm";
 
 const res = {
   _id: "659e56282226ac98f1655b20",
@@ -29,7 +29,7 @@ function TrainerProfile() {
           <p className={styles.phoneNumber}>{res.role}</p>
         </div>
         <div className={styles.profileSettings}>
-          <AdminForm admin={res} />
+          <ApproveAdminForm admin={res} />
         </div>
         <div>other display</div>
       </main>

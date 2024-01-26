@@ -1,7 +1,7 @@
-import styles from "./Logo1.module.css";
+import styles from "./LogoLoggedin.module.css";
 import { Link } from "react-router-dom";
 
-function Logo1() {
+function LogoLoggedin() {
   return (
     <Link to="/" className={styles.logoContainer}>
       <img src="PSTS-LOGO.png" className={styles.logo} />
@@ -13,4 +13,4 @@ function Logo1() {
   );
 }
 
-export default Logo1;
+export default LogoLoggedin;
