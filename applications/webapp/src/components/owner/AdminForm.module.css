@@ -1,18 +1,19 @@
 .login {
-  margin: 2.5rem 2.5rem;
-  padding: 0 1rem;
+  margin: 2.5rem;
+  padding: 0 5rem;
 }
 
 .form {
   border-radius: 7px;
   padding: 0rem 3rem;
-  width: 30rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 2rem;
 
   /* Different from other form */
-  margin: 0rem auto;
+  width: 48rem;
+  margin: 8rem auto;
 }
 
 .row {
@@ -54,4 +55,9 @@ a:visited {
   color: white;
   padding: 0.8rem 2rem;
   border-radius: 7px;
+}
+
+span {
+  font-weight: 600;
+  font-size: 1.6rem;
 }

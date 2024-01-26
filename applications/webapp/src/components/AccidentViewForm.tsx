@@ -1,29 +1,43 @@
 import { Link } from "react-router-dom";
-import styles from "./AccidentForm.module.css";
+import styles from "./AccidentViewForm.module.css";
 import { useState, useEffect } from "react";
 
-function AccidentForm() {
-  const [accidentDate, setAccidentDate] = useState("");
-  const [accidentPlace, setAccidentPlace] = useState("");
-  const [damages, setDamages] = useState("");
-  const [causes, setCauses] = useState("");
-  const [guilty, setGuilty] = useState("");
-  const [damageEstimation, setDamageEstimation] = useState("");
-  const [insuranceSentDate, setInsuranceSentDate] = useState("");
-  const [excessLetterDate, setExcessLetterDate] = useState("");
-  const [maintenanceProcess, setMaintenanceProcess] = useState("");
-  const [preformDate, setPreformDate] = useState("");
-  const [paymentDateLetterNumber, setPaymentDateLetterNumber] = useState("");
-  const [paymentRequestLetterDate, setPaymentRequestLetterDate] = useState("");
-  const [givenPoint, setGivenPoint] = useState();
-  const [reducedPoint, setReducedPoint] = useState();
-  const [givenDecision, setGivenDecision] = useState();
-  const [currentPoint, setCurrentPoint] = useState(0);
-
-  useEffect(() => {
-    // Calculate the difference and update currentPoint when either givenPoint or reducedPoint changes
-    setCurrentPoint(givenPoint - reducedPoint);
-  }, [givenPoint, reducedPoint]);
+function AccidentForm({ accidentData }) {
+  const [accidentDate, setAccidentDate] = useState(
+    accidentData.accident_date.split("T")[0]
+  );
+  const [accidentPlace, setAccidentPlace] = useState(
+    accidentData.accident_place
+  );
+  const [damages, setDamages] = useState(accidentData.damages);
+  const [causes, setCauses] = useState(accidentData.cause);
+  const [guilty, setGuilty] = useState(accidentData.guilty);
+  const [damageEstimation, setDamageEstimation] = useState(
+    accidentData.damageEstimation
+  );
+  const [insuranceSentDate, setInsuranceSentDate] = useState(
+    accidentData.insuranceSentDate.split("T")[0]
+  );
+  const [excessLetterDate, setExcessLetterDate] = useState(
+    accidentData.excessLetterDate.split("T")[0]
+  );
+  const [maintenanceProcess, setMaintenanceProcess] = useState(
+    accidentData.maintenanceProcess
+  );
+  const [preformDate, setPreformDate] = useState(
+    accidentData.preformDate.split("T")[0]
+  );
+  const [paymentDateLetterNumber, setPaymentDateLetterNumber] = useState(
+    accidentData.paymentDateLetterNumber
+  );
+  const [paymentRequestLetterDate, setPaymentRequestLetterDate] = useState(
+    accidentData.paymentRequestLetterDate.split("T")[0]
+  );
+  const [givenPoint, setGivenPoint] = useState(accidentData.givenPoint);
+  const [reducedPoint, setReducedPoint] = useState(accidentData.reducedPoint);
+  const [givenDecision, setGivenDecision] = useState(
+    accidentData.givenDecision
+  );
 
   return (
     <main className={styles.login}>
@@ -142,7 +156,7 @@ function AccidentForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Payment Request Letter Date</label>
+          <label htmlFor="date">Payment Request Letter Date</label>
           <input
             type="text"
             id="paymentRequestLetterDate"
@@ -172,16 +186,6 @@ function AccidentForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="Number">Current Point</label>
-          <input
-            type="number"
-            id="currentPoint"
-            value={currentPoint}
-            readOnly
-          />
-        </div>
-
-        <div className={styles.row}>
           <label htmlFor="text">Given Decision</label>
           <input
             type="text"
@@ -192,7 +196,8 @@ function AccidentForm() {
         </div>
 
         <div className={styles.buttons}>
-          <Link className={styles.ctaLink}>Submit</Link>
+          <Link className={styles.ctaLink}>Save Accident</Link>
+          <button className={styles.delbtn}>Delete Accident</button>
         </div>
       </form>
     </main>

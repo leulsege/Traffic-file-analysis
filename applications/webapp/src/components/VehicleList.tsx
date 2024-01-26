@@ -4,7 +4,7 @@ import Spinner from "./Spinner";
 import styles from "./DriversList.module.css";
 import Vehicle from "./Vehicle";
 
-function DriversList({ vehicles, isLoading }) {
+function VehicleList({ vehicles, isLoading }) {
   if (isLoading) return <Spinner />;
 
   return (
@@ -26,4 +26,4 @@ function DriversList({ vehicles, isLoading }) {
   );
 }
 
-export default DriversList;
+export default VehicleList;

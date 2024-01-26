@@ -13,6 +13,12 @@ import DriverProfile from "./views/DriverProfile";
 import NotFound from "./components/NotFound";
 import VehiclesAppLayout from "./views/VehiclesApplayout";
 import VehicleProfile from "./views/VehicleProfile";
+import TrainingAppLayout from "./views/TrainingAppLayout";
+import TrainerProfile from "./views/TrainerProfile";
+import AccidentView from "./views/accidentView";
+import AdminProfile from "./views/AdminProfile";
+import Approve from "./views/owner/Approve";
+import AdminApprove from "./views/owner/AdminApprove";
 
 function App() {
   const [user, setUser] = useState();

@@ -1,0 +1,25 @@
+// driversList.jsx
+
+import Admin from "./Admin";
+import Spinner from "../Spinner";
+import styles from "../driversList.module.css";
+
+function AdminList({ admins, isLoading }) {
+  if (isLoading) return <Spinner />;
+  console.log(admins, "from admin list");
+
+  return (
+    <>
+      <div className={styles.container}>
+        <h1 className={styles.title}>Admins List</h1>
+      </div>
+      <div className={styles.driverList}>
+        {admins.map((admin) => (
+          <Admin key={admin._id} admin={admin} />
+        ))}
+      </div>
+    </>
+  );
+}
+
+export default AdminList;
