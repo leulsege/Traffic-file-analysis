@@ -3,7 +3,7 @@ import TrainingModel from '../models/trainingModel'
 import { Request, Response, NextFunction } from 'express'
 import APIFeatures from '../utils/apiFeatures'
 import DriverModel from '../models/driverModel'
-import AppError from 'utils/appError'
+import AppError from '../utils/appError'
 
 export const createTraining = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -35,7 +35,6 @@ export const getAllTrainings = asyncError(
       .sort()
 
     const trainings = await features.query
-    console.log(trainings)
 
     res.status(200).json({
       status: 'success',

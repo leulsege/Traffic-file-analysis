@@ -2,14 +2,45 @@ import { Link } from "react-router-dom";
 import styles from "./TrainersForm.module.css";
 import { useState } from "react";
 
-function Form() {
-  // PRE-FILL FOR DEV PURPOSES
-  const [licenseNumber, setLicenseNumber] = useState("");
+function TrainersForm() {
+  const [driver, setDriver] = useState("");
   const [trainingType, setTrainingType] = useState("");
   const [trainingStartDate, setTrainingStartDate] = useState("");
   const [trainingEndDate, setTrainingEndDate] = useState("");
   const [trainingPassPoint, setTrainingPassPoint] = useState("");
   const [trainingResult, setTrainingResult] = useState("");
+
+  async function handleCreate() {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API}/vehicles`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            vehicleType,
+            plateNumber,
+            moterNumber,
+            chanciNumber,
+            sideNumber,
+            pmServiceTime,
+            bmServiceTime,
+            others,
+          }),
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        const vehicle = await response.json();
+        navigate(`/vehicles/${vehicle.data.vehicle._id}`);
+      } else {
+        const errorData = await response.json();
+        console.log(errorData);
+      }
+    } catch (error) {
+      console.error("Error fetching vehicle:", error);
+    }
+  }
 
   return (
     <main className={styles.login}>
@@ -19,8 +50,8 @@ function Form() {
           <input
             type="text"
             id="licenseNumber"
-            onChange={(e) => setLicenseNumber(e.target.value)}
-            value={licenseNumber}
+            onChange={(e) => setDriver(e.target.value)}
+            value={driver}
             required
           />
         </div>
@@ -77,11 +108,11 @@ function Form() {
         </div>
 
         <div>
-          <Link className={styles.ctaLink}>Add Driver</Link>
+          <Link className={styles.ctaLink}>Submit</Link>
         </div>
       </form>
     </main>
   );
 }
 
-export default Form;
+export default TrainersForm;

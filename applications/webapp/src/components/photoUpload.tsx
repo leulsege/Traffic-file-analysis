@@ -32,7 +32,9 @@ function PhotoUpload({ url, setProfile }) {
 
       if (response.ok) {
         const driverInfo = await response.json();
-        setProfile(driverInfo.data.driver);
+        if (driverInfo.data.driver) setProfile(driverInfo.data.driver);
+        else if (driverInfo.data.user) setProfile(driverInfo.data.user);
+        // else if (driverInfo.data.driver) setProfile(driverInfo.data.driver);
       } else {
         const errorData = await response.json();
         console.log(errorData);

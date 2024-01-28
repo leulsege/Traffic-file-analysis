@@ -17,6 +17,7 @@ import {
   updateUser,
   uploadUserPhoto,
   resizeUserPhoto,
+  getMe,
 } from '../controllers/adminController'
 const adminRoute = express.Router()
 
@@ -28,10 +29,12 @@ adminRoute.patch('/updatemypassword', protect, updatePassword)
 adminRoute.post('/forget-password', forgotPassword)
 adminRoute.patch('/reset-password/:token', resetPassword)
 
+adminRoute.get('/me', protect, getMe, getUser)
+adminRoute.patch('/updateme', protect, getMe, updateUser)
 adminRoute.route('/').all(protect, restrictTo('owner')).get(getAllUsers)
 adminRoute
   .route('/uploadphoto')
-  .patch(protect, uploadUserPhoto, resizeUserPhoto, updateUser)
+  .patch(protect, getMe, uploadUserPhoto, resizeUserPhoto, updateUser)
 
 adminRoute
   .route('/:id')

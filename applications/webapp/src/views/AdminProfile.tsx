@@ -1,35 +1,73 @@
-import React from "react";
 import styles from "./DriverProfile.module.css";
-import { useState } from "react";
 import AdminForm from "../components/owner/AdminForm";
 import LoggedinNavBar from "../components/LoggedinNavBar";
+import { useEffect, useState } from "react";
+import Spinner from "../components/Spinner";
+import PhotoUpload from "../components/photoUpload";
 
-const res = {
-  _id: "659e56282226ac98f1655b20",
-  firstName: "leul",
-  lastName: "gebre",
-  email: "mahimahletmahlet@gmail.com",
-  role: "owner",
-  verified: true,
-  approved: true,
-  photo: null,
-  __v: 0,
-};
+function AdminProfile() {
+  const [admin, setAdmin] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
-function TrainerProfile() {
+  useEffect(function () {
+    async function fetchAdmin() {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_API}/admins/me`,
+          {
+            credentials: "include",
+          }
+        );
+        if (response.ok) {
+          const adminInfo = await response.json();
+          setAdmin(adminInfo.data.user);
+        } else {
+          const errorData = await response.json();
+          console.log(errorData);
+        }
+      } catch (error) {
+        console.error("Error fetching admin:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchAdmin();
+  }, []);
+
+  if (isLoading) return <Spinner />;
+
   return (
     <>
       <LoggedinNavBar />
       <main className={styles.container}>
         <div className={styles.imgholder}>
-          <img src="driver.jpg" className={styles.driverImg} />
+          <a
+            href={
+              admin.photo &&
+              `${import.meta.env.VITE_BACKEND_STATIC_FILE}/img/admins/${
+                admin.photo
+              }`
+            }
+          >
+            <img
+              src={
+                admin.photo
+                  ? `${import.meta.env.VITE_BACKEND_STATIC_FILE}/img/admins/${
+                      admin.photo
+                    }`
+                  : "/default-user-profile.jpg"
+              }
+              className={styles.driverImg}
+            />
+          </a>
           <p className={styles.name}>
-            {res.firstName} {res.lastName}
+            {admin.firstName} {admin.lastName}
           </p>
-          <p className={styles.phoneNumber}>{res.role}</p>
+          <p className={styles.phoneNumber}>{admin.role}</p>
+          <PhotoUpload url={`admins/uploadphoto`} setProfile={setAdmin} />
         </div>
         <div className={styles.profileSettings}>
-          <AdminForm admin={res} />
+          <AdminForm admin={admin} setAdmin={setAdmin} />
         </div>
         <div>other display</div>
       </main>
@@ -37,4 +75,4 @@ function TrainerProfile() {
   );
 }
 
-export default TrainerProfile;
+export default AdminProfile;

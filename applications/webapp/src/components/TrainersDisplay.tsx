@@ -1,7 +1,7 @@
 import styles from "./Display.module.css";
 import { useState } from "react";
-import TrainersForm from "./TrainersForm";
 import TrainerList from "./TrainerList";
+import AddTrainerForm from "./AddTrainerForm";
 
 function TrainersDisplay({
   trainers,
@@ -28,7 +28,7 @@ function TrainersDisplay({
           <button className={styles.back} onClick={handleBack}>
             Back
           </button>
-          <TrainersForm />
+          <AddTrainerForm />
         </div>
       ) : (
         <div className={styles.display}>

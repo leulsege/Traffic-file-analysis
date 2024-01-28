@@ -1,11 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./UserForm.module.css";
 import { useState } from "react";
-import { useStepContext } from "@mui/material";
 
-function UserForm({ trainings }) {
-  // PRE-FILL FOR DEV PURPOSES
+function UserForm({ trainings, setTraining }) {
+  const navigate = useNavigate();
+  const trainerId = useParams();
 
+  const [trainingType, setTrainingType] = useState(trainings.trainingType);
   const [name, setName] = useState(trainings.driver.fullName);
   const [trainingStartDate, setTrainingStartDate] = useState(
     trainings.trainingStartDate.split("T")[0]
@@ -21,9 +22,60 @@ function UserForm({ trainings }) {
     trainings.trainingResult
   );
   const [checkUp, setCheckUp] = useState(trainings.checkUp);
+
+  async function handleUpdate() {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API}/trainings/${trainerId.id}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            trainingType,
+            trainingStartDate,
+            trainingEndDate,
+            trainingPassPoint,
+            trainingResult,
+            checkUp,
+          }),
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        const trainerInfo = await response.json();
+        setTraining(trainerInfo.data.training);
+      } else {
+        const errorData = await response.json();
+        console.log(errorData);
+      }
+    } catch (error) {
+      console.error("Error fetching trainer:", error);
+    }
+  }
+
+  async function handleDelete() {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API}/trainings/${trainerId.id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        navigate("/trainings");
+      } else {
+        const errorData = await response.json();
+        console.log(errorData);
+      }
+    } catch (error) {
+      console.error("Error fetching trainer:", error);
+    }
+  }
+
   return (
     <main className={styles.login}>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
         <div className={styles.row}>
           <label htmlFor="text">Full Name</label>
           <input
@@ -31,6 +83,17 @@ function UserForm({ trainings }) {
             id="fullName"
             onChange={(e) => setName(e.target.value)}
             value={name}
+            required
+          />
+        </div>
+
+        <div className={styles.row}>
+          <label htmlFor="text">Training Type</label>
+          <input
+            type="text"
+            id="trainingType"
+            onChange={(e) => setTrainingType(e.target.value)}
+            value={trainingType}
             required
           />
         </div>
@@ -68,7 +131,7 @@ function UserForm({ trainings }) {
           />
         </div>
         <div className={styles.row}>
-          <label htmlFor="text">Training Resultt</label>
+          <label htmlFor="text">Training Result</label>
           <input
             type="text"
             id="trainingResult"
@@ -89,8 +152,12 @@ function UserForm({ trainings }) {
         </div>
 
         <div className={styles.buttons}>
-          <Link className={styles.ctaLink}>Save Form</Link>
-          <button className={styles.delbtn}>Delete Trainer</button>
+          <button className={styles.updbtn} onClick={handleUpdate}>
+            Update Trainer
+          </button>
+          <button className={styles.delbtn} onClick={handleDelete}>
+            Remove Trainer
+          </button>
         </div>
       </form>
     </main>

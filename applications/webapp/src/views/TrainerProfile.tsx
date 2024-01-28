@@ -37,7 +37,7 @@ function TrainerProfile() {
   }, []);
 
   if (isLoading) return <Spinner />;
-  console.log(trainer);
+
   return (
     <>
       <LoggedinNavBar />
@@ -66,7 +66,7 @@ function TrainerProfile() {
           <p className={styles.phoneNumber}>{driver.phoneNumber}</p>
         </div>
         <div className={styles.profileSettings}>
-          <TrainerForm trainings={trainer} />
+          <TrainerForm trainings={trainer} setTraining={setTrainer} />
         </div>
         <div>other display</div>
       </main>
