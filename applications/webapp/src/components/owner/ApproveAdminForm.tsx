@@ -3,11 +3,9 @@ import styles from "./AdminForm.module.css";
 
 function ApproveAdminForm({ admin, setAdmin }) {
   const adminId = useParams();
-  console.log(adminId);
   const navigate = useNavigate();
 
   async function handleApprove() {
-    console.log("----------------------------------------------------");
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_API}/admins/${adminId.id}`,
@@ -28,7 +26,6 @@ function ApproveAdminForm({ admin, setAdmin }) {
         console.log(errorData);
       }
     } catch (error) {
-      console.log("----------------------------------------------------");
       console.error("Error fetching admin:", error);
     }
   }
@@ -56,7 +53,7 @@ function ApproveAdminForm({ admin, setAdmin }) {
   return (
     <>
       <main className={styles.login}>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
           <div className={styles.row}>
             <label htmlFor="text">Fist Name</label>
             <span>

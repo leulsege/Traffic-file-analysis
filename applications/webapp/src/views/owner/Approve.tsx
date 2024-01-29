@@ -31,7 +31,6 @@ export default function AppLayout() {
     fetchAdmins();
   }, []);
 
-  console.log(admins);
   return (
     <div className={styles.app}>
       <Sidebar />

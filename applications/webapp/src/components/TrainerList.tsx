@@ -6,7 +6,6 @@ import Trainer from "./Trainer";
 
 function TrainerList({ trainers, isLoading }) {
   if (isLoading) return <Spinner />;
-  console.log(trainers);
 
   return (
     <>

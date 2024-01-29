@@ -12,6 +12,7 @@ function AddDriverForm() {
   const [birthDate, setBirthDate] = useState();
   const [phoneNumber, setPhoneNumber] = useState();
   const [vehicle, setVehicle] = useState();
+  const [givenPoint, setGivenPoint] = useState();
 
   const navigate = useNavigate();
 
@@ -31,6 +32,7 @@ function AddDriverForm() {
             licenseNumber,
             licenseExpiredDate,
             idNumber,
+            givenPoint,
             vehicle,
           }),
           credentials: "include",
@@ -131,6 +133,16 @@ function AddDriverForm() {
             id="idNumber"
             onChange={(e) => setIdNumber(e.target.value)}
             value={idNumber}
+          />
+        </div>
+
+        <div className={styles.row}>
+          <label htmlFor="text">Given Point</label>
+          <input
+            type="text"
+            id="givenPoint"
+            onChange={(e) => setGivenPoint(e.target.value)}
+            value={givenPoint}
           />
         </div>
 

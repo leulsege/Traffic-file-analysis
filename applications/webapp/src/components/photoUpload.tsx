@@ -34,7 +34,8 @@ function PhotoUpload({ url, setProfile }) {
         const driverInfo = await response.json();
         if (driverInfo.data.driver) setProfile(driverInfo.data.driver);
         else if (driverInfo.data.user) setProfile(driverInfo.data.user);
-        // else if (driverInfo.data.driver) setProfile(driverInfo.data.driver);
+        else if (driverInfo.data.vehicleAccident)
+          setProfile(driverInfo.data.vehicleAccident);
       } else {
         const errorData = await response.json();
         console.log(errorData);

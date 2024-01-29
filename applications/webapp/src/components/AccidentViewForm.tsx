@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./AccidentViewForm.module.css";
 import { useState, useEffect } from "react";
 
-function AccidentForm({ accidentData }) {
+function AccidentForm({ accidentData, setAccident }) {
+  const navigate = useNavigate();
+
   const [plateNumber, setPlateNumber] = useState(
     accidentData.vehicle.plateNumber
   );
@@ -13,7 +15,7 @@ function AccidentForm({ accidentData }) {
     accidentData.accidentPlace
   );
   const [damages, setDamages] = useState(accidentData.damages);
-  const [causes, setCauses] = useState(accidentData.cause);
+  const [cause, setCause] = useState(accidentData.cause);
   const [guilty, setGuilty] = useState(accidentData.guilty);
   const [damageEstimation, setDamageEstimation] = useState(
     accidentData.damageEstimation
@@ -42,9 +44,70 @@ function AccidentForm({ accidentData }) {
     accidentData.givenDecision
   );
 
+  async function handleUpdate() {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API}/vehicleaccidents/${
+          accidentData._id
+        }`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            accidentDate,
+            accidentPlace,
+            damages,
+            cause,
+            guilty,
+            damageEstimation,
+            insuranceSentDate,
+            excessLetterDate,
+            maintenanceProcess,
+            preformDate,
+            paymentDateLetterNumber,
+            paymentRequestLetterDate,
+            reducedPoint,
+            givenDecision,
+          }),
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        const accidentInfo = await response.json();
+        setAccident(accidentInfo.data.vehicleAccident);
+      } else {
+        const errorData = await response.json();
+        console.log(errorData);
+      }
+    } catch (error) {
+      console.error("Error fetching vehicle:", error);
+    }
+  }
+
+  async function handleDelete() {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API}/vehicleaccidents/${
+          accidentData._id
+        }`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        navigate("/drivers");
+      } else {
+        const errorData = await response.json();
+        console.log(errorData);
+      }
+    } catch (error) {
+      console.error("Error fetching vehicle:", error);
+    }
+  }
   return (
     <main className={styles.login}>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
         <div className={styles.row}>
           <label htmlFor="text">Vehicle Plate Number</label>
           <input
@@ -87,12 +150,12 @@ function AccidentForm({ accidentData }) {
           />
         </div>
         <div className={styles.row}>
-          <label htmlFor="text">Causes</label>
+          <label htmlFor="text">Cause</label>
           <input
             type="text"
             id="accidentPlace"
-            onChange={(e) => setCauses(e.target.value)}
-            value={causes}
+            onChange={(e) => setCause(e.target.value)}
+            value={cause}
             required
           />
         </div>
@@ -199,8 +262,12 @@ function AccidentForm({ accidentData }) {
         </div>
 
         <div className={styles.buttons}>
-          <Link className={styles.ctaLink}>Save Accident</Link>
-          <button className={styles.delbtn}>Delete Accident</button>
+          <button className={styles.updbtn} onClick={handleUpdate}>
+            update Accident
+          </button>
+          <button className={styles.delbtn} onClick={handleDelete}>
+            Delete Accident
+          </button>
         </div>
       </form>
     </main>

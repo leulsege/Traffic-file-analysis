@@ -1,12 +1,22 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./accidentTrack.module.css";
 
 function accidentSummery({ accident }) {
+  const navigate = useNavigate();
+  function handleClick() {
+    navigate(`/accidents/${accident._id}`);
+  }
   return (
-    <div className={styles.accidentTrack}>
+    <div className={styles.accidentTrack} onClick={handleClick}>
       <img
         className={styles.accidentImg}
-        src={accident.photo}
-        alt="accident picture"
+        src={
+          accident.photo
+            ? `${import.meta.env.VITE_BACKEND_STATIC_FILE}/img/accidents/${
+                accident.photo
+              }`
+            : "/default-accident.png"
+        }
       />
       <div className={styles.accidentContent}>
         <div className={styles.flex}>

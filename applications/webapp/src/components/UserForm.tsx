@@ -14,9 +14,9 @@ function UserForm({ driver, setDriver }) {
   );
   const [idNumber, setIdNumber] = useState(driver.idNumber);
   const [commencementDate, setCommencementDate] = useState(
-    driver.commencementDate.split("T")[0]
+    driver.commencementDate?.split("T")[0]
   );
-  const [birthDate, setBirthDate] = useState(driver.birthDate);
+  const [birthDate, setBirthDate] = useState(driver.birthDate?.split("T")[0]);
   const [phoneNumber, setPhoneNumber] = useState(driver.phoneNumber);
   const [givenPoint, setGivenPoint] = useState(driver.givenPoint);
   const [vehicle, setVehicle] = useState(driver.vehicle?.plateNumber);
@@ -36,10 +36,12 @@ function UserForm({ driver, setDriver }) {
             phoneNumber,
             gender,
             birthDate,
+            commencementDate,
             licenseLevel,
             licenseNumber,
             licenseExpiredDate,
             idNumber,
+            givenPoint,
             vehicle,
           }),
           credentials: "include",
@@ -91,7 +93,7 @@ function UserForm({ driver, setDriver }) {
           />
         </div>
         <div className={styles.row}>
-          <label htmlFor="text">Gender</label>
+          <label htmlFor="text"> ጾታ</label>
           <input
             type="text"
             id="gender"
@@ -108,6 +110,26 @@ function UserForm({ driver, setDriver }) {
             onChange={(e) => setBirthDate(e.target.value)}
             value={birthDate}
             required
+          />
+        </div>
+
+        <div className={styles.row}>
+          <label htmlFor="number">ስልክ ቁጥር</label>
+          <input
+            type="tel"
+            id="phoneNumber"
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            value={phoneNumber}
+          />
+        </div>
+
+        <div className={styles.row}>
+          <label htmlFor="number">የቅጥር ዘመን</label>
+          <input
+            type="date"
+            id="commencementDate"
+            onChange={(e) => setCommencementDate(e.target.value)}
+            value={commencementDate}
           />
         </div>
 
@@ -148,25 +170,6 @@ function UserForm({ driver, setDriver }) {
             id="idNumber"
             onChange={(e) => setIdNumber(e.target.value)}
             value={idNumber}
-          />
-        </div>
-
-        <div className={styles.row}>
-          <label htmlFor="number">ስልክ ቁጥር</label>
-          <input
-            type="tel"
-            id="phoneNumber"
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            value={phoneNumber}
-          />
-        </div>
-        <div className={styles.row}>
-          <label htmlFor="number">የቅጥር ዘመን</label>
-          <input
-            type="date"
-            id="commencementDate"
-            onChange={(e) => setCommencementDate(e.target.value)}
-            value={commencementDate}
           />
         </div>
 

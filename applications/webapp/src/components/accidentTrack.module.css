@@ -2,7 +2,7 @@
   width: 98%;
 }
 .accidentContent {
-  padding: 1rem 2rem 2rem 1rem;
+  padding: 0rem 0rem 0rem 0rem;
 }
 
 .accidentTitle {
@@ -23,6 +23,7 @@
   transition: all 0.4s;
   margin-top: 2rem;
   cursor: pointer;
+  width: 70%;
 }
 
 .flex {

@@ -1,12 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./AccidentForm.module.css";
 import { useState, useEffect } from "react";
 
-function AccidentForm() {
+function AccidentForm({ driver }) {
   const [accidentDate, setAccidentDate] = useState("");
   const [accidentPlace, setAccidentPlace] = useState("");
   const [damages, setDamages] = useState("");
-  const [causes, setCauses] = useState("");
+  const [cause, setCause] = useState("");
   const [guilty, setGuilty] = useState("");
   const [damageEstimation, setDamageEstimation] = useState("");
   const [insuranceSentDate, setInsuranceSentDate] = useState("");
@@ -17,10 +17,51 @@ function AccidentForm() {
   const [paymentRequestLetterDate, setPaymentRequestLetterDate] = useState("");
   const [reducedPoint, setReducedPoint] = useState();
   const [givenDecision, setGivenDecision] = useState();
+  const navigate = useNavigate();
+
+  async function handleCreate() {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API}/vehicleaccidents`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            accidentDate,
+            accidentPlace,
+            damages,
+            cause,
+            guilty,
+            damageEstimation,
+            insuranceSentDate,
+            excessLetterDate,
+            maintenanceProcess,
+            preformDate,
+            paymentDateLetterNumber,
+            paymentRequestLetterDate,
+            reducedPoint,
+            givenDecision,
+            driver: driver._id,
+            vehicle: driver.vehicle._id,
+          }),
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        const accidentInfo = await response.json();
+        navigate(`/accidents/${accidentInfo.data.vehicleAccident._id}`);
+      } else {
+        const errorData = await response.json();
+        console.log(errorData);
+      }
+    } catch (error) {
+      console.error("Error fetching driver:", error);
+    }
+  }
 
   return (
     <main className={styles.login}>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
         <div className={styles.row}>
           <label htmlFor="text">የአደጋው ቦታ</label>
           <input
@@ -57,8 +98,8 @@ function AccidentForm() {
           <input
             type="text"
             id="accidentPlace"
-            onChange={(e) => setCauses(e.target.value)}
-            value={causes}
+            onChange={(e) => setCause(e.target.value)}
+            value={cause}
             required
           />
         </div>
@@ -137,7 +178,7 @@ function AccidentForm() {
         <div className={styles.row}>
           <label htmlFor="text">የተሰበሰበበት ቀን</label>
           <input
-            type="text"
+            type="Date"
             id="paymentRequestLetterDate"
             onChange={(e) => setPaymentRequestLetterDate(e.target.value)}
             value={paymentRequestLetterDate}
@@ -165,7 +206,9 @@ function AccidentForm() {
         </div>
 
         <div className={styles.buttons}>
-          <Link className={styles.ctaLink}>Submit</Link>
+          <button className={styles.updbtn} onClick={handleCreate}>
+            Submit
+          </button>
         </div>
       </form>
     </main>

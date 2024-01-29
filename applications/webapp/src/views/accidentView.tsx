@@ -1,59 +1,77 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./AccidentView.module.css";
 import { useState } from "react";
 import AccidentViewForm from "../components/AccidentViewForm";
 import PhotoUpload from "../components/photoUpload";
 import LoggedinNavbar from "../components/LoggedinNavBar";
-
-const res = {
-  data: {
-    _id: "65b1aa8fd25d3e3b31bc1190",
-    accidentDate: "2023-01-15T12:30:00.000Z",
-    accidentPlace: "City Center",
-    damages: "Minor damages to the front bumper",
-    cause: "Traffic collision",
-    guilty: "Other driver",
-    damageEstimation: 1000,
-    insuranceSentDate: "2023-01-20T00:00:00.000Z",
-    excessLetterDate: "2023-01-25",
-    maintenanceProcess: "Body repair and paint",
-    preformDate: "2023-02-01T08:00:00.000Z",
-    paymentDateLetterNumber: "ABC123",
-    paymentRequestLetterDate: "2023-02-10T00:00:00.000Z",
-    reducedPoint: 2,
-    givenDecision: "Compensation granted",
-    photo: "accident.png",
-    vehicle: {
-      _id: "65971e72ddd2d5c29a602a8c",
-      vehicleType: "Car",
-      MoterNumber: 456,
-      chanciNumber: "789",
-      sideNumber: "101",
-      pmServiceTime: 5001,
-      bmServiceTime: 10000,
-      others: "Additional informati",
-      startingPoint: "City A",
-      destination: "City B",
-      stayingPlace: "City C",
-      __v: 0,
-      moterNumber: "5768976",
-      plateNumber: "123",
-    },
-  },
-};
+import { useParams } from "react-router-dom";
+import Spinner from "../components/Spinner";
 
 function AccidentView() {
+  const [accident, setAccident] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const accidentId = useParams();
+
+  useEffect(function () {
+    async function fetchAdmin() {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_API}/vehicleaccidents/${
+            accidentId.id
+          }`,
+          {
+            credentials: "include",
+          }
+        );
+        if (response.ok) {
+          const accidentInfo = await response.json();
+          setAccident(accidentInfo.data.vehicleAccident);
+        } else {
+          const errorData = await response.json();
+          console.log(errorData);
+        }
+      } catch (error) {
+        console.error("Error fetching accident:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchAdmin();
+  }, []);
+
+  if (isLoading) return <Spinner />;
   return (
     <>
       <LoggedinNavbar />
       <main className={styles.container}>
         <div className={styles.imgholder}>
-          <img src="accident.png" className={styles.accidentImg} />
-          <PhotoUpload />
-          <p className={styles.reducedPoint}>-{res.data.reducedPoint}</p>
+          <a
+            href={
+              accident.photo &&
+              `${import.meta.env.VITE_BACKEND_STATIC_FILE}/img/accidents/${
+                accident.photo
+              }`
+            }
+          >
+            <img
+              src={
+                accident.photo
+                  ? `${
+                      import.meta.env.VITE_BACKEND_STATIC_FILE
+                    }/img/accidents/${accident.photo}`
+                  : "/default-accident.png"
+              }
+              className={styles.driverImg}
+            />
+          </a>
+          <PhotoUpload
+            url={`vehicleaccidents/uploadphoto/${accidentId.id}`}
+            setProfile={setAccident}
+          />
+          <p className={styles.reducedPoint}>-{accident.reducedPoint}</p>
         </div>
         <div className={styles.profileSettings}>
-          <AccidentViewForm accidentData={res.data} />
+          <AccidentViewForm accidentData={accident} setAccident={setAccident} />
         </div>
         <div>other display</div>
       </main>

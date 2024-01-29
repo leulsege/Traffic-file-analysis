@@ -1,9 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./AdminForm.module.css";
 import { useState } from "react";
 
 function AdminForm({ admin, setAdmin }) {
   const [firstName, setFirstName] = useState(admin.firstName);
   const [lastName, setLastName] = useState(admin.lastName);
+  const navigate = useNavigate();
 
   async function handleUpdate() {
     try {
@@ -39,12 +41,13 @@ function AdminForm({ admin, setAdmin }) {
       document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     }
     localStorage.clear();
+    navigate("/");
   }
 
   return (
     <>
       <main className={styles.login}>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
           <div className={styles.row}>
             <label htmlFor="text">ስም</label>
             <input

@@ -6,7 +6,6 @@ import styles from "../DriversList.module.css";
 
 function AdminList({ admins, isLoading }) {
   if (isLoading) return <Spinner />;
-  console.log(admins, "from admin list");
 
   return (
     <>

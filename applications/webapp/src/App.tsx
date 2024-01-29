@@ -18,6 +18,7 @@ import TrainerProfile from "./views/TrainerProfile";
 import AdminProfile from "./views/AdminProfile";
 import Approve from "./views/owner/Approve";
 import AdminApprove from "./views/owner/AdminApprove";
+import AccidentView from "./views/accidentView";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -128,6 +129,17 @@ function App() {
               setIsAuthenticated={setIsAuthenticated}
             >
               <AdminProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/accidents/:id"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              setIsAuthenticated={setIsAuthenticated}
+            >
+              <AccidentView />
             </ProtectedRoute>
           }
         />

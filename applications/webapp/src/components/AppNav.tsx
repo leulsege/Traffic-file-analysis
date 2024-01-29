@@ -52,7 +52,6 @@ function AppNav({ setDrivers, setVehicles, setTrainers }) {
           );
           const searchedResult = await response.json();
           setVehicles(searchedResult.data.vehicles);
-          console.log(searchedResult);
         }
         if (location.pathname == "/trainings" && setTrainers) {
           const sanitizedQuery = query.replace(/ /g, "-");

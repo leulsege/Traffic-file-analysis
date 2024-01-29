@@ -80,13 +80,13 @@ function DriverProfile() {
         </div>
         <div>
           {showAccidentForm ? (
-            <AccidentForm onCancel={toggleAccidentForm} />
+            <AccidentForm onCancel={toggleAccidentForm} driver={driver} />
           ) : (
             <>
               <button onClick={toggleAccidentForm} className={styles.addButton}>
                 Add Accident
               </button>
-              <AccidentTrack accidents={accidents} />
+              <AccidentTrack accidents={driver.accidentRecord} />
             </>
           )}
         </div>

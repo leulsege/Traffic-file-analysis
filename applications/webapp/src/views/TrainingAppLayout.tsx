@@ -46,7 +46,6 @@ export default function TrainingAppLayout() {
           );
           if (response.ok) {
             const trainingList = await response.json();
-            console.log(trainingList);
             setTrainers(trainingList.data.trainings);
             setResults(trainingList.results);
           } else {
