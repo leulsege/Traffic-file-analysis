@@ -13,8 +13,12 @@ function UserForm({ driver, setDriver }) {
     driver.licenseExpiredDate?.split("T")[0]
   );
   const [idNumber, setIdNumber] = useState(driver.idNumber);
-  const [birthDate, setBirthDate] = useState(driver.birthDate?.split("T")[0]);
+  const [commencementDate, setCommencementDate] = useState(
+    driver.commencementDate.split("T")[0]
+  );
+  const [birthDate, setBirthDate] = useState(driver.birthDate);
   const [phoneNumber, setPhoneNumber] = useState(driver.phoneNumber);
+  const [givenPoint, setGivenPoint] = useState(driver.givenPoint);
   const [vehicle, setVehicle] = useState(driver.vehicle?.plateNumber);
 
   const driverId = useParams();
@@ -77,7 +81,7 @@ function UserForm({ driver, setDriver }) {
     <main className={styles.login}>
       <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
         <div className={styles.row}>
-          <label htmlFor="text">Full Name</label>
+          <label htmlFor="text">ሙሉ ስም</label>
           <input
             type="text"
             id="fullName"
@@ -86,17 +90,6 @@ function UserForm({ driver, setDriver }) {
             required
           />
         </div>
-        <div className={styles.row}>
-          <label htmlFor="number">Phone Number</label>
-          <input
-            type="tel"
-            id="phoneNumber"
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            value={phoneNumber}
-            required
-          />
-        </div>
-
         <div className={styles.row}>
           <label htmlFor="text">Gender</label>
           <input
@@ -108,7 +101,7 @@ function UserForm({ driver, setDriver }) {
           />
         </div>
         <div className={styles.row}>
-          <label htmlFor="text">BirthDate</label>
+          <label htmlFor="text">የትውልድ ቀን</label>
           <input
             type="date"
             id="birthDate"
@@ -119,7 +112,7 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">License Level</label>
+          <label htmlFor="text">የመንጃ ፍቃድ ደረጃ</label>
           <input
             type="text"
             id="licenselevel"
@@ -129,7 +122,7 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">License Number</label>
+          <label htmlFor="text">የመንጃ ፍቃድ ቁጥር</label>
           <input
             type="text"
             id="licenseNumber"
@@ -139,7 +132,7 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="number">License Expired Date</label>
+          <label htmlFor="text">መንጃ ፍቃድ የሚያበቃበት ቀን</label>
           <input
             type="Date"
             id="licenseExpiredDate"
@@ -149,7 +142,7 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">id Number</label>
+          <label htmlFor="text">መለያ ቁጥር</label>
           <input
             type="text"
             id="idNumber"
@@ -159,7 +152,36 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="number">Vehicle plate Number</label>
+          <label htmlFor="number">ስልክ ቁጥር</label>
+          <input
+            type="tel"
+            id="phoneNumber"
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            value={phoneNumber}
+          />
+        </div>
+        <div className={styles.row}>
+          <label htmlFor="number">የቅጥር ዘመን</label>
+          <input
+            type="date"
+            id="commencementDate"
+            onChange={(e) => setCommencementDate(e.target.value)}
+            value={commencementDate}
+          />
+        </div>
+
+        <div className={styles.row}>
+          <label htmlFor="number">የተሰጠው ነጥብ</label>
+          <input
+            type="text"
+            id="givenPoint"
+            onChange={(e) => setGivenPoint(e.target.value)}
+            value={givenPoint}
+          />
+        </div>
+
+        <div className={styles.row}>
+          <label htmlFor="number">የሚነዳው መኪና ታርጋ ቁጥር</label>
           <input
             type="text"
             id="vehicle"

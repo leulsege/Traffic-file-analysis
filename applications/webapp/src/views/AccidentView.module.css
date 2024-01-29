@@ -1,5 +1,6 @@
 .accidentImg {
   width: 95%;
+  margin-top: 4rem;
 }
 /* DriverProfile.module.css */
 
@@ -62,4 +63,10 @@
 
 .formHolder {
   margin: 6.2rem 0;
+}
+
+.reducedPoint {
+  color: red;
+  font-size: 1.8rem;
+  font-weight: 600;
 }

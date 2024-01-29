@@ -86,7 +86,7 @@ function DriverProfile() {
               <button onClick={toggleAccidentForm} className={styles.addButton}>
                 Add Accident
               </button>
-              <AccidentTrack />
+              <AccidentTrack accidents={accidents} />
             </>
           )}
         </div>

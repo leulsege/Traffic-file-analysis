@@ -77,7 +77,7 @@ function UserForm({ trainings, setTraining }) {
     <main className={styles.login}>
       <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
         <div className={styles.row}>
-          <label htmlFor="text">Full Name</label>
+          <label htmlFor="text">ሙሉ ስም</label>
           <input
             type="text"
             id="fullName"
@@ -86,9 +86,8 @@ function UserForm({ trainings, setTraining }) {
             required
           />
         </div>
-
         <div className={styles.row}>
-          <label htmlFor="text">Training Type</label>
+          <label htmlFor="text">የስልጠናው አይነት</label>
           <input
             type="text"
             id="trainingType"
@@ -99,7 +98,7 @@ function UserForm({ trainings, setTraining }) {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Training Start Date</label>
+          <label htmlFor="text">ስልጠናው የተጀመረበት ቀን</label>
           <input
             type="date"
             id="trainingStartDate"
@@ -110,7 +109,7 @@ function UserForm({ trainings, setTraining }) {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Training End Date</label>
+          <label htmlFor="text">ስልጠናው የሚያልቅበት ቀን</label>
           <input
             type="date"
             id="trainingEndDate"
@@ -121,7 +120,7 @@ function UserForm({ trainings, setTraining }) {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Training Pass Point</label>
+          <label htmlFor="text">የስልጠናው ማለፊያ ነጥብ</label>
           <input
             type="text"
             id="trainingPassPoint"
@@ -131,7 +130,7 @@ function UserForm({ trainings, setTraining }) {
           />
         </div>
         <div className={styles.row}>
-          <label htmlFor="text">Training Result</label>
+          <label htmlFor="text">የስልጠናው ውጤት</label>
           <input
             type="text"
             id="trainingResult"
@@ -142,7 +141,7 @@ function UserForm({ trainings, setTraining }) {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">checkUp</label>
+          <label htmlFor="text">ምርመራ</label>
           <input
             type="text"
             id="checkUp"

@@ -1,17 +1,12 @@
 import styles from "./accidentTrack.module.css";
+import AccidentSummery from "./AccidentSummery";
 
-function accidentTrack() {
+function accidentTrack({ accidents }) {
   return (
-    <div className={styles.accidentTrack}>
-      <img
-        className={styles.accidentImg}
-        src="/accident.png"
-        alt="accident picture"
-      />
-      <div className={styles.accidentContent}>
-        <p className={styles.accidentTitle}>የአደጋው አይነት</p>
-        <p className={styles.accidentDescription}>16/06/2016</p>
-      </div>
+    <div className={styles.driverList}>
+      {accidents.map((accident) => (
+        <AccidentSummery key={accident._id} accident={accident} />
+      ))}
     </div>
   );
 }

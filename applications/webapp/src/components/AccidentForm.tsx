@@ -15,21 +15,14 @@ function AccidentForm() {
   const [preformDate, setPreformDate] = useState("");
   const [paymentDateLetterNumber, setPaymentDateLetterNumber] = useState("");
   const [paymentRequestLetterDate, setPaymentRequestLetterDate] = useState("");
-  const [givenPoint, setGivenPoint] = useState();
   const [reducedPoint, setReducedPoint] = useState();
   const [givenDecision, setGivenDecision] = useState();
-  const [currentPoint, setCurrentPoint] = useState(0);
-
-  useEffect(() => {
-    // Calculate the difference and update currentPoint when either givenPoint or reducedPoint changes
-    setCurrentPoint(givenPoint - reducedPoint);
-  }, [givenPoint, reducedPoint]);
 
   return (
     <main className={styles.login}>
       <form className={styles.form}>
         <div className={styles.row}>
-          <label htmlFor="text">Accident Place</label>
+          <label htmlFor="text">የአደጋው ቦታ</label>
           <input
             type="text"
             id="accidentPlace"
@@ -40,7 +33,7 @@ function AccidentForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Accident Date</label>
+          <label htmlFor="text">የአደጋ ቀን</label>
           <input
             type="date"
             id="firstName"
@@ -50,7 +43,7 @@ function AccidentForm() {
           />
         </div>
         <div className={styles.row}>
-          <label htmlFor="text">Damages</label>
+          <label htmlFor="text">የደረሰ ጉዳት</label>
           <input
             type="text"
             id="damages"
@@ -60,7 +53,7 @@ function AccidentForm() {
           />
         </div>
         <div className={styles.row}>
-          <label htmlFor="text">Causes</label>
+          <label htmlFor="text">መንስኤ</label>
           <input
             type="text"
             id="accidentPlace"
@@ -71,7 +64,7 @@ function AccidentForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Guilty</label>
+          <label htmlFor="text">ጥፋተኛ</label>
           <input
             type="text"
             id="guilty"
@@ -82,7 +75,7 @@ function AccidentForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Damage Estimation</label>
+          <label htmlFor="text">የጉዳቱ ግምት</label>
           <input
             type="text"
             id="damageEstimation"
@@ -92,7 +85,7 @@ function AccidentForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Insurance Sent Date</label>
+          <label htmlFor="text">ወደ ኢንሹራንስ የተላከበት ቀን</label>
           <input
             type="date"
             id="insuranceSentDate"
@@ -102,7 +95,7 @@ function AccidentForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Excess Letter Date</label>
+          <label htmlFor="text">ኤክሰስ የተቆረጠበት ደብዳ ቁጥር</label>
           <input
             type="date"
             id="iexcessLetterDate"
@@ -112,7 +105,7 @@ function AccidentForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Maintenance Process</label>
+          <label htmlFor="text">ጥገናው ያለበት ደረጃ</label>
           <input
             type="texts"
             id="maintenanceProcess"
@@ -122,7 +115,7 @@ function AccidentForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Preform Date</label>
+          <label htmlFor="text">ፕሮፎርማ የተሰራበት ቀን</label>
           <input
             type="date"
             id="preform Date"
@@ -132,7 +125,7 @@ function AccidentForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">payment Date Letter Number</label>
+          <label htmlFor="text">ክፍያ የተጠየቀበት ቀን የደብዳቤ ቁጥር</label>
           <input
             type="text"
             id="paymentDateLetterNumber"
@@ -142,7 +135,7 @@ function AccidentForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Payment Request Letter Date</label>
+          <label htmlFor="text">የተሰበሰበበት ቀን</label>
           <input
             type="text"
             id="paymentRequestLetterDate"
@@ -152,17 +145,7 @@ function AccidentForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="Number">Given Point</label>
-          <input
-            type="Number"
-            id="givenPoint"
-            onChange={(e) => setGivenPoint(e.target.value)}
-            value={givenPoint}
-          />
-        </div>
-
-        <div className={styles.row}>
-          <label htmlFor="Number">Reduced Point</label>
+          <label htmlFor="Number">ተቀናናሽ ነጥብ</label>
           <input
             type="Number"
             id="reducedPoint"
@@ -172,17 +155,7 @@ function AccidentForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="Number">Current Point</label>
-          <input
-            type="number"
-            id="currentPoint"
-            value={currentPoint}
-            readOnly
-          />
-        </div>
-
-        <div className={styles.row}>
-          <label htmlFor="text">Given Decision</label>
+          <label htmlFor="text">የተሰጠው ውሳኔ</label>
           <input
             type="text"
             id="givenDecision"

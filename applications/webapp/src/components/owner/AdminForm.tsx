@@ -46,7 +46,7 @@ function AdminForm({ admin, setAdmin }) {
       <main className={styles.login}>
         <form className={styles.form}>
           <div className={styles.row}>
-            <label htmlFor="text">Fist Name</label>
+            <label htmlFor="text">ስም</label>
             <input
               type="text"
               id="firstName"
@@ -57,7 +57,7 @@ function AdminForm({ admin, setAdmin }) {
           </div>
 
           <div className={styles.row}>
-            <label htmlFor="text">Last Name</label>
+            <label htmlFor="text">የአባት ስም</label>
             <input
               type="text"
               id="lastName"
