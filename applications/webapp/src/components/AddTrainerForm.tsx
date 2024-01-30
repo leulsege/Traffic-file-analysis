@@ -45,7 +45,7 @@ function AddTrainerForm() {
     <main className={styles.login}>
       <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
         <div className={styles.row}>
-          <label htmlFor="text">License Number of Trainer</label>
+          <label htmlFor="text">የሰልጣኙ መንጃ ፈቃድ ቁጥር</label>
           <input
             type="text"
             id="licenseNumber"
@@ -56,7 +56,7 @@ function AddTrainerForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Training Type</label>
+          <label htmlFor="text">የስልጠናው አይነት</label>
           <input
             type="text"
             id="trainingType"
@@ -67,7 +67,7 @@ function AddTrainerForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">training Start Date</label>
+          <label htmlFor="text">ስልጠናው የጀመረበት ቀን</label>
           <input
             type="date"
             id="trainingStartDate"
@@ -77,7 +77,7 @@ function AddTrainerForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">training EndDate</label>
+          <label htmlFor="text">ስልጠናው ያበቃበት ቀን</label>
           <input
             type="date"
             id="training End Date"
@@ -87,7 +87,7 @@ function AddTrainerForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">training Pass Point</label>
+          <label htmlFor="text">የስልጠናው ማለፊያ ነጥብ</label>
           <input
             type="text"
             id="idNumber"
@@ -97,7 +97,7 @@ function AddTrainerForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Training Result</label>
+          <label htmlFor="text">የተገኘ ውጤት</label>
           <input
             type="text"
             id="trainingResult"
