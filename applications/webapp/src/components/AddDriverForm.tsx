@@ -55,7 +55,7 @@ function AddDriverForm() {
     <main className={styles.login}>
       <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
         <div className={styles.row}>
-          <label htmlFor="text">Full Name</label>
+          <label htmlFor="text">ሙሉ ስም</label>
           <input
             type="text"
             id="fullName"
@@ -65,7 +65,7 @@ function AddDriverForm() {
           />
         </div>
         <div className={styles.row}>
-          <label htmlFor="number">Phone Number</label>
+          <label htmlFor="number">ስልክ ቁጥር</label>
           <input
             type="tel"
             id="phoneNumber"
@@ -76,7 +76,7 @@ function AddDriverForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Gender</label>
+          <label htmlFor="text">ጾታ</label>
           <input
             type="text"
             id="gender"
@@ -86,7 +86,7 @@ function AddDriverForm() {
           />
         </div>
         <div className={styles.row}>
-          <label htmlFor="text">BirthDate</label>
+          <label htmlFor="text">የትውልድ ቀን</label>
           <input
             type="date"
             id="birthDate"
@@ -97,7 +97,7 @@ function AddDriverForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">License Level</label>
+          <label htmlFor="text">የመንጃ ፈቃድ ደረጃ</label>
           <input
             type="text"
             id="licenselevel"
@@ -107,7 +107,7 @@ function AddDriverForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">License Number</label>
+          <label htmlFor="text">የመንጃ ፈቃድ ቁጥር</label>
           <input
             type="text"
             id="licenseNumber"
@@ -117,7 +117,7 @@ function AddDriverForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="number">License Expired Date</label>
+          <label htmlFor="number">መንጃ ፈቃድ የሚያበቃበት ቀን</label>
           <input
             type="Date"
             id="licenseExpiredDate"
@@ -127,7 +127,7 @@ function AddDriverForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">id Number</label>
+          <label htmlFor="text">መለያ ቁጥር</label>
           <input
             type="text"
             id="idNumber"
@@ -137,7 +137,7 @@ function AddDriverForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Given Point</label>
+          <label htmlFor="text">የተሰጠው ነጥብ</label>
           <input
             type="text"
             id="givenPoint"
@@ -147,7 +147,7 @@ function AddDriverForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="number">Vehicle plate Number</label>
+          <label htmlFor="number">የሚያሽከረክረው ታርጋ ቁጥር</label>
           <input
             type="text"
             id="vehicle"
