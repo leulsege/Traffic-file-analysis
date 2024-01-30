@@ -52,7 +52,7 @@ function AddVehicleForm() {
     <main className={styles.login}>
       <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
         <div className={styles.row}>
-          <label htmlFor="text">Vehicle Type</label>
+          <label htmlFor="text">የተሽከርካሪው አይነት</label>
           <input
             type="text"
             id="vehicleType"
@@ -63,7 +63,7 @@ function AddVehicleForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="number">Vehicle plate Number</label>
+          <label htmlFor="number">የተሽከርካሪው ታርጋ ቁጥር</label>
           <input
             type="text"
             id="plateNumber"
@@ -73,7 +73,7 @@ function AddVehicleForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="string">Motor Number</label>
+          <label htmlFor="string">የሞተር ቁጥር</label>
           <input
             type="tel"
             id="moterNumber"
@@ -84,7 +84,7 @@ function AddVehicleForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="string">Chanci Number</label>
+          <label htmlFor="string">የቻንሲ ቁጥር</label>
           <input
             type="tel"
             id="moterNumber"
@@ -95,7 +95,7 @@ function AddVehicleForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Side Number</label>
+          <label htmlFor="text">የጎን ቁጥርስ</label>
           <input
             type="text"
             id="sideNumber"
@@ -105,7 +105,7 @@ function AddVehicleForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="number">Bm Service Time</label>
+          <label htmlFor="number">Bm ሰርቪስ ጊዜ</label>
           <input
             type="number"
             id="bmServiceTime"
@@ -115,7 +115,7 @@ function AddVehicleForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="number">Pm Service Time</label>
+          <label htmlFor="number">Pm ሰርቪስ ጊዜ</label>
           <input
             type="number"
             id="pmServiceTime"
@@ -125,7 +125,7 @@ function AddVehicleForm() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">others</label>
+          <label htmlFor="text">ሌላ</label>
           <input
             type="text"
             id="others"

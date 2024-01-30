@@ -84,11 +84,7 @@ function UserForm({ driver, setDriver }) {
     <main className={styles.login}>
       <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
         <div className={styles.row}>
-<<<<<<< HEAD
           <label htmlFor="text">መሉ ስም</label>
-=======
-          <label htmlFor="text">ሙሉ ስም</label>
->>>>>>> e526c8a081944d3e9b0f404aa12a220fe2da27b6
           <input
             type="text"
             id="fullName"
@@ -129,11 +125,7 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
-<<<<<<< HEAD
           <label htmlFor="text">ጾታ</label>
-=======
-          <label htmlFor="number">የቅጥር ዘመን</label>
->>>>>>> e526c8a081944d3e9b0f404aa12a220fe2da27b6
           <input
             type="date"
             id="commencementDate"
@@ -143,11 +135,7 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
-<<<<<<< HEAD
           <label htmlFor="text">የመንጃ ፈቃድ ደረጃ</label>
-=======
-          <label htmlFor="text">የመንጃ ፍቃድ ደረጃ</label>
->>>>>>> e526c8a081944d3e9b0f404aa12a220fe2da27b6
           <input
             type="text"
             id="licenselevel"
@@ -157,11 +145,7 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
-<<<<<<< HEAD
           <label htmlFor="text">የመንጃ ፈቃድ ቁጥር</label>
-=======
-          <label htmlFor="text">የመንጃ ፍቃድ ቁጥር</label>
->>>>>>> e526c8a081944d3e9b0f404aa12a220fe2da27b6
           <input
             type="text"
             id="licenseNumber"
@@ -171,11 +155,7 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
-<<<<<<< HEAD
           <label htmlFor="number">መንጃ ፍቃድ የሚያበቃበት ቀን</label>
-=======
-          <label htmlFor="text">መንጃ ፍቃድ የሚያበቃበት ቀን</label>
->>>>>>> e526c8a081944d3e9b0f404aa12a220fe2da27b6
           <input
             type="Date"
             id="licenseExpiredDate"
@@ -195,11 +175,7 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
-<<<<<<< HEAD
           <label htmlFor="number">የሚያሽከረክረው ሰሌዳ ቁጥር</label>
-=======
-          <label htmlFor="number">የተሰጠው ነጥብ</label>
->>>>>>> e526c8a081944d3e9b0f404aa12a220fe2da27b6
           <input
             type="text"
             id="givenPoint"
