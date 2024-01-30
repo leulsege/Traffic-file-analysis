@@ -3,6 +3,9 @@ import styles from "./DriverProfile.module.css";
 import UserForm from "../components/UserForm";
 import { useParams } from "react-router-dom";
 import Spinner from "../components/Spinner";
+import AccidentForm from "../components/AccidentForm";
+import AccidentTrack from "../components/accidentTrack";
+import PhotoUpload from "../components/photoUpload";
 
 function DriverProfile() {
   const [driver, setDriver] = useState();
@@ -34,29 +37,59 @@ function DriverProfile() {
     fetchDriver();
   }, []);
 
+  const [showAccidentForm, setShowAccidentForm] = useState(false);
+
+  const toggleAccidentForm = () => {
+    setShowAccidentForm(!showAccidentForm);
+  };
+
   if (isLoading) return <Spinner />;
 
   return (
     <>
       <main className={styles.container}>
         <div className={styles.imgholder}>
-          <img
-            src={
-              driver.photo
-                ? `${import.meta.env.VITE_BACKEND_STATIC_FILE}/img/drivers/${
-                    driver.photo
-                  }`
-                : "/default-user-profile.jpg"
+          <a
+            href={
+              driver.photo &&
+              `${import.meta.env.VITE_BACKEND_STATIC_FILE}/img/drivers/${
+                driver.photo
+              }`
             }
-            className={styles.driverImg}
+          >
+            <img
+              src={
+                driver.photo
+                  ? `${import.meta.env.VITE_BACKEND_STATIC_FILE}/img/drivers/${
+                      driver.photo
+                    }`
+                  : "/default-user-profile.jpg"
+              }
+              className={styles.driverImg}
+            />
+          </a>
+          <PhotoUpload
+            url={`drivers/uploadphoto/${driverId.id}`}
+            setProfile={setDriver}
           />
-          <p className={styles.name}>{driver.name}</p>
+          <p className={styles.name}>{driver.fullName}</p>
           <p className={styles.phoneNumber}>{driver.phoneNumber}</p>
         </div>
         <div className={styles.profileSettings}>
           <UserForm driver={driver} setDriver={setDriver} />
         </div>
-        <div>Another User Details</div>
+        <div>
+          {showAccidentForm ? (
+            <AccidentForm onCancel={toggleAccidentForm} driver={driver} />
+          ) : (
+            <>
+              <button onClick={toggleAccidentForm} className={styles.addButton}>
+                Add Accident
+              </button>
+              <AccidentTrack accidents={driver.accidentRecord} />
+            </>
+          )}
+        </div>
       </main>
     </>
   );

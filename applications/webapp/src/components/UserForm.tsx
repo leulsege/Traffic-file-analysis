@@ -1,19 +1,26 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./UserForm.module.css";
 import { useState } from "react";
+import { useStepContext } from "@mui/material";
 import Spinner from "./Spinner";
+import ConfirmationPrompt from "./ConfirmationPrompt";
 
 function UserForm({ driver, setDriver }) {
-  const [fullName, setFullName] = useState(driver.name);
+  const [fullName, setFullName] = useState(driver.fullName);
   const [gender, setGender] = useState(driver.gender);
   const [licenseLevel, setLicenseLevel] = useState(driver.licenseLevel);
   const [licenseNumber, setLicenseNumber] = useState(driver.licenseNumber);
   const [licenseExpiredDate, setLicenseExpiredDate] = useState(
-    driver.licenseExpiredDate
+    driver.licenseExpiredDate?.split("T")[0]
   );
   const [idNumber, setIdNumber] = useState(driver.idNumber);
+  const [commencementDate, setCommencementDate] = useState(
+    driver.commencementDate?.split("T")[0]
+  );
+  const [birthDate, setBirthDate] = useState(driver.birthDate?.split("T")[0]);
   const [phoneNumber, setPhoneNumber] = useState(driver.phoneNumber);
-  const [PlateNumber, setPlateNumber] = useState(driver.vehicle[0].plateNumber);
+  const [givenPoint, setGivenPoint] = useState(driver.givenPoint);
+  const [vehicle, setVehicle] = useState(driver.vehicle?.plateNumber);
 
   const driverId = useParams();
   const navigate = useNavigate();
@@ -29,11 +36,14 @@ function UserForm({ driver, setDriver }) {
             fullName,
             phoneNumber,
             gender,
+            birthDate,
+            commencementDate,
             licenseLevel,
             licenseNumber,
             licenseExpiredDate,
             idNumber,
-            PlateNumber,
+            givenPoint,
+            vehicle,
           }),
           credentials: "include",
         }
@@ -74,12 +84,36 @@ function UserForm({ driver, setDriver }) {
     <main className={styles.login}>
       <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
         <div className={styles.row}>
+<<<<<<< HEAD
           <label htmlFor="text">መሉ ስም</label>
+=======
+          <label htmlFor="text">ሙሉ ስም</label>
+>>>>>>> e526c8a081944d3e9b0f404aa12a220fe2da27b6
           <input
             type="text"
             id="fullName"
             onChange={(e) => setFullName(e.target.value)}
             value={fullName}
+            required
+          />
+        </div>
+        <div className={styles.row}>
+          <label htmlFor="text"> ጾታ</label>
+          <input
+            type="text"
+            id="gender"
+            onChange={(e) => setGender(e.target.value)}
+            value={gender}
+            required
+          />
+        </div>
+        <div className={styles.row}>
+          <label htmlFor="text">የትውልድ ቀን</label>
+          <input
+            type="date"
+            id="birthDate"
+            onChange={(e) => setBirthDate(e.target.value)}
+            value={birthDate}
             required
           />
         </div>
@@ -95,17 +129,25 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
+<<<<<<< HEAD
           <label htmlFor="text">ጾታ</label>
+=======
+          <label htmlFor="number">የቅጥር ዘመን</label>
+>>>>>>> e526c8a081944d3e9b0f404aa12a220fe2da27b6
           <input
-            type="text"
-            id="gender"
-            onChange={(e) => setGender(e.target.value)}
-            value={gender}
+            type="date"
+            id="commencementDate"
+            onChange={(e) => setCommencementDate(e.target.value)}
+            value={commencementDate}
           />
         </div>
 
         <div className={styles.row}>
+<<<<<<< HEAD
           <label htmlFor="text">የመንጃ ፈቃድ ደረጃ</label>
+=======
+          <label htmlFor="text">የመንጃ ፍቃድ ደረጃ</label>
+>>>>>>> e526c8a081944d3e9b0f404aa12a220fe2da27b6
           <input
             type="text"
             id="licenselevel"
@@ -115,7 +157,11 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
+<<<<<<< HEAD
           <label htmlFor="text">የመንጃ ፈቃድ ቁጥር</label>
+=======
+          <label htmlFor="text">የመንጃ ፍቃድ ቁጥር</label>
+>>>>>>> e526c8a081944d3e9b0f404aa12a220fe2da27b6
           <input
             type="text"
             id="licenseNumber"
@@ -125,7 +171,11 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
+<<<<<<< HEAD
           <label htmlFor="number">መንጃ ፍቃድ የሚያበቃበት ቀን</label>
+=======
+          <label htmlFor="text">መንጃ ፍቃድ የሚያበቃበት ቀን</label>
+>>>>>>> e526c8a081944d3e9b0f404aa12a220fe2da27b6
           <input
             type="Date"
             id="licenseExpiredDate"
@@ -145,12 +195,26 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
+<<<<<<< HEAD
           <label htmlFor="number">የሚያሽከረክረው ሰሌዳ ቁጥር</label>
+=======
+          <label htmlFor="number">የተሰጠው ነጥብ</label>
+>>>>>>> e526c8a081944d3e9b0f404aa12a220fe2da27b6
           <input
             type="text"
-            id="plateNumber"
-            onChange={(e) => setPlateNumber(e.target.value)}
-            value={PlateNumber}
+            id="givenPoint"
+            onChange={(e) => setGivenPoint(e.target.value)}
+            value={givenPoint}
+          />
+        </div>
+
+        <div className={styles.row}>
+          <label htmlFor="number">የሚነዳው መኪና ታርጋ ቁጥር</label>
+          <input
+            type="text"
+            id="vehicle"
+            onChange={(e) => setVehicle(e.target.value)}
+            value={vehicle}
           />
         </div>
 
@@ -158,9 +222,12 @@ function UserForm({ driver, setDriver }) {
           <button className={styles.updbtn} onClick={handleUpdate}>
             Save Profile
           </button>
-          <button className={styles.delbtn} onClick={handleDelete}>
-            Delete Driver
-          </button>
+          <ConfirmationPrompt
+            onConfirm={handleDelete}
+            onCancel={() => console.log("Deletion canceled")}
+          >
+            <button className={styles.delbtn}>Delete Driver</button>
+          </ConfirmationPrompt>
         </div>
       </form>
     </main>

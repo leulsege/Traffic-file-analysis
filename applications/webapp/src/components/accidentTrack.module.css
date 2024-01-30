@@ -2,7 +2,7 @@
   width: 98%;
 }
 .accidentContent {
-  padding: 1rem 2rem 2rem 1rem;
+  padding: 0rem 0rem 0rem 0rem;
 }
 
 .accidentTitle {
@@ -23,4 +23,16 @@
   transition: all 0.4s;
   margin-top: 2rem;
   cursor: pointer;
+  width: 70%;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.reducedPoint {
+  color: red;
+  font-size: 1.8rem;
+  font-weight: 600;
 }

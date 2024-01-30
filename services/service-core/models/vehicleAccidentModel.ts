@@ -7,13 +7,17 @@ interface VehicleAccident extends Document {
   damages: string
   cause: string
   guilty: string
-  damageEstimation: number
+  damageEstimation: string
   insuranceSentDate: Date
   excessLetterDate: Date
   maintenanceProcess: string
   preformDate: Date
   paymentDateLetterNumber: string
   paymentRequestLetterDate: Date
+  reducedPoint: number
+  givenDecision: string
+  vehicle: Schema.Types.ObjectId
+  driver: Schema.Types.ObjectId
 }
 
 // Define the mongoose schema
@@ -23,13 +27,18 @@ const accidentSchema: Schema = new Schema({
   damages: { type: String },
   cause: { type: String },
   guilty: { type: String },
-  damageEstimation: { type: Number },
+  damageEstimation: { type: String },
   insuranceSentDate: { type: Date },
   excessLetterDate: { type: String },
   maintenanceProcess: { type: String },
   preformDate: { type: Date },
   paymentDateLetterNumber: { type: String },
   paymentRequestLetterDate: { type: Date },
+  reducedPoint: {
+    type: Number,
+    required: true,
+  },
+  givenDecision: String,
   photo: {
     type: String,
     default: null,

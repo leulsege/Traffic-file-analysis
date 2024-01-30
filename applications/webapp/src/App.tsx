@@ -11,9 +11,16 @@ import { useState } from "react";
 import ProtectedRoute from "./views/ProtectedRoute";
 import DriverProfile from "./views/DriverProfile";
 import NotFound from "./components/NotFound";
+import VehiclesAppLayout from "./views/VehiclesApplayout";
+import VehicleProfile from "./views/VehicleProfile";
+import TrainingAppLayout from "./views/TrainingAppLayout";
+import TrainerProfile from "./views/TrainerProfile";
+import AdminProfile from "./views/AdminProfile";
+import Approve from "./views/owner/Approve";
+import AdminApprove from "./views/owner/AdminApprove";
+import AccidentView from "./views/accidentView";
 
 function App() {
-  const [user, setUser] = useState();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   return (
     <BrowserRouter>
@@ -22,9 +29,7 @@ function App() {
         <Route path="/aboutus" element={<AboutUs />} />
         <Route
           path="/login"
-          element={
-            <Login setUser={setUser} setIsAuthenticated={setIsAuthenticated} />
-          }
+          element={<Login setIsAuthenticated={setIsAuthenticated} />}
         ></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route index element={<Navigate replace to="drivers" />} />
@@ -50,8 +55,94 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="vehicles" element={<AppLayout />} />
-        <Route path="vehicles/:id" element={<DriverProfile />} />
+        <Route
+          path="/vehicles"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              setIsAuthenticated={setIsAuthenticated}
+            >
+              <VehiclesAppLayout />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/vehicles/:id"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              setIsAuthenticated={setIsAuthenticated}
+            >
+              <VehicleProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/trainings"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              setIsAuthenticated={setIsAuthenticated}
+            >
+              <TrainingAppLayout />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/trainings/:id"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              setIsAuthenticated={setIsAuthenticated}
+            >
+              <TrainerProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admins"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              setIsAuthenticated={setIsAuthenticated}
+            >
+              <Approve />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admins/:id"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              setIsAuthenticated={setIsAuthenticated}
+            >
+              <AdminApprove />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              setIsAuthenticated={setIsAuthenticated}
+            >
+              <AdminProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/accidents/:id"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              setIsAuthenticated={setIsAuthenticated}
+            >
+              <AccidentView />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verify/:token" element={<Verify />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />

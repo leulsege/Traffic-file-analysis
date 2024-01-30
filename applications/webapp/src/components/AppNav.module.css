@@ -21,9 +21,10 @@
 
 .item {
   border: 1px solid #ddd;
-  padding: 52px;
+  padding: 42px;
   text-align: center;
   cursor: pointer;
+  font-size: 1.5rem;
 }
 
 .row {

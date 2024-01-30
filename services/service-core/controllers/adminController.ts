@@ -33,10 +33,16 @@ const upload = multer({
 
 export const uploadUserPhoto = upload.single('photo')
 
+export const getMe = asyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    req.params.id = (req as any).user._id
+    next()
+  },
+)
+
 export const resizeUserPhoto = asyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     if (!req.file) return next()
-    console.log((req as any).user._id)
     req.file.filename = `admin-${(req as any).user._id}-${Date.now()}.jpeg`
 
     await sharp(req.file.buffer)
@@ -85,7 +91,7 @@ export const updateUser = asyncError(
         ),
       )
     }
-    req.params.id = (req as any).user._id
+
     if (req.file) req.body.photo = req.file.filename
     const updateUser = await User.findByIdAndUpdate(req.params.id, req.body, {
       new: true,

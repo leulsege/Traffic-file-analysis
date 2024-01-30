@@ -1,7 +1,7 @@
+import { Request, Response, NextFunction } from 'express'
 import asyncError from '../utils/asyncError'
 import VehicleModel from '../models/vehicleModel'
-
-import { Request, Response, NextFunction } from 'express'
+import APIFeatures from '../utils/apiFeatures'
 
 export const createVehicle = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -18,7 +18,13 @@ export const createVehicle = asyncError(
 
 export const getAllVehicles = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const vehicles = await VehicleModel.find()
+    const features = new APIFeatures(VehicleModel.find(), req.query)
+      .filter()
+      .limitFields()
+      .paginate()
+      .sort()
+
+    const vehicles = await features.query
 
     res.status(200).json({
       status: 'success',
@@ -32,7 +38,10 @@ export const getAllVehicles = asyncError(
 
 export const getVehicle = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const vehicle = await VehicleModel.findById(req.params.id)
+    const vehicle = await VehicleModel.findById(req.params.id).populate({
+      path: 'driver',
+      select: '-vehicle -__v',
+    })
 
     res.status(200).json({
       status: 'success',
@@ -45,18 +54,6 @@ export const getVehicle = asyncError(
 
 export const updateVehicle = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const currentVehicle = await VehicleModel.findById(req.params.id)
-
-    if (req.body.driver !== undefined) {
-      currentVehicle.history.push({
-        date: Date.now(),
-        driver: currentVehicle.driver,
-        user: (req as any).user._id,
-      })
-
-      await currentVehicle.save()
-    }
-
     // Update the document with the provided data
     const updatedVehicle = await VehicleModel.findByIdAndUpdate(
       req.params.id,
@@ -65,7 +62,10 @@ export const updateVehicle = asyncError(
         new: true,
         runValidators: true,
       },
-    )
+    ).populate({
+      path: 'driver',
+      select: '-vehicle -__v',
+    })
 
     res.status(200).json({
       status: 'success',

@@ -6,9 +6,8 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  width: calc(
-    100vw - 2rem
-  ); /* Adjust this value to control the height of the container */
+  width: calc(100vw - 2rem);
+  overflow: hidden;
 }
 
 /* Add additional styling for other elements as needed */
@@ -51,4 +50,22 @@
   background-color: var(--color-brand--2);
   color: #333;
   padding: 0.8rem 1.6rem;
+}
+
+.formHolder {
+  margin: 9.2rem 0;
+}
+
+.currentPoint {
+  color: red;
+  font-size: 2.4rem;
+  font-weight: 700;
+  display: inline-block;
+}
+
+.currentText {
+  color: #555;
+  font-weight: 400;
+  font-size: 1.2rem;
+  display: inline;
 }

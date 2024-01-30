@@ -5,6 +5,7 @@ import DriverModel from '../models/driverModel'
 import { Request, Response, NextFunction } from 'express'
 import APIFeatures from '../utils/apiFeatures'
 import AppError from '../utils/appError'
+import VehicleModel from '../models/vehicleModel'
 
 const multerStorage = multer.memoryStorage()
 
@@ -51,6 +52,14 @@ export const resizeUserPhoto = asyncError(
 
 export const createDriver = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    if (req.body.vehicle) {
+      const vehicle = await VehicleModel.findOne({
+        plateNumber: req.body.vehicle,
+      })
+      if (!vehicle)
+        new AppError('there is no vehicle with this PlateNumber', 404)
+      req.body.vehicle = (vehicle as any)?._id
+    }
     const newDriver = await DriverModel.create(req.body)
 
     res.status(201).json({
@@ -72,9 +81,6 @@ export const getAllDrivers = asyncError(
 
     const drivers = await features.query
 
-    const searchString = 'eth'
-    const regex = new RegExp(`^${searchString}`, 'i')
-
     res.status(200).json({
       status: 'success',
       results: drivers.length,
@@ -87,32 +93,36 @@ export const getAllDrivers = asyncError(
 
 export const getDriver = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const driver = await DriverModel.findById(req.params.id)
-      .populate({
-        path: 'vehicle',
-        select: '-driver -__v',
-      })
-      .populate({
-        path: 'faultRecord',
-        select: '-driver -__v',
-      })
-      .populate({
-        path: 'accidentRecord',
-        select: '-driver -__v',
-      })
+    const driver = await DriverModel.findById(req.params.id).populate({
+      path: 'accidentRecord',
+      select: '-driver -__v',
+    })
+
+    // Await currentPoint calculation
+    const currentPoint = await (driver as any).currentPoint
 
     res.status(200).json({
       status: 'success',
       data: {
-        driver,
+        driver: {
+          ...driver.toJSON(),
+          currentPoint,
+        },
       },
     })
   },
 )
-
 export const updateDriver = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     if (req.file) req.body.photo = req.file.filename
+    if (req.body.vehicle) {
+      const vehicle = await VehicleModel.findOne({
+        plateNumber: req.body.vehicle,
+      })
+      if (!vehicle)
+        new AppError('there is no vehicle with this PlateNumber', 404)
+      req.body.vehicle = (vehicle as any)?._id
+    }
     const updateDriver = await DriverModel.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -120,20 +130,20 @@ export const updateDriver = asyncError(
         new: true,
         runValidators: true,
       },
-    )
-      .populate({
-        path: 'vehicle',
-        select: '-driver -__v',
-      })
-      .populate({
-        path: 'faultRecord',
-        select: '-driver -__v',
-      })
+    ).populate({
+      path: 'accidentRecord',
+      select: '-driver -__v',
+    })
+
+    const currentPoint = await (updateDriver as any).currentPoint
 
     res.status(200).json({
       status: 'success',
       data: {
-        driver: updateDriver,
+        driver: {
+          ...updateDriver.toJSON(),
+          currentPoint,
+        },
       },
     })
   },
