@@ -1,5 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./AdminForm.module.css";
+import ConfirmationPrompt from "../ConfirmationPrompt";
 
 function ApproveAdminForm({ admin, setAdmin }) {
   const adminId = useParams();
@@ -72,9 +73,12 @@ function ApproveAdminForm({ admin, setAdmin }) {
                 Approve
               </button>
             )}
-            <button className={styles.delbtn} onClick={handleDelete}>
-              Delete
-            </button>
+            <ConfirmationPrompt
+              onConfirm={handleDelete}
+              onCancel={() => console.log("Deletion canceled")}
+            >
+              <button className={styles.delbtn}>Delete</button>
+            </ConfirmationPrompt>
           </div>
         </form>
       </main>

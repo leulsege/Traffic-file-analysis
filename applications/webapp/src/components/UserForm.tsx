@@ -3,6 +3,7 @@ import styles from "./UserForm.module.css";
 import { useState } from "react";
 import { useStepContext } from "@mui/material";
 import Spinner from "./Spinner";
+import ConfirmationPrompt from "./ConfirmationPrompt";
 
 function UserForm({ driver, setDriver }) {
   const [fullName, setFullName] = useState(driver.fullName);
@@ -197,9 +198,12 @@ function UserForm({ driver, setDriver }) {
           <button className={styles.updbtn} onClick={handleUpdate}>
             Save Profile
           </button>
-          <button className={styles.delbtn} onClick={handleDelete}>
-            Delete Driver
-          </button>
+          <ConfirmationPrompt
+            onConfirm={handleDelete}
+            onCancel={() => console.log("Deletion canceled")}
+          >
+            <button className={styles.delbtn}>Delete Driver</button>
+          </ConfirmationPrompt>
         </div>
       </form>
     </main>

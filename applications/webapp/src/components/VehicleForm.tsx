@@ -2,6 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./UserForm.module.css";
 import { useState } from "react";
 import Spinner from "./Spinner";
+import ConfirmationPrompt from "./ConfirmationPrompt";
 
 function VehicleForm({ vehicle, setVehicle }) {
   const [bmServiceTime, setBmServiceTime] = useState(vehicle.bmServiceTime);
@@ -158,9 +159,12 @@ function VehicleForm({ vehicle, setVehicle }) {
           <button className={styles.updbtn} onClick={handleUpdate}>
             Update Vehicle
           </button>
-          <button className={styles.delbtn} onClick={handleDelete}>
-            Delete Vehicle
-          </button>
+          <ConfirmationPrompt
+            onConfirm={handleDelete}
+            onCancel={() => console.log("Deletion canceled")}
+          >
+            <button className={styles.delbtn}>Delete Vehicle</button>
+          </ConfirmationPrompt>
         </div>
       </form>
     </main>

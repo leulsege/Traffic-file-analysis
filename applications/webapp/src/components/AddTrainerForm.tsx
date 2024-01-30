@@ -43,7 +43,7 @@ function AddTrainerForm() {
 
   return (
     <main className={styles.login}>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
         <div className={styles.row}>
           <label htmlFor="text">License Number of Trainer</label>
           <input
@@ -107,9 +107,9 @@ function AddTrainerForm() {
         </div>
 
         <div>
-          <Link className={styles.ctaLink} onClick={handleCreate}>
+          <button className={styles.updbtn} onClick={handleCreate}>
             Submit
-          </Link>
+          </button>
         </div>
       </form>
     </main>

@@ -34,3 +34,15 @@ a:visited {
   font-size: 1.2rem;
   font-weight: 600;
 }
+
+.updbtn {
+  background-color: var(--color-brand--2);
+  align-self: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  padding: 0.8rem 2rem;
+  border-radius: 7px;
+}

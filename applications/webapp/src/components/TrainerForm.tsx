@@ -1,6 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./UserForm.module.css";
 import { useState } from "react";
+import ConfirmationPrompt from "./ConfirmationPrompt";
 
 function UserForm({ trainings, setTraining }) {
   const navigate = useNavigate();
@@ -154,9 +155,13 @@ function UserForm({ trainings, setTraining }) {
           <button className={styles.updbtn} onClick={handleUpdate}>
             Update Trainer
           </button>
-          <button className={styles.delbtn} onClick={handleDelete}>
-            Remove Trainer
-          </button>
+
+          <ConfirmationPrompt
+            onConfirm={handleDelete}
+            onCancel={() => console.log("Deletion canceled")}
+          >
+            <button className={styles.delbtn}>Remove Trainer</button>
+          </ConfirmationPrompt>
         </div>
       </form>
     </main>
