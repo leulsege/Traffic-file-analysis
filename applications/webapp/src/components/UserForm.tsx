@@ -74,7 +74,7 @@ function UserForm({ driver, setDriver }) {
     <main className={styles.login}>
       <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
         <div className={styles.row}>
-          <label htmlFor="text">Full Name</label>
+          <label htmlFor="text">መሉ ስም</label>
           <input
             type="text"
             id="fullName"
@@ -85,7 +85,7 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="number">Phone Number</label>
+          <label htmlFor="number">ስልክ ቁጥር</label>
           <input
             type="tel"
             id="phoneNumber"
@@ -95,7 +95,7 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">Gender</label>
+          <label htmlFor="text">ጾታ</label>
           <input
             type="text"
             id="gender"
@@ -105,7 +105,7 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">License Level</label>
+          <label htmlFor="text">የመንጃ ፈቃድ ደረጃ</label>
           <input
             type="text"
             id="licenselevel"
@@ -115,7 +115,7 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">License Number</label>
+          <label htmlFor="text">የመንጃ ፈቃድ ቁጥር</label>
           <input
             type="text"
             id="licenseNumber"
@@ -125,7 +125,7 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="number">License Expired Date</label>
+          <label htmlFor="number">መንጃ ፍቃድ የሚያበቃበት ቀን</label>
           <input
             type="Date"
             id="licenseExpiredDate"
@@ -135,7 +135,7 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="text">id Number</label>
+          <label htmlFor="text">መለያ ቁጥር</label>
           <input
             type="text"
             id="idNumber"
@@ -145,7 +145,7 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="number">Vehicle plate Number</label>
+          <label htmlFor="number">የሚያሽከረክረው ሰሌዳ ቁጥር</label>
           <input
             type="text"
             id="plateNumber"
