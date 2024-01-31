@@ -57,7 +57,7 @@ export default function Signup() {
       setError("An error occurred while signing up" as any);
       setSnackbarOpen(true);
     } finally {
-      // setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
