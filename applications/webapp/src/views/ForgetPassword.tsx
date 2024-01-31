@@ -4,6 +4,7 @@ import { useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import Message from "../components/Message";
+import Spinner from "../components/Spinner";
 
 export default function ForgetPassword() {
   const [email, setEmail] = useState();
@@ -11,6 +12,7 @@ export default function ForgetPassword() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
@@ -19,6 +21,7 @@ export default function ForgetPassword() {
     e.preventDefault();
 
     try {
+      setIsLoading(true);
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_API}/admins/forget-password`,
         {
@@ -40,8 +43,12 @@ export default function ForgetPassword() {
       console.error("sending email error:", error);
       setError("An error occurred while sending email" as any);
       setSnackbarOpen(true);
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  if (isLoading) return <Spinner />;
 
   return (
     <main className={styles.login}>

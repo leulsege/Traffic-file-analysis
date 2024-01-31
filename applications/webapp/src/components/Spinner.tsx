@@ -1,9 +1,21 @@
-import styles from "./Spinner.module.css";
+// Spinner.js
+import React from "react";
+import { CircularProgress } from "@mui/material";
 
 function Spinner() {
   return (
-    <div className={styles.spinnerContainer}>
-      <div className={styles.spinner}></div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100vw",
+        height: "100vh",
+        background: "#333",
+        margin: "0",
+      }}
+    >
+      <CircularProgress size={100} thickness={4} />{" "}
     </div>
   );
 }

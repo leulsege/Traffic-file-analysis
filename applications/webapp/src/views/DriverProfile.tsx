@@ -75,7 +75,7 @@ function DriverProfile() {
           />
           <p className={styles.name}>{driver.fullName}</p>
           <p className={styles.phoneNumber}>{driver.phoneNumber}</p>
-          <p className={styles.currentPoint}>ቀሪ ነጥብ - {driver.currentPoint}</p>
+          <p className={styles.currentPoint}>ቀሪ ነጥብ = {driver.currentPoint}</p>
         </div>
         <div className={styles.profileSettings}>
           <UserForm driver={driver} setDriver={setDriver} />

@@ -175,7 +175,7 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="number">የሚያሽከረክረው ሰሌዳ ቁጥር</label>
+          <label htmlFor="number">የተሰጠው ነጥብ</label>
           <input
             type="text"
             id="givenPoint"

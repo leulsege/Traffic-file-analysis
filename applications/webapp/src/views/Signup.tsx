@@ -4,6 +4,7 @@ import { useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import Message from "../components/Message";
+import Spinner from "../components/Spinner";
 
 export default function Signup() {
   // PRE-FILL FOR DEV PURPOSES
@@ -16,6 +17,7 @@ export default function Signup() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
@@ -25,6 +27,7 @@ export default function Signup() {
     e.preventDefault();
 
     try {
+      setIsLoading(true);
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_API}/admins/signup`,
         {
@@ -53,8 +56,12 @@ export default function Signup() {
       console.error("Sign up error:", error);
       setError("An error occurred while signing up" as any);
       setSnackbarOpen(true);
+    } finally {
+      // setIsLoading(false);
     }
   };
+
+  if (isLoading) return <Spinner />;
 
   return (
     <main className={styles.login}>
