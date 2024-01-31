@@ -13,9 +13,10 @@ function AdminList({ admins, isLoading }) {
         <h1 className={styles.title}>Admins List</h1>
       </div>
       <div className={styles.driverList}>
-        {admins.map((admin) => (
-          <Admin key={admin._id} admin={admin} />
-        ))}
+        {admins.map((admin) => {
+          if (admin.role == "owner") return;
+          return <Admin key={admin._id} admin={admin} />;
+        })}
       </div>
     </>
   );

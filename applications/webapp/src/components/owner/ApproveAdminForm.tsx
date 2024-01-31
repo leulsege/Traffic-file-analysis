@@ -56,7 +56,7 @@ function ApproveAdminForm({ admin, setAdmin }) {
       <main className={styles.login}>
         <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
           <div className={styles.row}>
-            <label htmlFor="text">Fist Name</label>
+            <label htmlFor="text">ሙሉ ስም</label>
             <span>
               {admin.firstName} {admin.lastName}
             </span>
