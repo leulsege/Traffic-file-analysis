@@ -8,11 +8,12 @@
 }
 
 .message {
-  display: inline;
-  padding: 2.5rem 2.5rem;
-  background-color: var(--color-dark--1);
+  padding: 2.5rem;
+  background-color: #3498db; /* Updated background color */
+  border-radius: 10px; /* Added border radius for rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added a subtle box shadow */
   text-align: center;
-  font-size: 36px;
-  font-weight: 500;
-  color: white;
+  font-size: 24px; /* Reduced font size for better readability */
+  font-weight: 600; /* Adjusted font weight */
+  color: #fff;
 }
