@@ -1,11 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./AdminForm.module.css";
 import { useState } from "react";
+import CustomSnackbar from "../CustomSnackBar";
 
 function AdminForm({ admin, setAdmin }) {
   const [firstName, setFirstName] = useState(admin.firstName);
   const [lastName, setLastName] = useState(admin.lastName);
   const navigate = useNavigate();
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setShowSnackbar(false);
+  };
 
   async function handleUpdate() {
     try {
@@ -24,11 +34,20 @@ function AdminForm({ admin, setAdmin }) {
       if (response.ok) {
         const adminInfo = await response.json();
         setAdmin(adminInfo.data.user);
+        setSnackbarMessage("Profile Updated Successfully!");
+        setSnackbarSeverity("success");
+        setShowSnackbar(true);
       } else {
         const errorData = await response.json();
+        setSnackbarMessage(errorData.message);
+        setSnackbarSeverity("error");
+        setShowSnackbar(true);
         console.log(errorData);
       }
     } catch (error) {
+      setSnackbarMessage("unknown error");
+      setSnackbarSeverity("success");
+      setShowSnackbar(true);
       console.error("Error fetching admin:", error);
     }
   }
@@ -76,9 +95,17 @@ function AdminForm({ admin, setAdmin }) {
           </div>
 
           <div className={styles.buttons}>
-            <button className={styles.updbtn} onClick={handleUpdate}>
-              update profile
-            </button>
+            <div>
+              <button className={styles.updbtn} onClick={handleUpdate}>
+                Save Profile
+              </button>
+              <CustomSnackbar
+                open={showSnackbar}
+                onClose={handleSnackbarClose}
+                message={snackbarMessage}
+                severity={snackbarSeverity}
+              />
+            </div>
             <button className={styles.delbtn} onClick={handleLogout}>
               Log out
             </button>

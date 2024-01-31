@@ -2,6 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./UserForm.module.css";
 import { useState } from "react";
 import ConfirmationPrompt from "./ConfirmationPrompt";
+import CustomSnackbar from "./CustomSnackBar";
 
 function UserForm({ trainings, setTraining }) {
   const navigate = useNavigate();
@@ -24,6 +25,16 @@ function UserForm({ trainings, setTraining }) {
   );
   const [checkUp, setCheckUp] = useState(trainings.checkUp);
 
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setShowSnackbar(false);
+  };
+
   async function handleUpdate() {
     try {
       const response = await fetch(
@@ -45,11 +56,20 @@ function UserForm({ trainings, setTraining }) {
       if (response.ok) {
         const trainerInfo = await response.json();
         setTraining(trainerInfo.data.training);
+        setSnackbarMessage("Trainer Updated Successfully!");
+        setSnackbarSeverity("success");
+        setShowSnackbar(true);
       } else {
         const errorData = await response.json();
+        setSnackbarMessage(errorData.message);
+        setSnackbarSeverity("error");
+        setShowSnackbar(true);
         console.log(errorData);
       }
     } catch (error) {
+      setSnackbarMessage("unknown error");
+      setSnackbarSeverity("success");
+      setShowSnackbar(true);
       console.error("Error fetching trainer:", error);
     }
   }
@@ -152,9 +172,17 @@ function UserForm({ trainings, setTraining }) {
         </div>
 
         <div className={styles.buttons}>
-          <button className={styles.updbtn} onClick={handleUpdate}>
-            Update Trainer
-          </button>
+          <div>
+            <button className={styles.updbtn} onClick={handleUpdate}>
+              Update Trainer
+            </button>
+            <CustomSnackbar
+              open={showSnackbar}
+              onClose={handleSnackbarClose}
+              message={snackbarMessage}
+              severity={snackbarSeverity}
+            />
+          </div>
 
           <ConfirmationPrompt
             onConfirm={handleDelete}

@@ -3,6 +3,7 @@ import styles from "./UserForm.module.css";
 import { useState } from "react";
 import Spinner from "./Spinner";
 import ConfirmationPrompt from "./ConfirmationPrompt";
+import CustomSnackbar from "./CustomSnackBar";
 
 function VehicleForm({ vehicle, setVehicle }) {
   const [bmServiceTime, setBmServiceTime] = useState(vehicle.bmServiceTime);
@@ -13,6 +14,15 @@ function VehicleForm({ vehicle, setVehicle }) {
   const [chanciNumber, setChanciNumber] = useState(vehicle.chanciNumber);
   const [plateNumber, setPlateNumber] = useState(vehicle.plateNumber);
   const [others, setOthers] = useState(vehicle.others);
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setShowSnackbar(false);
+  };
 
   const vehicleId = useParams();
   const navigate = useNavigate();
@@ -40,11 +50,20 @@ function VehicleForm({ vehicle, setVehicle }) {
       if (response.ok) {
         const vehicleInfo = await response.json();
         setVehicle(vehicleInfo.data.vehicle);
+        setSnackbarMessage("Vehicle Updated Successfully!");
+        setSnackbarSeverity("success");
+        setShowSnackbar(true);
       } else {
         const errorData = await response.json();
+        setSnackbarMessage(errorData.message);
+        setSnackbarSeverity("error");
+        setShowSnackbar(true);
         console.log(errorData);
       }
     } catch (error) {
+      setSnackbarMessage("unknown error");
+      setSnackbarSeverity("success");
+      setShowSnackbar(true);
       console.error("Error fetching vehicle:", error);
     }
   }
@@ -156,9 +175,17 @@ function VehicleForm({ vehicle, setVehicle }) {
         </div>
 
         <div className={styles.buttons}>
-          <button className={styles.updbtn} onClick={handleUpdate}>
-            Update Vehicle
-          </button>
+          <div>
+            <button className={styles.updbtn} onClick={handleUpdate}>
+              Update Vehicle
+            </button>
+            <CustomSnackbar
+              open={showSnackbar}
+              onClose={handleSnackbarClose}
+              message={snackbarMessage}
+              severity={snackbarSeverity}
+            />
+          </div>
           <ConfirmationPrompt
             onConfirm={handleDelete}
             onCancel={() => console.log("Deletion canceled")}

@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./TrainersForm.module.css";
 import { useState } from "react";
+import CustomSnackbar from "./CustomSnackBar";
 
 function AddTrainerForm() {
   const [driver, setDriver] = useState("");
@@ -10,6 +11,15 @@ function AddTrainerForm() {
   const [trainingPassPoint, setTrainingPassPoint] = useState("");
   const [trainingResult, setTrainingResult] = useState("");
   const navigate = useNavigate();
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setShowSnackbar(false);
+  };
 
   async function handleCreate() {
     try {
@@ -34,9 +44,15 @@ function AddTrainerForm() {
         navigate(`/trainings/${training.data.training._id}`);
       } else {
         const errorData = await response.json();
+        setSnackbarMessage(errorData.message);
+        setSnackbarSeverity("error");
+        setShowSnackbar(true);
         console.log(errorData);
       }
     } catch (error) {
+      setSnackbarMessage("unknown error");
+      setSnackbarSeverity("success");
+      setShowSnackbar(true);
       console.error("Error fetching trainer:", error);
     }
   }
@@ -110,6 +126,12 @@ function AddTrainerForm() {
           <button className={styles.updbtn} onClick={handleCreate}>
             Submit
           </button>
+          <CustomSnackbar
+            open={showSnackbar}
+            onClose={handleSnackbarClose}
+            message={snackbarMessage}
+            severity={snackbarSeverity}
+          />
         </div>
       </form>
     </main>

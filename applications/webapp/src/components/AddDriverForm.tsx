@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Form.module.css";
 import { useState } from "react";
+import CustomSnackbar from "./CustomSnackBar";
 
 function AddDriverForm() {
   const [fullName, setFullName] = useState();
@@ -13,6 +14,15 @@ function AddDriverForm() {
   const [phoneNumber, setPhoneNumber] = useState();
   const [vehicle, setVehicle] = useState();
   const [givenPoint, setGivenPoint] = useState();
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setShowSnackbar(false);
+  };
 
   const navigate = useNavigate();
 
@@ -44,9 +54,15 @@ function AddDriverForm() {
         navigate(`/drivers/${driver.data.driver._id}`);
       } else {
         const errorData = await response.json();
+        setSnackbarMessage(errorData.message);
+        setSnackbarSeverity("error");
+        setShowSnackbar(true);
         console.log(errorData);
       }
     } catch (error) {
+      setSnackbarMessage("unknown error");
+      setSnackbarSeverity("success");
+      setShowSnackbar(true);
       console.error("Error fetching driver:", error);
     }
   }
@@ -160,6 +176,12 @@ function AddDriverForm() {
           <button className={styles.crtbtn} onClick={handleCreate}>
             Add Driver
           </button>
+          <CustomSnackbar
+            open={showSnackbar}
+            onClose={handleSnackbarClose}
+            message={snackbarMessage}
+            severity={snackbarSeverity}
+          />
         </div>
       </form>
     </main>

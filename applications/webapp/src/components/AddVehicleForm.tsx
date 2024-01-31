@@ -2,6 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./UserForm.module.css";
 import { useState } from "react";
 import Spinner from "./Spinner";
+import CustomSnackbar from "./CustomSnackBar";
 
 function AddVehicleForm() {
   const [bmServiceTime, setBmServiceTime] = useState();
@@ -12,6 +13,15 @@ function AddVehicleForm() {
   const [chanciNumber, setChanciNumber] = useState();
   const [plateNumber, setPlateNumber] = useState();
   const [others, setOthers] = useState();
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setShowSnackbar(false);
+  };
 
   const vehicleId = useParams();
   const navigate = useNavigate();
@@ -41,9 +51,15 @@ function AddVehicleForm() {
         navigate(`/vehicles/${vehicle.data.vehicle._id}`);
       } else {
         const errorData = await response.json();
+        setSnackbarMessage(errorData.message);
+        setSnackbarSeverity("error");
+        setShowSnackbar(true);
         console.log(errorData);
       }
     } catch (error) {
+      setSnackbarMessage("unknown error");
+      setSnackbarSeverity("success");
+      setShowSnackbar(true);
       console.error("Error fetching vehicle:", error);
     }
   }
@@ -138,7 +154,12 @@ function AddVehicleForm() {
           <button className={styles.updbtn} onClick={handleCreate}>
             Add Vehicle
           </button>
-          <div></div>
+          <CustomSnackbar
+            open={showSnackbar}
+            onClose={handleSnackbarClose}
+            message={snackbarMessage}
+            severity={snackbarSeverity}
+          />
         </div>
       </form>
     </main>

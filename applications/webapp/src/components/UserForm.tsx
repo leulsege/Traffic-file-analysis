@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useStepContext } from "@mui/material";
 import Spinner from "./Spinner";
 import ConfirmationPrompt from "./ConfirmationPrompt";
+import CustomSnackbar from "./CustomSnackBar";
 
 function UserForm({ driver, setDriver }) {
   const [fullName, setFullName] = useState(driver.fullName);
@@ -22,6 +23,15 @@ function UserForm({ driver, setDriver }) {
   const [givenPoint, setGivenPoint] = useState(driver.givenPoint);
   const [vehicle, setVehicle] = useState(driver.vehicle?.plateNumber);
 
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setShowSnackbar(false);
+  };
   const driverId = useParams();
   const navigate = useNavigate();
 
@@ -51,11 +61,20 @@ function UserForm({ driver, setDriver }) {
       if (response.ok) {
         const driverInfo = await response.json();
         setDriver(driverInfo.data.driver);
+        setSnackbarMessage("Driver Updated Successfully!");
+        setSnackbarSeverity("success");
+        setShowSnackbar(true);
       } else {
         const errorData = await response.json();
+        setSnackbarMessage(errorData.message);
+        setSnackbarSeverity("error");
+        setShowSnackbar(true);
         console.log(errorData);
       }
     } catch (error) {
+      setSnackbarMessage("unknown error");
+      setSnackbarSeverity("success");
+      setShowSnackbar(true);
       console.error("Error fetching driver:", error);
     }
   }
@@ -195,9 +214,17 @@ function UserForm({ driver, setDriver }) {
         </div>
 
         <div className={styles.buttons}>
-          <button className={styles.updbtn} onClick={handleUpdate}>
-            Save Profile
-          </button>
+          <div>
+            <button className={styles.updbtn} onClick={handleUpdate}>
+              Save Profile
+            </button>
+            <CustomSnackbar
+              open={showSnackbar}
+              onClose={handleSnackbarClose}
+              message={snackbarMessage}
+              severity={snackbarSeverity}
+            />
+          </div>
           <ConfirmationPrompt
             onConfirm={handleDelete}
             onCancel={() => console.log("Deletion canceled")}

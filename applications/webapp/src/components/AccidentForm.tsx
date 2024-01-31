@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./AccidentForm.module.css";
 import { useState, useEffect } from "react";
+import CustomSnackbar from "./CustomSnackBar";
 
 function AccidentForm({ driver, setShowAccidentForm }) {
   const [accidentDate, setAccidentDate] = useState("");
@@ -17,6 +18,16 @@ function AccidentForm({ driver, setShowAccidentForm }) {
   const [paymentRequestLetterDate, setPaymentRequestLetterDate] = useState("");
   const [reducedPoint, setReducedPoint] = useState();
   const [givenDecision, setGivenDecision] = useState();
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setShowSnackbar(false);
+  };
+
   const navigate = useNavigate();
 
   function handleBack() {
@@ -56,9 +67,15 @@ function AccidentForm({ driver, setShowAccidentForm }) {
         navigate(`/accidents/${accidentInfo.data.vehicleAccident._id}`);
       } else {
         const errorData = await response.json();
+        setSnackbarMessage(errorData.message);
+        setSnackbarSeverity("error");
+        setShowSnackbar(true);
         console.log(errorData);
       }
     } catch (error) {
+      setSnackbarMessage("unknown error");
+      setSnackbarSeverity("success");
+      setShowSnackbar(true);
       console.error("Error fetching driver:", error);
     }
   }
@@ -216,6 +233,12 @@ function AccidentForm({ driver, setShowAccidentForm }) {
           <button className={styles.updbtn} onClick={handleCreate}>
             Submit
           </button>
+          <CustomSnackbar
+            open={showSnackbar}
+            onClose={handleSnackbarClose}
+            message={snackbarMessage}
+            severity={snackbarSeverity}
+          />
         </div>
       </form>
     </main>

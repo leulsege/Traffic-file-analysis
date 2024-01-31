@@ -7,12 +7,22 @@ import AccidentForm from "../components/AccidentForm";
 import AccidentTrack from "../components/accidentTrack";
 import PhotoUpload from "../components/photoUpload";
 import LoggedinNavBar from "../components/LoggedinNavBar";
+import CustomSnackbar from "../components/CustomSnackBar";
 
 function DriverProfile() {
   const [driver, setDriver] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [showAccidentForm, setShowAccidentForm] = useState(false);
   const driverId = useParams();
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setShowSnackbar(false);
+  };
 
   useEffect(function () {
     async function fetchDriver() {
@@ -40,7 +50,10 @@ function DriverProfile() {
   }, []);
 
   const toggleAccidentForm = () => {
-    setShowAccidentForm(!showAccidentForm);
+    if (driver.vehicle) return setShowAccidentForm(!showAccidentForm);
+    setSnackbarMessage("በመጀመሪያ ለአሽከርካሪው መኪና ይሰይሙ");
+    setSnackbarSeverity("error");
+    setShowSnackbar(true);
   };
 
   if (isLoading) return <Spinner />;
@@ -94,6 +107,12 @@ function DriverProfile() {
               <button onClick={toggleAccidentForm} className={styles.addButton}>
                 Add Accident
               </button>
+              <CustomSnackbar
+                open={showSnackbar}
+                onClose={handleSnackbarClose}
+                message={snackbarMessage}
+                severity={snackbarSeverity}
+              />
               <AccidentTrack accidents={driver.accidentRecord} />
             </>
           )}
