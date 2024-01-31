@@ -5,6 +5,7 @@ import styles from "./AppLayout.module.css";
 import TrainersDisplay from "../components/TrainersDisplay";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import LoggedinNavBar from "../components/LoggedinNavBar";
 
 export default function TrainingAppLayout() {
   const [trainers, setTrainers] = useState([]);
@@ -63,6 +64,7 @@ export default function TrainingAppLayout() {
 
   return (
     <div className={styles.app}>
+      <LoggedinNavBar />
       <Sidebar setTrainers={setTrainers} />
       {
         <TrainersDisplay

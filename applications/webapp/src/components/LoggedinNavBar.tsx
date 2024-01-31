@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 import LogoLoggedin from "./LogoLoggedin";
 
-function Navbar() {
+function LoggedinNavBar() {
   return (
     <nav className={styles.nav}>
       <LogoLoggedin />
@@ -18,4 +18,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default LoggedinNavBar;

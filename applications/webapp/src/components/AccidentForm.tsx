@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./AccidentForm.module.css";
 import { useState, useEffect } from "react";
 
-function AccidentForm({ driver }) {
+function AccidentForm({ driver, setShowAccidentForm }) {
   const [accidentDate, setAccidentDate] = useState("");
   const [accidentPlace, setAccidentPlace] = useState("");
   const [damages, setDamages] = useState("");
@@ -18,6 +18,10 @@ function AccidentForm({ driver }) {
   const [reducedPoint, setReducedPoint] = useState();
   const [givenDecision, setGivenDecision] = useState();
   const navigate = useNavigate();
+
+  function handleBack() {
+    setShowAccidentForm(false);
+  }
 
   async function handleCreate() {
     try {
@@ -61,6 +65,9 @@ function AccidentForm({ driver }) {
 
   return (
     <main className={styles.login}>
+      <button className={styles.back} onClick={handleBack}>
+        Back
+      </button>
       <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
         <div className={styles.row}>
           <label htmlFor="text">የአደጋው ቦታ</label>

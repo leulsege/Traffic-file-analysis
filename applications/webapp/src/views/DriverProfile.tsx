@@ -6,10 +6,12 @@ import Spinner from "../components/Spinner";
 import AccidentForm from "../components/AccidentForm";
 import AccidentTrack from "../components/accidentTrack";
 import PhotoUpload from "../components/photoUpload";
+import LoggedinNavBar from "../components/LoggedinNavBar";
 
 function DriverProfile() {
   const [driver, setDriver] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [showAccidentForm, setShowAccidentForm] = useState(false);
   const driverId = useParams();
 
   useEffect(function () {
@@ -37,8 +39,6 @@ function DriverProfile() {
     fetchDriver();
   }, []);
 
-  const [showAccidentForm, setShowAccidentForm] = useState(false);
-
   const toggleAccidentForm = () => {
     setShowAccidentForm(!showAccidentForm);
   };
@@ -47,6 +47,7 @@ function DriverProfile() {
 
   return (
     <>
+      <LoggedinNavBar />
       <main className={styles.container}>
         <div className={styles.imgholder}>
           <a
@@ -74,13 +75,20 @@ function DriverProfile() {
           />
           <p className={styles.name}>{driver.fullName}</p>
           <p className={styles.phoneNumber}>{driver.phoneNumber}</p>
+          <p className={styles.currentPoint}>ቀሪ ነጥብ - {driver.currentPoint}</p>
         </div>
         <div className={styles.profileSettings}>
           <UserForm driver={driver} setDriver={setDriver} />
         </div>
         <div>
           {showAccidentForm ? (
-            <AccidentForm onCancel={toggleAccidentForm} driver={driver} />
+            <>
+              <AccidentForm
+                onCancel={toggleAccidentForm}
+                driver={driver}
+                setShowAccidentForm={setShowAccidentForm}
+              />
+            </>
           ) : (
             <>
               <button onClick={toggleAccidentForm} className={styles.addButton}>

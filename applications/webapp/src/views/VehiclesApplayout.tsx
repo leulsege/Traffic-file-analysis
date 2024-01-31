@@ -5,6 +5,7 @@ import styles from "./AppLayout.module.css";
 import VehiclesDisplay from "../components/VehicleDisplay";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import LoggedinNavBar from "../components/LoggedinNavBar";
 
 export default function VehiclesAppLayout() {
   const [vehicles, setVehicles] = useState([]);
@@ -62,6 +63,7 @@ export default function VehiclesAppLayout() {
 
   return (
     <div className={styles.app}>
+      <LoggedinNavBar />
       <Sidebar setVehicles={setVehicles} />
       {
         <VehiclesDisplay

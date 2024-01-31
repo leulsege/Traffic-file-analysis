@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import styles from "./Approve.module.css";
 import AdminDisplay from "../../components/owner/AdminDisplay";
+import LoggedinNavBar from "../../components/LoggedinNavBar";
 
 export default function AppLayout() {
   const [admins, setAdmins] = useState([]);
@@ -33,6 +34,7 @@ export default function AppLayout() {
 
   return (
     <div className={styles.app}>
+      <LoggedinNavBar />
       <Sidebar />
       <AdminDisplay admins={admins} isLoading={isLoading} />
     </div>

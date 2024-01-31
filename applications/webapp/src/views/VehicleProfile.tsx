@@ -3,6 +3,7 @@ import styles from "./DriverProfile.module.css";
 import { useParams } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import VehicleForm from "../components/VehicleForm";
+import LoggedinNavBar from "../components/LoggedinNavBar";
 
 function VehicleProfile() {
   const [vehicle, setVehicle] = useState();
@@ -38,6 +39,7 @@ function VehicleProfile() {
 
   return (
     <>
+      <LoggedinNavBar />
       <main className={styles.container}>
         <div className={styles.imgholder}>
           <img src="/vehicle.jpg" className={styles.driverImg} />

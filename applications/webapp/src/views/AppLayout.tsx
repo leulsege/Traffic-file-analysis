@@ -4,6 +4,7 @@ import Sidebar from "../components/Sidebar";
 import styles from "./AppLayout.module.css";
 import Display from "../components/Display";
 import { useLocation, useNavigate } from "react-router-dom";
+import LoggedinNavBar from "../components/LoggedinNavBar";
 
 export default function AppLayout() {
   const [drivers, setDrivers] = useState([]);
@@ -63,6 +64,7 @@ export default function AppLayout() {
 
   return (
     <div className={styles.app}>
+      <LoggedinNavBar />
       <Sidebar setDrivers={setDrivers} />
       <Display
         drivers={drivers}
