@@ -13,7 +13,9 @@ function FiredDisplay({
   results,
 }) {
   const [isFormVisible, setIsFormVisible] = useState(false);
+
   const inactiveDrivers = drivers.filter((driver) => !driver.active);
+  const from = { from: "fired" };
 
   function handleAddDriversClick() {
     setIsFormVisible(true);
@@ -26,7 +28,11 @@ function FiredDisplay({
   return (
     <>
       <div className={styles.display}>
-        <DriversList drivers={inactiveDrivers} isLoading={isLoading} />
+        <DriversList
+          drivers={inactiveDrivers}
+          from={from}
+          isLoading={isLoading}
+        />
 
         {!isLoading && (
           <div className={styles.buttons}>

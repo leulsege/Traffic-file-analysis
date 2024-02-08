@@ -4,13 +4,15 @@ import Driver from "./Driver";
 import Spinner from "./Spinner";
 import styles from "./DriversList.module.css";
 
-function DriversList({ drivers, isLoading }) {
+function DriversList({ drivers, isLoading, from }) {
   if (isLoading) return <Spinner />;
-
+  console.log(drivers.from, "from driverslist");
   return (
     <>
       <div className={styles.container}>
-        <h1 className={styles.title}>Drivers List</h1>
+        <h1 className={styles.title}>
+          {from?.from == "fired" ? "የተሰናበቱ አሽከርካሪዎች" : "የአሽካሪዎች ዝርዝር"}
+        </h1>
       </div>
       <div className={styles.driverList}>
         {drivers.map((driver) => (
