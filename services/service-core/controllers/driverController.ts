@@ -100,7 +100,7 @@ export const getDriver = asyncError(
     })
 
     // Sort the filtered array by the 'createdBy' field
-    driver.accidentRecord.sort(
+    driver.accidentRecord?.sort(
       (b, a) => a.createdAt.getTime() - b.createdAt.getTime(),
     )
 
