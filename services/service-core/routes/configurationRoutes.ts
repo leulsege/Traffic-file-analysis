@@ -40,7 +40,7 @@ const configRouter = Router()
 
 configRouter
   .route('/')
-  .all(protect, restrictTo('admin', 'owner'))
+  .all(protect)
   .get(getConfiguration)
   .patch(updateConfiguration)
 

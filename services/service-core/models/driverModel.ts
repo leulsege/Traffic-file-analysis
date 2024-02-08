@@ -22,6 +22,8 @@ interface Driver extends Document {
   birthDate: Date
   active: boolean
   photo?: string | null
+  haveAccident: boolean
+  accidentRecord: any
   vehicle?: Schema.Types.ObjectId | null
 }
 
@@ -29,12 +31,12 @@ const configurationSchema = new Schema<Configuration>({
   givenPoint: {
     type: Number,
     required: true,
-    default: 10,
+    default: 100,
   },
   trainingEntryPoint: {
     type: Number,
     required: true,
-    default: 10,
+    default: 0,
   },
 })
 
@@ -84,6 +86,10 @@ const driverSchema = new Schema<Driver>(
       type: Boolean,
       default: true,
     },
+    haveAccident: {
+      type: Boolean,
+      default: false,
+    },
     photo: {
       type: String,
       default: null,
@@ -109,7 +115,7 @@ driverSchema.virtual('currentPoint').get(async function (this: Driver) {
   if (!configuration) {
     await ConfigurationModel.create({
       givenPoint: 100,
-      trainingEntryPoint: 5,
+      trainingEntryPoint: 0,
     })
 
     configuration = await ConfigurationModel.findOne()

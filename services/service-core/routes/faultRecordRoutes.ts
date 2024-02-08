@@ -12,14 +12,14 @@ const faultRecordRouter = express.Router()
 
 faultRecordRouter
   .route('/')
-  .all(protect, restrictTo('admin', 'owner'))
+  .all(protect)
   .post(createFaultRecord)
   .get(getAllFaultRecords)
 faultRecordRouter
   .route('/:id')
   .all(protect)
   .get(getFaultRecord)
-  .patch(restrictTo('admin', 'owner'), updateFaultRecord)
-  .delete(restrictTo('admin', 'owner'), deleteFaultRecord)
+  .patch(updateFaultRecord)
+  .delete(deleteFaultRecord)
 
 export default faultRecordRouter

@@ -6,6 +6,7 @@ import { Request, Response, NextFunction } from 'express'
 import APIFeatures from '../utils/apiFeatures'
 import AppError from '../utils/appError'
 import VehicleModel from '../models/vehicleModel'
+import VehicleAccidentModel from '../models/vehicleAccidentModel'
 
 const multerStorage = multer.memoryStorage()
 
@@ -98,6 +99,11 @@ export const getDriver = asyncError(
       select: '-driver -__v',
     })
 
+    // Sort the filtered array by the 'createdBy' field
+    driver.accidentRecord?.sort(
+      (b, a) => a.createdAt.getTime() - b.createdAt.getTime(),
+    )
+
     // Await currentPoint calculation
     const currentPoint = await (driver as any).currentPoint
 
@@ -134,6 +140,10 @@ export const updateDriver = asyncError(
       path: 'accidentRecord',
       select: '-driver -__v',
     })
+
+    updateDriver.accidentRecord.sort(
+      (b, a) => a.createdAt.getTime() - b.createdAt.getTime(),
+    )
 
     const currentPoint = await (updateDriver as any).currentPoint
 
@@ -181,6 +191,45 @@ export const backDriver = asyncError(
     res.status(204).json({
       status: 'success',
       data: null,
+    })
+  },
+)
+
+export const accidentFreeDrivers = asyncError(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const driver = await DriverModel.find({
+      haveAccident: false,
+    })
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        driver,
+      },
+    })
+  },
+)
+
+export const clearAccident = asyncError(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const updateDriver = await DriverModel.findByIdAndUpdate(
+      req.params.id,
+      { haveAccident: false },
+      {
+        new: true,
+        runValidators: true,
+      },
+    )
+
+    const clearAccidents = await VehicleAccidentModel.deleteMany({
+      driver: req.params.id,
+    })
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        updateDriver,
+      },
     })
   },
 )

@@ -23,14 +23,14 @@ vehicleAccidentRouter
 
 vehicleAccidentRouter
   .route('/')
-  .all(protect, restrictTo('admin', 'owner'))
+  .all(protect)
   .post(createVehicleAccident)
   .get(getAllVehicleAccidents)
 vehicleAccidentRouter
   .route('/:id')
   .all(protect)
   .get(getVehicleAccident)
-  .patch(restrictTo('admin', 'owner'), updateVehicleAccident)
-  .delete(restrictTo('admin', 'owner'), deleteVehicleAccident)
+  .patch(updateVehicleAccident)
+  .delete(deleteVehicleAccident)
 
 export default vehicleAccidentRouter

@@ -8,6 +8,8 @@ import {
   uploadUserPhoto,
   resizeUserPhoto,
   backDriver,
+  accidentFreeDrivers,
+  clearAccident,
 } from '../controllers/driverController'
 import { protect, restrictTo } from '../middleware/authMiddleware'
 
@@ -17,17 +19,17 @@ driverRouter
   .route('/uploadphoto/:id')
   .patch(protect, uploadUserPhoto, resizeUserPhoto, updateDriver)
 
-driverRouter
-  .route('/')
-  .all(protect, restrictTo('admin', 'owner'))
-  .get(getAllDrivers)
-  .post(createDriver)
+driverRouter.route('/accidentfree').get(protect, accidentFreeDrivers)
+
+driverRouter.route('/clear/:id').delete(protect, clearAccident)
+
+driverRouter.route('/').all(protect).get(getAllDrivers).post(createDriver)
 driverRouter
   .route('/:id')
   .all(protect)
   .get(getDriver)
-  .patch(restrictTo('admin', 'owner'), updateDriver)
-  .delete(restrictTo('admin', 'owner'), deleteDriver)
-  .put(restrictTo('admin', 'owner'), backDriver)
+  .patch(updateDriver)
+  .delete(deleteDriver)
+  .put(backDriver)
 
 export default driverRouter
