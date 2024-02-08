@@ -9,7 +9,6 @@
   width: 30rem;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
 
   /* Different from other form */
   margin: 0rem auto;
