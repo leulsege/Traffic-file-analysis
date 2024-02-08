@@ -90,7 +90,7 @@ export const updateTraining = asyncError(
 export const deleteTraining = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const deleteTraining = await TrainingModel.findByIdAndUpdate({
-      active: false,
+      activeTrainer: false,
     })
 
     res.status(204).json({

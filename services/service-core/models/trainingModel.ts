@@ -29,7 +29,7 @@ const trainingSchema: Schema = new mongoose.Schema({
   checkUp: {
     type: String,
   },
-  Active: {
+  activeTrainer: {
     type: Boolean,
     default: true,
   },

@@ -16,7 +16,7 @@ function LoggedinNavBar() {
   function handleInputBlur() {
     setTimeout(() => {
       setIsButtonVisible(false);
-    }, 2000); // Delay hiding the button to allow time for the button click event to be processed
+    }, 3000);
   }
 
   function handleOnClick() {
