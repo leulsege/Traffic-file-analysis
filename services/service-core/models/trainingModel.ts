@@ -29,6 +29,10 @@ const trainingSchema: Schema = new mongoose.Schema({
   checkUp: {
     type: String,
   },
+  Active: {
+    type: Boolean,
+    default: true,
+  },
   driver: {
     type: Schema.Types.ObjectId,
     ref: 'Driver',

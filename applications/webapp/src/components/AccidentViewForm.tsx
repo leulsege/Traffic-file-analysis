@@ -6,10 +6,10 @@ function AccidentForm({ accidentData, setAccident }) {
   const navigate = useNavigate();
 
   const [plateNumber, setPlateNumber] = useState(
-    accidentData.vehicle.plateNumber
+    accidentData.vehicle?.plateNumber
   );
   const [accidentDate, setAccidentDate] = useState(
-    accidentData.accidentDate.split("T")[0]
+    accidentData.accidentDate?.split("T")[0]
   );
   const [accidentPlace, setAccidentPlace] = useState(
     accidentData.accidentPlace
@@ -21,22 +21,22 @@ function AccidentForm({ accidentData, setAccident }) {
     accidentData.damageEstimation
   );
   const [insuranceSentDate, setInsuranceSentDate] = useState(
-    accidentData.insuranceSentDate.split("T")[0]
+    accidentData.insuranceSentDate?.split("T")[0]
   );
   const [excessLetterDate, setExcessLetterDate] = useState(
-    accidentData.excessLetterDate.split("T")[0]
+    accidentData.excessLetterDate?.split("T")[0]
   );
   const [maintenanceProcess, setMaintenanceProcess] = useState(
     accidentData.maintenanceProcess
   );
   const [preformDate, setPreformDate] = useState(
-    accidentData.preformDate.split("T")[0]
+    accidentData.preformDate?.split("T")[0]
   );
   const [paymentDateLetterNumber, setPaymentDateLetterNumber] = useState(
     accidentData.paymentDateLetterNumber
   );
   const [paymentRequestLetterDate, setPaymentRequestLetterDate] = useState(
-    accidentData.paymentRequestLetterDate.split("T")[0]
+    accidentData.paymentRequestLetterDate?.split("T")[0]
   );
 
   const [reducedPoint, setReducedPoint] = useState(accidentData.reducedPoint);

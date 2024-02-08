@@ -1,7 +1,7 @@
 import multer from 'multer'
 import sharp from 'sharp'
 import asyncError from '../utils/asyncError'
-import DriverModel from '../models/driverModel'
+import { DriverModel } from '../models/driverModel'
 import { Request, Response, NextFunction } from 'express'
 import APIFeatures from '../utils/apiFeatures'
 import AppError from '../utils/appError'
@@ -150,7 +150,33 @@ export const updateDriver = asyncError(
 )
 export const deleteDriver = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const deleteDriver = await DriverModel.findByIdAndDelete(req.params.id)
+    const deleteDriver = await DriverModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        active: false,
+        terminationDate: new Date(),
+      },
+      { new: true, runValidators: true },
+    )
+
+    res.status(204).json({
+      status: 'success',
+      data: null,
+    })
+  },
+)
+
+export const backDriver = asyncError(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const backDriver = await DriverModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        active: true,
+        terminationDate: null,
+        commencementDate: new Date(),
+      },
+      { new: true, runValidators: true },
+    )
 
     res.status(204).json({
       status: 'success',

@@ -11,10 +11,10 @@ function UserForm({ trainings, setTraining }) {
   const [trainingType, setTrainingType] = useState(trainings.trainingType);
   const [name, setName] = useState(trainings.driver.fullName);
   const [trainingStartDate, setTrainingStartDate] = useState(
-    trainings.trainingStartDate.split("T")[0]
+    trainings.trainingStartDate?.split("T")[0]
   );
   const [trainingEndDate, setTrainingEndDate] = useState(
-    trainings.trainingEndDate.split("T")[0]
+    trainings.trainingEndDate?.split("T")[0]
   );
 
   const [trainingPassPoint, setTrainingPassPoint] = useState(

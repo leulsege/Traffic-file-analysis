@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document, Query, Types } from 'mongoose'
-import DriverModel from './driverModel'
+import { DriverModel } from './driverModel'
 
 interface Vehicle extends Document {
   vehicleType: string
@@ -10,36 +10,43 @@ interface Vehicle extends Document {
   pmServiceTime: Number
   bmServiceTime: Number
   others: String
+  crashedBy: any
 }
 
-const vehicleSchema: Schema = new mongoose.Schema({
-  vehicleType: {
-    type: String,
+const vehicleSchema: Schema = new mongoose.Schema(
+  {
+    vehicleType: {
+      type: String,
+    },
+    plateNumber: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    moterNumber: {
+      type: String,
+    },
+    chanciNumber: {
+      type: String,
+    },
+    sideNumber: {
+      type: String,
+    },
+    pmServiceTime: {
+      type: Number,
+    },
+    bmServiceTime: {
+      type: Number,
+    },
+    others: {
+      type: String,
+    },
   },
-  plateNumber: {
-    type: String,
-    required: true,
-    unique:true
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   },
-  moterNumber: {
-    type: String,
-  },
-  chanciNumber: {
-    type: String,
-  },
-  sideNumber: {
-    type: String,
-  },
-  pmServiceTime: {
-    type: Number,
-  },
-  bmServiceTime: {
-    type: Number,
-  },
-  others: {
-    type: String,
-  },
-})
+)
 
 vehicleSchema.virtual('driver', {
   ref: 'Driver',
@@ -47,6 +54,11 @@ vehicleSchema.virtual('driver', {
   localField: '_id',
 })
 
+vehicleSchema.virtual('crashedBy', {
+  ref: 'Accident',
+  foreignField: 'vehicle',
+  localField: '_id',
+})
 const VehicleModel = mongoose.model<Vehicle>('Vehicle', vehicleSchema)
 
 export default VehicleModel

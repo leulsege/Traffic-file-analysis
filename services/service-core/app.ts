@@ -12,6 +12,7 @@ import faultRecordRouter from './routes/faultRecordRoutes'
 import vehicleRouter from './routes/vehicleRoutes'
 import vehicleAccidentRouter from './routes/vehicleAccidentRoutes'
 import AppError from './utils/appError'
+import configRouter from './routes/configurationRoutes'
 
 dotenv.config()
 
@@ -32,6 +33,7 @@ app.use('/api/trainings', trainingRouter)
 app.use('/api/faultrecords', faultRecordRouter)
 app.use('/api/vehicleaccidents', vehicleAccidentRouter)
 app.use('/api/vehicles', vehicleRouter)
+app.use('/api/setconfig', configRouter)
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404))

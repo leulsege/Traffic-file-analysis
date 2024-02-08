@@ -20,7 +20,6 @@ function UserForm({ driver, setDriver }) {
   );
   const [birthDate, setBirthDate] = useState(driver.birthDate?.split("T")[0]);
   const [phoneNumber, setPhoneNumber] = useState(driver.phoneNumber);
-  const [givenPoint, setGivenPoint] = useState(driver.givenPoint);
   const [vehicle, setVehicle] = useState(driver.vehicle?.plateNumber);
 
   const [showSnackbar, setShowSnackbar] = useState(false);
@@ -52,7 +51,6 @@ function UserForm({ driver, setDriver }) {
             licenseNumber,
             licenseExpiredDate,
             idNumber,
-            givenPoint,
             vehicle,
           }),
           credentials: "include",
@@ -190,16 +188,6 @@ function UserForm({ driver, setDriver }) {
             id="idNumber"
             onChange={(e) => setIdNumber(e.target.value)}
             value={idNumber}
-          />
-        </div>
-
-        <div className={styles.row}>
-          <label htmlFor="number">የተሰጠው ነጥብ</label>
-          <input
-            type="text"
-            id="givenPoint"
-            onChange={(e) => setGivenPoint(e.target.value)}
-            value={givenPoint}
           />
         </div>
 
