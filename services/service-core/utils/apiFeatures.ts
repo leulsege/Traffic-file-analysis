@@ -36,7 +36,7 @@ class APIFeatures<T extends Document> {
       const sortBy = this.queryString.sort.split(',').join(' ')
       this.query = this.query.sort(sortBy)
     } else {
-      this.query = this.query.sort('fullName plateNumber')
+      this.query = this.query.sort('fullName plateNumber -createdAt')
     }
 
     return this

@@ -34,6 +34,7 @@ const accidentSchema: Schema = new Schema({
   preformDate: { type: Date },
   paymentDateLetterNumber: { type: String },
   paymentRequestLetterDate: { type: Date },
+  createdAt: { type: Date, default: Date.now },
   reducedPoint: {
     type: Number,
     required: true,

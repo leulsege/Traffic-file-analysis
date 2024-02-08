@@ -4,6 +4,7 @@ import multer from 'multer'
 import sharp from 'sharp'
 import asyncError from '../utils/asyncError'
 import AppError from '../utils/appError'
+import { DriverModel } from '../models/driverModel'
 
 const multerStorage = multer.memoryStorage()
 
@@ -51,7 +52,9 @@ export const resizeAccidentPhoto = asyncError(
 export const createVehicleAccident = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const newVehicleAccident = await VehicleAccidentModel.create(req.body)
-
+    const driver = await DriverModel.findByIdAndUpdate(req.body.driver, {
+      haveAccident: true,
+    })
     res.status(201).json({
       status: 'success',
       data: {

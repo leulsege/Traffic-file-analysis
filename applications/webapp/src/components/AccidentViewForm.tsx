@@ -96,7 +96,7 @@ function AccidentForm({ accidentData, setAccident }) {
         }
       );
       if (response.ok) {
-        navigate("/drivers");
+        navigate(`/drivers/${accidentData.driver?._id}`);
       } else {
         const errorData = await response.json();
         console.log(errorData);
