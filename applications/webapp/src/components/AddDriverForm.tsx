@@ -50,7 +50,6 @@ function AddDriverForm() {
       );
       if (response.ok) {
         const driver = await response.json();
-        console.log(driver);
         navigate(`/drivers/${driver.data.driver._id}`);
       } else {
         const errorData = await response.json();

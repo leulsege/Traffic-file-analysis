@@ -3,7 +3,6 @@ import { useNavigate } from "react-router";
 
 function Trainer({ trainer }) {
   const navigate = useNavigate();
-  console.log(trainer, "from trainer");
 
   function handleTrainer() {
     navigate(`${trainer._id}`);

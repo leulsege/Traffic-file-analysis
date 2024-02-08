@@ -97,6 +97,9 @@ function UserForm({ driver, setDriver }) {
     }
   }
 
+  async function handleRecover() {}
+  console.log(driver, "from profile");
+
   return (
     <main className={styles.login}>
       <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
@@ -213,12 +216,21 @@ function UserForm({ driver, setDriver }) {
               severity={snackbarSeverity}
             />
           </div>
-          <ConfirmationPrompt
-            onConfirm={handleDelete}
-            onCancel={() => console.log("Deletion canceled")}
-          >
-            <button className={styles.delbtn}>Delete Driver</button>
-          </ConfirmationPrompt>
+          {driver.active ? (
+            <ConfirmationPrompt
+              onConfirm={handleDelete}
+              onCancel={() => console.log("Deletion canceled")}
+            >
+              <button className={styles.delbtn}>Delete Driver</button>
+            </ConfirmationPrompt>
+          ) : (
+            <ConfirmationPrompt
+              onConfirm={handleRecover}
+              onCancel={() => console.log("Deletion canceled")}
+            >
+              <button className={styles.delbtn}>&larr; Recover</button>
+            </ConfirmationPrompt>
+          )}
         </div>
       </form>
     </main>

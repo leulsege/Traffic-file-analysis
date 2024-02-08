@@ -50,7 +50,7 @@ const ConfirmationPrompt = ({ onConfirm, onCancel, children }) => {
             }}
           >
             <Typography variant="body1" sx={{ fontSize: "16px" }}>
-              Are you sure you want to Delete?
+              Are you sure you want to Continue?
             </Typography>
           </DialogContentText>
         </DialogContent>
