@@ -19,6 +19,7 @@ import AdminProfile from "./views/AdminProfile";
 import Approve from "./views/owner/Approve";
 import AdminApprove from "./views/owner/AdminApprove";
 import AccidentView from "./views/accidentView";
+import FiredAppLayout from "./views/FiredAppLayout";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -44,6 +45,19 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="exdrivers"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              setIsAuthenticated={setIsAuthenticated}
+            >
+              <FiredAppLayout />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="drivers/:id"
           element={

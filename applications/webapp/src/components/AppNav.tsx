@@ -19,7 +19,7 @@ function AppNav({ setDrivers, setVehicles, setTrainers }) {
   const handleTraining = () => {
     navigate("/trainings");
   };
-  const handleReward = () => {
+  const handleExDrivers = () => {
     navigate("/exdrivers");
   };
 
@@ -106,7 +106,7 @@ function AppNav({ setDrivers, setVehicles, setTrainers }) {
         <div onClick={handleTraining} className={styles.item}>
           <p className={styles.p}>ስልጠና መመዝገቢያ</p>
         </div>
-        <div onClick={handleReward} className={styles.item}>
+        <div onClick={handleExDrivers} className={styles.item}>
           <p className={styles.p}>የተባረሩ አሽከርካሪዎች</p>
         </div>
 
