@@ -7,6 +7,7 @@ import {
   deleteDriver,
   uploadUserPhoto,
   resizeUserPhoto,
+  backDriver,
 } from '../controllers/driverController'
 import { protect, restrictTo } from '../middleware/authMiddleware'
 
@@ -27,5 +28,6 @@ driverRouter
   .get(getDriver)
   .patch(restrictTo('admin', 'owner'), updateDriver)
   .delete(restrictTo('admin', 'owner'), deleteDriver)
+  .put(restrictTo('admin', 'owner'), backDriver)
 
 export default driverRouter

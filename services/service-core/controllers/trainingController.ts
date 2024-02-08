@@ -2,7 +2,7 @@ import asyncError from '../utils/asyncError'
 import TrainingModel from '../models/trainingModel'
 import { Request, Response, NextFunction } from 'express'
 import APIFeatures from '../utils/apiFeatures'
-import DriverModel from '../models/driverModel'
+import { DriverModel } from '../models/driverModel'
 import AppError from '../utils/appError'
 
 export const createTraining = asyncError(
@@ -89,7 +89,22 @@ export const updateTraining = asyncError(
 )
 export const deleteTraining = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const deleteTraining = await TrainingModel.findByIdAndDelete(req.params.id)
+    const deleteTraining = await TrainingModel.findByIdAndUpdate({
+      active: false,
+    })
+
+    res.status(204).json({
+      status: 'success',
+      data: null,
+    })
+  },
+)
+
+export const backTraining = asyncError(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const backTraining = await TrainingModel.findByIdAndUpdate({
+      active: false,
+    })
 
     res.status(204).json({
       status: 'success',

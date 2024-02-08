@@ -1,10 +1,11 @@
 import mongoose, { Document, Schema, Types, Query } from 'mongoose'
 import VehicleModel from './vehicleModel'
 import VehicleAccidentModel from './vehicleAccidentModel'
+import TrainingModal from './trainingModel'
 
-interface FaultRecord {
+interface Configuration extends Document {
   givenPoint: number
-  reducedPoint: number
+  trainingEntryPoint: number
 }
 
 interface Driver extends Document {
@@ -15,13 +16,32 @@ interface Driver extends Document {
   gender: string
   phoneNumber: string
   commencementDate: Date
+  terminationDate: Date | null
   age: number
   idNumber: string
   birthDate: Date
-  givenPoint: number
+  active: boolean
   photo?: string | null
   vehicle?: Schema.Types.ObjectId | null
 }
+
+const configurationSchema = new Schema<Configuration>({
+  givenPoint: {
+    type: Number,
+    required: true,
+    default: 10,
+  },
+  trainingEntryPoint: {
+    type: Number,
+    required: true,
+    default: 10,
+  },
+})
+
+const ConfigurationModel = mongoose.model<Configuration>(
+  'Configuration',
+  configurationSchema,
+)
 
 const driverSchema = new Schema<Driver>(
   {
@@ -49,6 +69,10 @@ const driverSchema = new Schema<Driver>(
     commencementDate: {
       type: Date,
     },
+    terminationDate: {
+      type: Date,
+      default: null,
+    },
     birthDate: {
       type: Date,
     },
@@ -56,9 +80,9 @@ const driverSchema = new Schema<Driver>(
       type: String,
       unique: true,
     },
-    givenPoint: {
-      type: Number,
-      required: true,
+    active: {
+      type: Boolean,
+      default: true,
     },
     photo: {
       type: String,
@@ -76,7 +100,20 @@ const driverSchema = new Schema<Driver>(
   },
 )
 
-driverSchema.virtual('currentPoint').get(async function () {
+// ... (previous code)
+
+driverSchema.virtual('currentPoint').get(async function (this: Driver) {
+  // Retrieve configuration values
+  let configuration = await ConfigurationModel.findOne()
+
+  if (!configuration) {
+    await ConfigurationModel.create({
+      givenPoint: 100,
+      trainingEntryPoint: 5,
+    })
+
+    configuration = await ConfigurationModel.findOne()
+  }
   try {
     // Find all accidents related to this driver and calculate the sum of reduced points
     const totalReducedPoints = await VehicleAccidentModel.aggregate([
@@ -92,12 +129,46 @@ driverSchema.virtual('currentPoint').get(async function () {
     ])
 
     // If there are accidents, subtract the total reduced points from the givenPoint
-    return this.givenPoint - (totalReducedPoints[0]?.totalReducedPoints || 0)
+    const currentPoint =
+      configuration?.givenPoint -
+        (totalReducedPoints[0]?.totalReducedPoints || 0) || 0
+
+    // Subtract the trainingEntryPoint from the netGivenPoint
+    const downTrainingPoint =
+      currentPoint - (configuration?.trainingEntryPoint || 0)
+
+    // Update TrainingModel based on currentPoint
+    await updateTrainingStatus(this._id, downTrainingPoint)
+
+    return currentPoint
   } catch (error) {
     console.error('Error calculating currentPoint:', error)
-    return this.givenPoint // Return default givenPoint in case of an error
+    // Return default givenPoint in case of an error
+    return configuration?.givenPoint | 0
   }
 })
+
+async function updateTrainingStatus(
+  driverId: Schema.Types.ObjectId,
+  downTrainingPoint: number,
+): Promise<void> {
+  const training = await TrainingModal.findOne({ driver: driverId })
+
+  if (downTrainingPoint <= 0) {
+    // If downTrainingPoint is less than 0, add the driver to training
+    if (!training) {
+      await TrainingModal.create({
+        driver: driverId,
+        // Add other training details as needed
+      })
+    }
+  } else {
+    // If downTrainingPoint is greater than or equal to 0, remove the driver from training if they exist
+    if (training && !training?.trainingStartDate) {
+      await TrainingModal.findByIdAndDelete(training._id)
+    }
+  }
+}
 
 // driverSchema.virtual('faultRecord', {
 //   ref: 'FaultRecord',
@@ -120,4 +191,4 @@ driverSchema.pre(
 )
 const DriverModel = mongoose.model<Driver>('Driver', driverSchema)
 
-export default DriverModel
+export { DriverModel, ConfigurationModel }

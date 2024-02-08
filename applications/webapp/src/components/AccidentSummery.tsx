@@ -25,7 +25,7 @@ function accidentSummery({ accident }) {
         </div>
 
         <p className={styles.accidentDescription}>
-          {accident.accidentDate.split("T")[0]}
+          {accident.accidentDate?.split("T")[0]}
         </p>
       </div>
     </div>

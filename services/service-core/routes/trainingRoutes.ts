@@ -5,6 +5,7 @@ import {
   updateTraining,
   deleteTraining,
   createTraining,
+  backTraining,
 } from '../controllers/trainingController'
 import { protect, restrictTo } from '../middleware/authMiddleware'
 
@@ -21,5 +22,6 @@ trainingRouter
   .get(getTraining)
   .patch(restrictTo('admin', 'owner'), updateTraining)
   .delete(restrictTo('admin', 'owner'), deleteTraining)
+  .put(restrictTo('admin', 'owner'), backTraining)
 
 export default trainingRouter
