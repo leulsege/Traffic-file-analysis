@@ -36,6 +36,7 @@ function DriverProfile() {
         if (response.ok) {
           const driverInfo = await response.json();
           setDriver(driverInfo.data.driver);
+          console.log(driverInfo.data.driver, "from driver profile");
         } else {
           const errorData = await response.json();
           console.log(errorData);
@@ -93,7 +94,7 @@ function DriverProfile() {
         <div className={styles.profileSettings}>
           <UserForm driver={driver} setDriver={setDriver} />
         </div>
-        <div>
+        <div className={styles.accidentGrid}>
           {showAccidentForm ? (
             <>
               <AccidentForm
@@ -104,9 +105,15 @@ function DriverProfile() {
             </>
           ) : (
             <>
-              <button onClick={toggleAccidentForm} className={styles.addButton}>
-                Add Accident
-              </button>
+              <div className={styles.btns}>
+                <button
+                  onClick={toggleAccidentForm}
+                  className={styles.addButton}
+                >
+                  Add Accident
+                </button>
+                <button className={styles.delbtn}>Clear</button>
+              </div>
               <CustomSnackbar
                 open={showSnackbar}
                 onClose={handleSnackbarClose}

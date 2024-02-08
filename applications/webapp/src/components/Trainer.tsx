@@ -1,8 +1,9 @@
-import styles from "./Driver.module.css";
+import styles from "../components/owner/Admin.module.css";
 import { useNavigate } from "react-router";
 
 function Trainer({ trainer }) {
   const navigate = useNavigate();
+  console.log(trainer, "from trainer");
 
   function handleTrainer() {
     navigate(`${trainer._id}`);
@@ -20,6 +21,9 @@ function Trainer({ trainer }) {
         className={styles.driverImg}
       />
       <span className={styles.name}>{trainer.driver.fullName}</span>
+      {!trainer.trainingStartDate && (
+        <span className={styles.approved}>{"new"}</span>
+      )}
     </div>
   );
 }

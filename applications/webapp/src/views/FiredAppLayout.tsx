@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import styles from "./AppLayout.module.css";
-import Display from "../components/Display";
+import FiredDisplay from "../components/FiredDisplay";
 import { useLocation, useNavigate } from "react-router-dom";
 import LoggedinNavBar from "../components/LoggedinNavBar";
 
@@ -66,7 +66,7 @@ export default function AppLayout() {
     <div className={styles.app}>
       <LoggedinNavBar />
       <Sidebar setDrivers={setDrivers} />
-      <Display
+      <FiredDisplay
         drivers={drivers}
         isLoading={isLoading}
         handlePrevPage={handlePrevPage}

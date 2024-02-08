@@ -46,10 +46,36 @@
   align-self: start;
 }
 
+.accidentGrid {
+  align-self: start;
+  margin-top: 20rem;
+}
+
+.delbtn {
+  background-color: red;
+  align-self: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  padding: 0.8rem 2rem;
+  border-radius: 7px;
+}
+
+.btns {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
+
 .addButton {
   background-color: var(--color-brand--2);
   color: #333;
   padding: 0.8rem 1.6rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
 }
 
 .formHolder {
