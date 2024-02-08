@@ -89,9 +89,12 @@ export const updateTraining = asyncError(
 )
 export const deleteTraining = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const deleteTraining = await TrainingModel.findByIdAndUpdate({
-      activeTrainer: false,
-    })
+    const deleteTraining = await TrainingModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        activeTrainer: false,
+      },
+    )
 
     res.status(204).json({
       status: 'success',
@@ -102,8 +105,8 @@ export const deleteTraining = asyncError(
 
 export const backTraining = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const backTraining = await TrainingModel.findByIdAndUpdate({
-      active: false,
+    const backTraining = await TrainingModel.findByIdAndUpdate(req.params.id, {
+      activeTrainer: true,
     })
 
     res.status(204).json({
