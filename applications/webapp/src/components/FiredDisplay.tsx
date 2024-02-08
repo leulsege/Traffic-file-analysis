@@ -25,36 +25,24 @@ function FiredDisplay({
 
   return (
     <>
-      {isFormVisible ? (
-        <div className={styles.formContainer}>
-          <button className={styles.back} onClick={handleBack}>
-            Back
-          </button>
-          <AddDriverForm />
-        </div>
-      ) : (
-        <div className={styles.display}>
-          <button className={styles.buttonAdd} onClick={handleAddDriversClick}>
-            Add Drivers
-          </button>
-          <DriversList drivers={inactiveDrivers} isLoading={isLoading} />
+      <div className={styles.display}>
+        <DriversList drivers={inactiveDrivers} isLoading={isLoading} />
 
-          {!isLoading && (
-            <div className={styles.buttons}>
-              {page > 1 && (
-                <button className={styles.button} onClick={handlePrevPage}>
-                  Back
-                </button>
-              )}
-              {results != 0 && (
-                <button className={styles.button} onClick={handleNextPage}>
-                  Next
-                </button>
-              )}
-            </div>
-          )}
-        </div>
-      )}
+        {!isLoading && (
+          <div className={styles.buttons}>
+            {page > 1 && (
+              <button className={styles.button} onClick={handlePrevPage}>
+                Back
+              </button>
+            )}
+            {results != 0 && (
+              <button className={styles.button} onClick={handleNextPage}>
+                Next
+              </button>
+            )}
+          </div>
+        )}
+      </div>
     </>
   );
 }
