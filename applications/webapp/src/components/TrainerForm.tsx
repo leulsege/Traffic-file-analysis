@@ -94,6 +94,8 @@ function UserForm({ trainings, setTraining }) {
     }
   }
 
+  async function handleRecover() {}
+
   return (
     <main className={styles.login}>
       <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
@@ -184,12 +186,21 @@ function UserForm({ trainings, setTraining }) {
             />
           </div>
 
-          <ConfirmationPrompt
-            onConfirm={handleDelete}
-            onCancel={() => console.log("Deletion canceled")}
-          >
-            <button className={styles.delbtn}>Remove Trainer</button>
-          </ConfirmationPrompt>
+          {trainings.activeTrainer ? (
+            <ConfirmationPrompt
+              onConfirm={handleDelete}
+              onCancel={() => console.log("Deletion canceled")}
+            >
+              <button className={styles.delbtn}>Remove Trainer</button>
+            </ConfirmationPrompt>
+          ) : (
+            <ConfirmationPrompt
+              onConfirm={handleRecover}
+              onCancel={() => console.log("Deletion canceled")}
+            >
+              <button className={styles.delbtn}>&larr; Recover</button>
+            </ConfirmationPrompt>
+          )}
         </div>
       </form>
     </main>
