@@ -5,7 +5,7 @@ function Driver({ driver }) {
   const navigate = useNavigate();
 
   const handleDriver = () => {
-    navigate(driver._id);
+    navigate(`/drivers/${driver._id}`);
   };
 
   return (

@@ -87,7 +87,7 @@ function UserForm({ driver, setDriver }) {
         }
       );
       if (response.ok) {
-        navigate("/drivers");
+        navigate("/exdrivers");
       } else {
         const errorData = await response.json();
         console.log(errorData);
@@ -97,8 +97,25 @@ function UserForm({ driver, setDriver }) {
     }
   }
 
-  async function handleRecover() {}
-  console.log(driver, "from profile");
+  async function handleRecover() {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API}/drivers/${driverId.id}`,
+        {
+          method: "PUT",
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        navigate("/drivers");
+      } else {
+        const errorData = await response.json();
+        console.log(errorData);
+      }
+    } catch (error) {
+      console.error("Error fetching driver:", error);
+    }
+  }
 
   return (
     <main className={styles.login}>

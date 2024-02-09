@@ -2,8 +2,8 @@ import { Document, Schema, model, Query } from 'mongoose'
 
 // Define the interface for the data
 interface VehicleAccident extends Document {
-  accident_date: Date
-  accident_place: string
+  accidentDate: Date
+  accidentPlace: string
   damages: string
   cause: string
   guilty: string
