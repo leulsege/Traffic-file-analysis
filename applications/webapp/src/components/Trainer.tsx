@@ -5,7 +5,7 @@ function Trainer({ trainer }) {
   const navigate = useNavigate();
 
   function handleTrainer() {
-    navigate(`${trainer._id}`);
+    navigate(`/trainings/${trainer._id}`);
   }
   return (
     <div className={styles.container} onClick={handleTrainer}>
