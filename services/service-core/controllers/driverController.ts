@@ -7,6 +7,7 @@ import APIFeatures from '../utils/apiFeatures'
 import AppError from '../utils/appError'
 import VehicleModel from '../models/vehicleModel'
 import VehicleAccidentModel from '../models/vehicleAccidentModel'
+import TrainingModal from '../models/trainingModel'
 
 const multerStorage = multer.memoryStorage()
 
@@ -165,6 +166,16 @@ export const deleteDriver = asyncError(
       {
         active: false,
         terminationDate: new Date(),
+      },
+      { new: true, runValidators: true },
+    )
+
+    const deleteTraining = await TrainingModal.findOneAndUpdate(
+      {
+        driver: req.params.id,
+      },
+      {
+        activeTrainer: false,
       },
       { new: true, runValidators: true },
     )

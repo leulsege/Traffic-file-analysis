@@ -58,7 +58,6 @@ function DriverProfile() {
         if (response.ok) {
           const driverInfo = await response.json();
           setDriver(driverInfo.data.driver);
-          console.log(driverInfo.data.driver, "from driver profile");
         } else {
           const errorData = await response.json();
           console.log(errorData);
