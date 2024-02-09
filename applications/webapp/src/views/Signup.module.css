@@ -1,23 +1,26 @@
 .login {
-  margin: 2.5rem;
   padding: 2.5rem 5rem;
   background-color: var(--color-dark--1);
-  width: calc(100vw - 5rem);
-  min-height: calc(100vh - 5rem);
+  min-width: calc(100vw);
+  min-height: calc(100vh);
+  margin-bottom: 0px;
 }
 
 .form {
   background-color: var(--color-dark--2);
   border-radius: 7px;
   padding: 2rem 3rem;
-  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
 
   /* Different from other form */
   width: 48rem;
   margin: 8rem auto;
+  position: relative;
+}
+
+div {
+  margin: 20px 0px;
 }
 
 .row {
@@ -42,3 +45,60 @@ a:visited {
   font-size: 1.2rem;
   font-weight: 600;
 }
+
+.logButton {
+  background-color: var(--color-brand--2);
+  color: var(--color-light--2);
+  color: var(--color-dark--0);
+  padding: 0.8rem 2rem;
+  border-radius: 7px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: 80px;
+}
+
+/* .login {
+  padding: 2.5rem 5rem;
+  background-color: var(--color-dark--1);
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.form {
+  background-color: var(--color-dark--2);
+  border-radius: 7px;
+  padding: 2rem 3rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  /* Different from other form */
+/* width: 48rem;
+  margin: 8rem auto;
+} */
+/* 
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+a.ctaLink:link,
+a.ctaLink:visited {
+  background-color: var(--color-brand--2);
+  color: var(--color-dark--0);
+  padding: 0.8rem 2rem;
+  border-radius: 7px;
+}
+
+a:link,
+a:visited {
+  text-decoration: none;
+  color: var(--color-light--2);
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: 600;
+} */

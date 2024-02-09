@@ -24,6 +24,6 @@
     "resolveJsonModule": true,
     "types": ["node"]
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": ["**/*.ts", ".env", "*.json"],
+  "exclude": ["node_modules", "dist"]
 }

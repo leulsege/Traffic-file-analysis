@@ -1,23 +1,27 @@
 .login {
-  margin: 2.5rem;
   padding: 2.5rem 5rem;
   background-color: var(--color-dark--1);
-  min-width: calc(100vw - 5rem);
-  min-height: calc(100vh - 5rem);
+  min-width: calc(100vw);
+  min-height: calc(100vh);
+  margin-bottom: 0px;
 }
 
 .form {
   background-color: var(--color-dark--2);
   border-radius: 7px;
   padding: 2rem 3rem;
-  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
 
   /* Different from other form */
   width: 48rem;
+  height: 30vh;
   margin: 8rem auto;
+  position: relative;
+}
+
+div {
+  margin: 20px 0px;
 }
 
 .row {
@@ -41,4 +45,28 @@ a:visited {
   text-transform: uppercase;
   font-size: 1.2rem;
   font-weight: 600;
+}
+
+.logButton {
+  background-color: var(--color-brand--2);
+  color: var(--color-light--2);
+  color: var(--color-dark--0);
+  padding: 0.8rem 2rem;
+  border-radius: 7px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: 80px;
+}
+
+.forget {
+  margin-top: 2px;
+  color: rgb(74, 148, 233);
+  position: absolute;
+  right: 30px;
+
+  text-transform: lowercase;
+  font-weight: normal;
+  font-size: 1.4rem;
 }

@@ -1,0 +1,19 @@
+/* Message.module.css */
+
+.messageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+}
+
+.message {
+  padding: 2.5rem;
+  background-color: #3498db; /* Updated background color */
+  border-radius: 10px; /* Added border radius for rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added a subtle box shadow */
+  text-align: center;
+  font-size: 24px; /* Reduced font size for better readability */
+  font-weight: 600; /* Adjusted font weight */
+  color: #fff;
+}

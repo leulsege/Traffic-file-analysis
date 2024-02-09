@@ -1,0 +1,56 @@
+.nav {
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  background-color: var(--color-dark--2);
+  border-radius: 7px;
+}
+
+.grid {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px; /* Adjust the gap between grid items as needed */
+  max-width: 900px; /* Set a maximum width for better readability */
+  margin: 40px auto; /* Center the grid container */
+}
+
+.item {
+  border: 1px solid #ddd;
+  padding: 42px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: center;
+}
+a.ctaLink:link,
+a.ctaLink:visited {
+  background-color: var(--color-brand--2);
+  color: var(--color-dark--0);
+  padding: 0.8rem 2rem;
+  border-radius: 5px;
+}
+
+a:link,
+a:visited {
+  text-decoration: none;
+  color: var(--color-light--2);
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* CSS Modules feature */
+.nav a:global(.active) {
+  background-color: var(--color-dark--0);
+}

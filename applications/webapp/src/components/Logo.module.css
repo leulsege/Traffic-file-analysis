@@ -5,10 +5,18 @@
   cursor: pointer;
 }
 
+.amharic {
+  font-size: 1.3rem;
+  color: white;
+}
 .logoContainer img {
   width: 6.4rem;
 }
 
 h4 {
-  font-size: 1.2rem;
+  font-size: 1rem;
+}
+
+.English {
+  color: white;
 }

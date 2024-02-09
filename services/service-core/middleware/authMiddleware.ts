@@ -25,9 +25,10 @@ const createSendToken = (
         Date.now() +
           parseInt(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60 * 1000,
       ),
+      httpOnly: true,
     }
 
-    res.cookie('jwt', token, cookieOptions)
+    res.cookie('token', token, cookieOptions)
 
     user.password = undefined
     res.status(statusCode).json({
@@ -54,6 +55,15 @@ export const signup = asyncError(
       req.body.role = 'admin'
       req.body.approved = false
     }
+    const existingUnverifiedUser = await User.findOne({
+      email: req.body.email,
+      verified: false,
+    })
+
+    if (existingUnverifiedUser) {
+      await User.deleteOne({ _id: existingUnverifiedUser._id })
+    }
+
     const newUser = await User.create({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -68,22 +78,20 @@ export const signup = asyncError(
     const resetToken = newUser.createPasswordResetToken()
     await newUser.save({ validateBeforeSave: false })
 
-    const verificationURL = `${req.protocol}://${req.get(
-      'host',
-    )}/admins/verify/${resetToken}`
+    const verificationURL = `${process.env.FRONTEND_URL}/verify/${resetToken}`
 
     const message = `welecome to PSTS, click the the link to verify your email: ${verificationURL}.\nIf you didn't signup, please ignore this email!`
 
     try {
       await sendEmail({
         email: req.body.email,
-        subject: 'account verification (valid for 1 day)',
+        subject: 'account verification (valid for an hour)',
         message,
       })
 
       res.status(200).json({
         status: 'success',
-        message: 'we have sent a verification email!',
+        message: `we have sent a verification email to ${req.body.email}, please verify your account`,
       })
     } catch (err) {
       await newUser.deleteOne({ email: req.body.email })
@@ -156,6 +164,8 @@ export const protect = asyncError(
       req.headers.authorization.startsWith('Bearer')
     ) {
       token = req.headers.authorization.split(' ')[1]
+    } else if (req.cookies && req.cookies.token) {
+      token = req.cookies.token
     }
 
     if (!token) {
@@ -215,7 +225,9 @@ export const forgotPassword = asyncError(
     // 1) Get user based on POSTed email
     const user = await User.findOne({ email: req.body.email })
     if (!user) {
-      return next(new AppError('There is no user with email address.', 404))
+      return next(
+        new AppError('There is no user with this email address.', 404),
+      )
     }
 
     // 2) Generate the random reset token
@@ -223,22 +235,20 @@ export const forgotPassword = asyncError(
     await user.save({ validateBeforeSave: false })
 
     // 3) Send it to the user's email
-    const resetURL = `${req.protocol}://${req.get(
-      'host',
-    )}/admins/resetpassword/${resetToken}`
+    const resetURL = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`
 
     const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`
 
     try {
       await sendEmail({
         email: user.email,
-        subject: 'Your password reset token (valid for 1 day)',
+        subject: 'Your password reset token (valid for an hour)',
         message,
       })
 
       res.status(200).json({
         status: 'success',
-        message: 'Token sent to email!',
+        message: `we have sent a verification token to ${req.body.email}`,
       })
     } catch (err) {
       user.passwordResetToken = undefined

@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer'
+import AppError from './appError'
 
 interface EmailOptions {
   email: string
@@ -23,9 +24,19 @@ const sendEmail = async (options: EmailOptions): Promise<void> => {
     subject: options.subject,
     text: options.message,
   }
+  try {
+    // 3) Actually send the email
+    await transporter.sendMail(mailOptions)
+  } catch (error) {
+    if (
+      (error as any).code === 'ENOTFOUND' ||
+      (error as any).code === 'EENVELOPE'
+    ) {
+      throw new AppError('Email address not found', 404)
+    }
 
-  // 3) Actually send the email
-  await transporter.sendMail(mailOptions)
+    throw error
+  }
 }
 
 export default sendEmail

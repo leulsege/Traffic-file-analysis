@@ -1,0 +1,27 @@
+/* ConfirmationPrompt.module.css */
+
+.confirmationPrompt {
+  position: relative;
+  display: inline-block;
+}
+
+.confirmationDialog {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background-color: var(--color-dark--2);
+  border: 1px solid #ccc;
+  /* padding: 20px; */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  text-align: center;
+  width: 60rem;
+}
+
+.confirmationButtons {
+  /* margin-top: 20px; */
+}
+
+/* Add any other styles as needed */

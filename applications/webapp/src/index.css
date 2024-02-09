@@ -120,3 +120,7 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
+#root {
+  margin: 0;
+}

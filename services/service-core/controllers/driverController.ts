@@ -1,10 +1,13 @@
 import multer from 'multer'
 import sharp from 'sharp'
 import asyncError from '../utils/asyncError'
-import DriverModel from '../models/driverModel'
+import { DriverModel } from '../models/driverModel'
 import { Request, Response, NextFunction } from 'express'
 import APIFeatures from '../utils/apiFeatures'
 import AppError from '../utils/appError'
+import VehicleModel from '../models/vehicleModel'
+import VehicleAccidentModel from '../models/vehicleAccidentModel'
+import TrainingModal from '../models/trainingModel'
 
 const multerStorage = multer.memoryStorage()
 
@@ -51,6 +54,14 @@ export const resizeUserPhoto = asyncError(
 
 export const createDriver = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    if (req.body.vehicle) {
+      const vehicle = await VehicleModel.findOne({
+        plateNumber: req.body.vehicle,
+      })
+      if (!vehicle)
+        new AppError('there is no vehicle with this PlateNumber', 404)
+      req.body.vehicle = (vehicle as any)?._id
+    }
     const newDriver = await DriverModel.create(req.body)
 
     res.status(201).json({
@@ -72,9 +83,6 @@ export const getAllDrivers = asyncError(
 
     const drivers = await features.query
 
-    const searchString = 'eth'
-    const regex = new RegExp(`^${searchString}`, 'i')
-
     res.status(200).json({
       status: 'success',
       results: drivers.length,
@@ -87,15 +95,122 @@ export const getAllDrivers = asyncError(
 
 export const getDriver = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const driver = await DriverModel.findById(req.params.id)
-      .populate({
-        path: 'vehicle',
-        select: '-driver -__v',
+    const driver = await DriverModel.findById(req.params.id).populate({
+      path: 'accidentRecord',
+      select: '-driver -__v',
+    })
+
+    // Sort the filtered array by the 'createdBy' field
+    driver.accidentRecord?.sort(
+      (b, a) => a.createdAt.getTime() - b.createdAt.getTime(),
+    )
+
+    // Await currentPoint calculation
+    const currentPoint = await (driver as any).currentPoint
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        driver: {
+          ...driver.toJSON(),
+          currentPoint,
+        },
+      },
+    })
+  },
+)
+export const updateDriver = asyncError(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    if (req.file) req.body.photo = req.file.filename
+    if (req.body.vehicle) {
+      const vehicle = await VehicleModel.findOne({
+        plateNumber: req.body.vehicle,
       })
-      .populate({
-        path: 'faultRecord',
-        select: '-driver -__v',
-      })
+      if (!vehicle)
+        new AppError('there is no vehicle with this PlateNumber', 404)
+      req.body.vehicle = (vehicle as any)?._id
+    }
+    const updateDriver = await DriverModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      },
+    ).populate({
+      path: 'accidentRecord',
+      select: '-driver -__v',
+    })
+
+    updateDriver.accidentRecord.sort(
+      (b, a) => a.createdAt.getTime() - b.createdAt.getTime(),
+    )
+
+    const currentPoint = await (updateDriver as any).currentPoint
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        driver: {
+          ...updateDriver.toJSON(),
+          currentPoint,
+        },
+      },
+    })
+  },
+)
+export const deleteDriver = asyncError(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const deleteDriver = await DriverModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        active: false,
+        terminationDate: new Date(),
+      },
+      { new: true, runValidators: true },
+    )
+
+    const deleteTraining = await TrainingModal.findOneAndUpdate(
+      {
+        driver: req.params.id,
+      },
+      {
+        activeTrainer: false,
+      },
+      { new: true, runValidators: true },
+    )
+
+    res.status(204).json({
+      status: 'success',
+      data: null,
+    })
+  },
+)
+
+export const backDriver = asyncError(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const backDriver = await DriverModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        active: true,
+        terminationDate: null,
+        commencementDate: new Date(),
+      },
+      { new: true, runValidators: true },
+    )
+
+    res.status(204).json({
+      status: 'success',
+      data: null,
+    })
+  },
+)
+
+export const accidentFreeDrivers = asyncError(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const driver = await DriverModel.find({
+      haveAccident: false,
+    })
 
     res.status(200).json({
       status: 'success',
@@ -106,42 +221,26 @@ export const getDriver = asyncError(
   },
 )
 
-export const updateDriver = asyncError(
+export const clearAccident = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    if (req.file) req.body.photo = req.file.filename
-    console.log(req.file)
     const updateDriver = await DriverModel.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      { haveAccident: false },
       {
         new: true,
         runValidators: true,
       },
     )
-      .populate({
-        path: 'vehicle',
-        select: '-driver -__v',
-      })
-      .populate({
-        path: 'faultRecord',
-        select: '-driver -__v',
-      })
+
+    const clearAccidents = await VehicleAccidentModel.deleteMany({
+      driver: req.params.id,
+    })
 
     res.status(200).json({
       status: 'success',
       data: {
-        driver: updateDriver,
+        updateDriver,
       },
-    })
-  },
-)
-export const deleteDriver = asyncError(
-  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const deleteDriver = await DriverModel.findByIdAndDelete(req.params.id)
-
-    res.status(204).json({
-      status: 'success',
-      data: null,
     })
   },
 )

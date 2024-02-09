@@ -18,11 +18,14 @@ class APIFeatures<T extends Document> {
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`)
     queryStr = queryStr.replace(/-/g, ' ')
     const finalQuery = JSON.parse(queryStr)
-    if (finalQuery.name) {
-      const nameRegex = new RegExp(`^${finalQuery.name}`, 'i')
-      finalQuery.name = nameRegex
+    if (finalQuery.fullName) {
+      const nameRegex = new RegExp(`^${finalQuery.fullName}`, 'i')
+      finalQuery.fullName = nameRegex
     }
-
+    if (finalQuery.plateNumber) {
+      const nameRegex = new RegExp(`^${finalQuery.plateNumber}`, 'i')
+      finalQuery.plateNumber = nameRegex
+    }
     this.query = this.query.find(finalQuery)
 
     return this
@@ -33,7 +36,7 @@ class APIFeatures<T extends Document> {
       const sortBy = this.queryString.sort.split(',').join(' ')
       this.query = this.query.sort(sortBy)
     } else {
-      this.query = this.query.sort('-name')
+      this.query = this.query.sort('fullName plateNumber -createdAt')
     }
 
     return this

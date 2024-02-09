@@ -10,7 +10,7 @@ class User {
   @IsNotEmpty()
   lastName: string
 
-  @IsEmail()
+  @IsEmail({}, { message: 'Please provide a valid email' })
   @IsNotEmpty()
   email: string
 
@@ -44,16 +44,17 @@ const userSchema: Schema = new Schema({
     required: [true, 'please provide an email'],
     unique: true,
     lowercase: true,
+    validate: [IsEmail, 'Please provide a valid email'],
   },
   password: {
     type: String,
     required: [true, 'please provide a password'],
-    minlength: 8,
+    minlength: 6,
     select: false,
   },
   role: {
     type: String,
-    required: [true, 'please assign a role'],
+    default: 'admin',
     enum: ['admin', 'owner'],
   },
   confirmPassword: {
@@ -121,7 +122,7 @@ userSchema.methods.createPasswordResetToken = function () {
     .createHash('sha256')
     .update(resetToken)
     .digest('hex')
-  this.passwordResetExpires = Date.now() + 24 * 60 * 60 * 1000
+  this.passwordResetExpires = Date.now() + 60 * 60 * 1000
 
   return resetToken
 }

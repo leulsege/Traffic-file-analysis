@@ -1,0 +1,30 @@
+/* PhotoUpload.module.css */
+
+.container {
+  margin: 2rem; /* equivalent to 20px */
+  display: flex;
+  flex-direction: column;
+}
+
+.inputContainer {
+  margin-bottom: 1rem; /* equivalent to 10px */
+}
+
+.fileInput {
+  display: none;
+}
+
+.uploadButton {
+  padding: 0.8rem 1.6rem; /* equivalent to 8px 16px */
+  font-size: 1.4rem; /* equivalent to 14px */
+  cursor: pointer;
+  background-color: var(--color-brand--2);
+  color: #333;
+  border: none;
+  border-radius: 0.4rem; /* equivalent to 4px */
+  transition: background-color 0.3s ease;
+}
+
+.uploadButton:hover {
+  background-color: #195e3d;
+}

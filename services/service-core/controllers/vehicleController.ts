@@ -1,7 +1,7 @@
+import { Request, Response, NextFunction } from 'express'
 import asyncError from '../utils/asyncError'
 import VehicleModel from '../models/vehicleModel'
-
-import { Request, Response, NextFunction } from 'express'
+import APIFeatures from '../utils/apiFeatures'
 
 export const createVehicle = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -18,7 +18,13 @@ export const createVehicle = asyncError(
 
 export const getAllVehicles = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const vehicles = await VehicleModel.find()
+    const features = new APIFeatures(VehicleModel.find(), req.query)
+      .filter()
+      .limitFields()
+      .paginate()
+      .sort()
+
+    const vehicles = await features.query
 
     res.status(200).json({
       status: 'success',
@@ -33,7 +39,30 @@ export const getAllVehicles = asyncError(
 export const getVehicle = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const vehicle = await VehicleModel.findById(req.params.id)
+      .populate({
+        path: 'driver',
+        select: '-vehicle -__v',
+      })
+      .populate({
+        path: 'crashedBy',
+        select: '-vehicle -__v',
+      })
 
+    const uniqueDrivers = new Map()
+    const uniqueCrashedBy = vehicle.crashedBy?.map((crash) => {
+      if (crash.accidentDate !== null) {
+        const driverId = crash.driver.id
+
+        if (!uniqueDrivers.has(driverId)) {
+          uniqueDrivers.set(driverId, crash.driver)
+        }
+
+        return { ...crash.toObject(), driver: driverId }
+      }
+    })
+
+    const uniqueDriverArray = Array.from(uniqueDrivers.values())
+    vehicle.crashedBy = uniqueDriverArray
     res.status(200).json({
       status: 'success',
       data: {
@@ -45,7 +74,7 @@ export const getVehicle = asyncError(
 
 export const updateVehicle = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const updateVehicle = await VehicleModel.findByIdAndUpdate(
+    const updatedVehicle = await VehicleModel.findByIdAndUpdate(
       req.params.id,
       req.body,
       {
@@ -53,18 +82,44 @@ export const updateVehicle = asyncError(
         runValidators: true,
       },
     )
+      .populate({
+        path: 'driver',
+        select: '-vehicle -__v',
+      })
+      .populate({
+        path: 'crashedBy',
+        select: '-vehicle -__v',
+      })
+
+    const uniqueDrivers = new Map()
+    const uniqueCrashedBy = updatedVehicle.crashedBy?.map((crash) => {
+      const driverId = crash.driver.id
+
+      if (!uniqueDrivers.has(driverId)) {
+        uniqueDrivers.set(driverId, crash.driver)
+      }
+
+      return { ...crash.toObject(), driver: driverId }
+    })
+
+    const uniqueDriverArray = Array.from(uniqueDrivers.values())
+
+    updatedVehicle.crashedBy = uniqueDriverArray
 
     res.status(200).json({
       status: 'success',
       data: {
-        vehicle: updateVehicle,
+        vehicle: updatedVehicle,
       },
     })
   },
 )
+
 export const deleteVehicle = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const deleteVehicle = await VehicleModel.findByIdAndDelete(req.params.id)
+    const deleteVehicle = await VehicleModel.findByIdAndUpdate({
+      active: false,
+    })
 
     res.status(204).json({
       status: 'success',

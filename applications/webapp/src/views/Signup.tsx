@@ -1,73 +1,162 @@
-import { Link } from "react-router-dom";
 import PageNav from "../components/Navbar";
-import styles from "./Login.module.css";
+import styles from "./Signup.module.css";
 import { useState } from "react";
-export default function Login() {
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import Message from "../components/Message";
+import Spinner from "../components/Spinner";
+
+export default function Signup() {
   // PRE-FILL FOR DEV PURPOSES
-  const [email, setEmail] = useState("jack@example.com");
-  const [password, setPassword] = useState("qwerty");
-  const [firstName, setFirstName] = useState("Abebe");
-  const [lastName, setLastName] = useState("Kebede");
-  const [confirmPassword, setConfirmPassword] = useState("qwerty");
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
+  const [error, setError] = useState(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [message, setMessage] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      setIsLoading(true);
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API}/admins/signup`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            password,
+            firstName,
+            lastName,
+            confirmPassword,
+          }),
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setMessage((data as any).message);
+        setSuccess(true);
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || "Sign up failed");
+        setSnackbarOpen(true);
+      }
+    } catch (error) {
+      console.error("Sign up error:", error);
+      setError("An error occurred while signing up" as any);
+      setSnackbarOpen(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) return <Spinner />;
 
   return (
     <main className={styles.login}>
       <PageNav />
-      <form className={styles.form}>
-        <div className={styles.row}>
-          <label htmlFor="text">First Name</label>
-          <input
-            type="text"
-            id="firstName"
-            onChange={(e) => setFirstName(e.target.value)}
-            value={firstName}
-          />
-        </div>
+      {success ? (
+        <Message message={message} />
+      ) : (
+        <>
+          <form className={styles.form}>
+            <div className={styles.row}>
+              <label htmlFor="text"></label>
+              <input
+                type="text"
+                id="firstName"
+                onChange={(e) => setFirstName(e.target.value)}
+                value={firstName}
+                required
+                placeholder="First Name"
+              />
+            </div>
 
-        <div className={styles.row}>
-          <label htmlFor="text">Last Name</label>
-          <input
-            type="text"
-            id="lastName"
-            onChange={(e) => setLastName(e.target.value)}
-            value={lastName}
-          />
-        </div>
+            <div className={styles.row}>
+              <label htmlFor="text"></label>
+              <input
+                type="text"
+                id="lastName"
+                onChange={(e) => setLastName(e.target.value)}
+                value={lastName}
+                required
+                placeholder="Last Name"
+              />
+            </div>
 
-        <div className={styles.row}>
-          <label htmlFor="email">Email address</label>
-          <input
-            type="email"
-            id="email"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-          />
-        </div>
+            <div className={styles.row}>
+              <label htmlFor="email"></label>
+              <input
+                type="email"
+                id="email"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                required
+                placeholder="Email address"
+              />
+            </div>
 
-        <div className={styles.row}>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-          />
-        </div>
+            <div className={styles.row}>
+              <label htmlFor="password"></label>
+              <input
+                type="password"
+                id="password"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                required
+                placeholder="Password"
+              />
+            </div>
 
-        <div className={styles.row}>
-          <label htmlFor="password">Comfirm Password</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            value={confirmPassword}
-          />
-        </div>
+            <div className={styles.row}>
+              <label htmlFor="password"></label>
+              <input
+                type="password"
+                id="confirmPassword"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                value={confirmPassword}
+                required
+                placeholder="Comfirm Password"
+              />
+            </div>
 
-        <div>
-          <Link className={styles.ctaLink}>Login</Link>
-        </div>
-      </form>
+            <button
+              type="submit"
+              className={styles.logButton}
+              onClick={handleSubmit}
+            >
+              signup
+            </button>
+          </form>
+          <Snackbar
+            open={snackbarOpen}
+            autoHideDuration={6000}
+            onClose={handleSnackbarClose}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          >
+            <MuiAlert
+              elevation={6}
+              variant="filled"
+              severity="error"
+              onClose={handleSnackbarClose}
+              style={{ width: "300px", fontSize: "16px" }}
+            >
+              {error}
+            </MuiAlert>
+          </Snackbar>
+        </>
+      )}
     </main>
   );
 }

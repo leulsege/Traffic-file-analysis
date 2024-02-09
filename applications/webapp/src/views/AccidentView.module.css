@@ -1,0 +1,72 @@
+.accidentImg {
+  width: 95%;
+  margin-top: 4rem;
+}
+/* DriverProfile.module.css */
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: calc(100vw - 2rem);
+  overflow: hidden;
+}
+
+/* Add additional styling for other elements as needed */
+
+.imgholder {
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12rem;
+  box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.075);
+  border-radius: 11px;
+  overflow: hidden;
+  transition: all 0.4s;
+  cursor: pointer;
+}
+
+.phoneNumber {
+  color: #444;
+}
+
+.driverImg {
+  height: 9.2rem;
+  width: 9.2rem;
+  border-radius: 50%;
+  border: 3px solid #fdf2e9;
+  margin-bottom: 1.2rem;
+}
+
+.name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: black;
+}
+
+.profileSettings {
+  border-left: 0.1px solid rgba(0, 0, 0, 0.1);
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  align-self: start;
+}
+
+.addButton {
+  background-color: var(--color-brand--2);
+  color: #333;
+  padding: 0.8rem 1.6rem;
+}
+
+.formHolder {
+  margin: 6.2rem 0;
+}
+
+.reducedPoint {
+  color: red;
+  font-size: 1.8rem;
+  font-weight: 600;
+}

@@ -10,16 +10,12 @@ import { protect, restrictTo } from '../middleware/authMiddleware'
 
 const siteRouter = express.Router()
 
-siteRouter
-  .route('/')
-  .all(protect, restrictTo('admin', 'owner'))
-  .post(createSite)
-  .get(getAllSites)
+siteRouter.route('/').all(protect).post(createSite).get(getAllSites)
 siteRouter
   .route('/:id')
   .all(protect)
   .get(getSite)
-  .patch(restrictTo('admin', 'owner'), updateSite)
-  .delete(restrictTo('admin', 'owner'), deleteSite)
+  .patch(updateSite)
+  .delete(deleteSite)
 
 export default siteRouter

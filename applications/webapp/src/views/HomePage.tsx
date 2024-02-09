@@ -13,10 +13,11 @@ export default function HomePage() {
           Traffic Management System
         </h1>
         <h2>
-          የማሽን እና የመኪና አገልግሎት መተግበሪ ተጠቃሚ ሆኖ የመንገድ መከተልና የቀመር አገልግሎት ለተያይዞ የቀረበ
-          እና አንድነት እንዲቀይሩ፣ የሰላም ዝርዝር እና እርከን መንገድ ይከተላል።
+          በቀላሉ የመስሪያ ቤቶን አሽከርካሪ ተሽከርካሪ መቆጣጠሪያ ፣ ጥፋት (አደጋ) መመዝገቢያ ፣ በድርጅቱ ውስጥ
+          የሚገኙ ሰልጣኝ አሽከርካሪዎችን መከታተያ፡ እና ሌሎችም ብዙ ጥቅም ያለው ሲስተም ነው በ2024GC በ
+          "Internship" ተማሪዎች የተሰራ
         </h2>
-        <Link to="app" className="cta">
+        <Link to="/drivers" className="cta">
           Go to App
         </Link>
       </section>

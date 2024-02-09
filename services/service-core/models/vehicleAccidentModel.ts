@@ -2,33 +2,48 @@ import { Document, Schema, model, Query } from 'mongoose'
 
 // Define the interface for the data
 interface VehicleAccident extends Document {
-  accident_date: Date
-  accident_place: string
+  accidentDate: Date
+  accidentPlace: string
   damages: string
   cause: string
   guilty: string
-  damageEstimation: number
+  damageEstimation: string
   insuranceSentDate: Date
+  excessLetterDate: Date
   maintenanceProcess: string
   preformDate: Date
-  ክፍያ_የተጠየቀበት_ቀን_የደብዳቤ_ቁጥር: string
+  paymentDateLetterNumber: string
   paymentRequestLetterDate: Date
+  reducedPoint: number
+  givenDecision: string
+  vehicle: Schema.Types.ObjectId
+  driver: Schema.Types.ObjectId
 }
 
 // Define the mongoose schema
 const accidentSchema: Schema = new Schema({
-  accident_date: { type: Date },
-  accident_place: { type: String },
+  accidentDate: { type: Date },
+  accidentPlace: { type: String },
   damages: { type: String },
   cause: { type: String },
   guilty: { type: String },
-  damageEstimation: { type: Number },
+  damageEstimation: { type: String },
   insuranceSentDate: { type: Date },
-  ኤክሰስ_የተቆረጠበት_ደብዳ_ቁጥር: { type: String },
+  excessLetterDate: { type: String },
   maintenanceProcess: { type: String },
   preformDate: { type: Date },
-  ክፍያ_የተጠየቀበት_ቀን_የደብዳቤ_ቁጥር: { type: String },
+  paymentDateLetterNumber: { type: String },
   paymentRequestLetterDate: { type: Date },
+  createdAt: { type: Date, default: Date.now },
+  reducedPoint: {
+    type: Number,
+    required: true,
+  },
+  givenDecision: String,
+  photo: {
+    type: String,
+    default: null,
+  },
   vehicle: {
     type: Schema.Types.ObjectId,
     ref: 'Vehicle',

@@ -44,7 +44,27 @@ export const getFaultRecord = asyncError(
 
 export const updateFaultRecord = asyncError(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const updateFaultRecord = await FaultRecordModel.findByIdAndUpdate(
+    // Fetch the current document before the update
+    const currentFaultRecord = await FaultRecordModel.findById(req.params.id)
+
+    console.log('User ObjectId:', (req as any).user._id)
+    // If givenPoint or reducedPoint is modified, record history
+    if (
+      req.body.givenPoint !== undefined ||
+      req.body.reducedPoint !== undefined
+    ) {
+      // Push the current state to the history array
+      currentFaultRecord.history.push({
+        date: Date.now(),
+        givenPoint: currentFaultRecord.givenPoint,
+        reducedPoint: currentFaultRecord.reducedPoint,
+        user: (req as any).user._id,
+      })
+
+      await currentFaultRecord.save()
+    }
+
+    const updatedFaultRecord = await FaultRecordModel.findByIdAndUpdate(
       req.params.id,
       req.body,
       {
@@ -56,7 +76,7 @@ export const updateFaultRecord = asyncError(
     res.status(200).json({
       status: 'success',
       data: {
-        faultRecord: updateFaultRecord,
+        faultRecord: updatedFaultRecord,
       },
     })
   },
