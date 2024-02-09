@@ -37,7 +37,6 @@ export default function ExTrainersLayout() {
   useEffect(
     function () {
       async function fetchTrainings() {
-        console.log("----------------------------------");
         try {
           const response = await fetch(
             `${import.meta.env.VITE_BACKEND_API}/trainings?page=${page}`,

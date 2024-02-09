@@ -84,6 +84,25 @@ function UserForm({ trainings, setTraining }) {
         }
       );
       if (response.ok) {
+        navigate("/extrainers");
+      } else {
+        const errorData = await response.json();
+        console.log(errorData);
+      }
+    } catch (error) {
+      console.error("Error fetching trainer:", error);
+    }
+  }
+  async function handleRecover() {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API}/trainings/${trainerId.id}`,
+        {
+          method: "PUT",
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
         navigate("/trainings");
       } else {
         const errorData = await response.json();
@@ -93,9 +112,6 @@ function UserForm({ trainings, setTraining }) {
       console.error("Error fetching trainer:", error);
     }
   }
-
-  async function handleRecover() {}
-
   return (
     <main className={styles.login}>
       <form className={styles.form} onSubmit={(e) => e.preventDefault()}>

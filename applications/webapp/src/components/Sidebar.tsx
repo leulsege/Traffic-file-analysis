@@ -3,7 +3,7 @@ import Logo from "./Logo";
 import AppNav from "./AppNav";
 import { Outlet } from "react-router-dom";
 
-function Sidebar({ setDrivers, setVehicles, setTrainers }) {
+function Sidebar({ setDrivers, setVehicles, setTrainers, setExDrivers }) {
   return (
     <div className={styles.sidebar}>
       <Logo />
@@ -11,6 +11,7 @@ function Sidebar({ setDrivers, setVehicles, setTrainers }) {
         setDrivers={setDrivers}
         setVehicles={setVehicles}
         setTrainers={setTrainers}
+        setExDrivers={setExDrivers}
       />
       <Outlet />
       <footer className={styles.footer}>

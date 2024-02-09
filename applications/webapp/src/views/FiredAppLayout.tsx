@@ -65,7 +65,7 @@ export default function AppLayout() {
   return (
     <div className={styles.app}>
       <LoggedinNavBar />
-      <Sidebar setDrivers={setDrivers} />
+      <Sidebar setExDrivers={setDrivers} />
       <FiredDisplay
         drivers={drivers}
         isLoading={isLoading}

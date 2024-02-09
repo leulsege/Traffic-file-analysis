@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./AppNav.module.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-function AppNav({ setDrivers, setVehicles, setTrainers }) {
+function AppNav({ setDrivers, setVehicles, setTrainers, setExDrivers }) {
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ function AppNav({ setDrivers, setVehicles, setTrainers }) {
     const fetchData = async () => {
       setLoading(true);
       try {
-        if (location.pathname == "/drivers" && setDrivers) {
+        if (location.pathname == ("/drivers" || "/exdrivers") && setDrivers) {
           const sanitizedQuery = query.replace(/ /g, "-");
           const response = await fetch(
             `${
@@ -62,18 +62,19 @@ function AppNav({ setDrivers, setVehicles, setTrainers }) {
           const searchedResult = await response.json();
           setVehicles(searchedResult.data.vehicles);
         }
-        if (location.pathname == "/trainings" && setTrainers) {
+
+        if (location.pathname == "/exdrivers" && setExDrivers) {
           const sanitizedQuery = query.replace(/ /g, "-");
           const response = await fetch(
             `${
               import.meta.env.VITE_BACKEND_API
-            }/trainings?fullName=${sanitizedQuery}`,
+            }/drivers?fullName=${sanitizedQuery}`,
             {
               credentials: "include",
             }
           );
           const searchedResult = await response.json();
-          setDrivers(searchedResult.data.drivers);
+          setExDrivers(searchedResult.data.drivers);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -91,15 +92,21 @@ function AppNav({ setDrivers, setVehicles, setTrainers }) {
   return (
     <>
       <nav className={styles.nav}>
-        <div className={styles.row}>
-          <input
-            type="text"
-            id="driverNameSearch"
-            onChange={(e) => setQuery(e.target.value)}
-            value={query}
-            placeholder="ፈልግ ..."
-          />
-        </div>
+        {location.pathname !== "/admins" &&
+          location.pathname !== "/topdrivers" &&
+          location.pathname !== "/trainings" &&
+          location.pathname !== "/extrainers" &&
+          location.pathname !== "/topdrivers" && (
+            <div className={styles.row}>
+              <input
+                type="text"
+                id="driverNameSearch"
+                onChange={(e) => setQuery(e.target.value)}
+                value={query}
+                placeholder="ፈልግ ..."
+              />
+            </div>
+          )}
       </nav>
 
       <div className={styles.grid}>
@@ -115,11 +122,11 @@ function AppNav({ setDrivers, setVehicles, setTrainers }) {
         <div onClick={handleExTrainers} className={styles.item}>
           <p className={styles.p}>ከዚህ በፊት ስልጠና የወሰዱ</p>
         </div>
-        <div onClick={handletopDrivers} className={styles.item}>
-          <p className={styles.p}>ምንም አደጋ ያላደረሱ</p>
-        </div>
         <div onClick={handleExDrivers} className={styles.item}>
           <p className={styles.p}>የተሰናበቱ አሽከርካሪዎች</p>
+        </div>
+        <div onClick={handletopDrivers} className={styles.item}>
+          <p className={styles.p}>ምንም አደጋ ያላደረሱ</p>
         </div>
 
         {role == "owner" && (
