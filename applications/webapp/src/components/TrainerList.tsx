@@ -4,13 +4,16 @@ import Spinner from "./Spinner";
 import styles from "./DriversList.module.css";
 import Trainer from "./Trainer";
 
-function TrainerList({ trainers, isLoading }) {
+function TrainerList({ trainers, isLoading, from }) {
   if (isLoading) return <Spinner />;
 
   return (
     <>
       <div className={styles.container}>
-        <h1 className={styles.title}>Trainer List</h1>
+        <h1 className={styles.title}>
+          {" "}
+          {from?.from == "extrainers" ? "ከዚህ በፊት ስልጠና የወሰዱ" : "የሰልጣኞች ዝርዝር"}
+        </h1>
       </div>
       <div className={styles.driverList}>
         {trainers.map((trainer) => {

@@ -15,7 +15,7 @@
   grid-template-rows: repeat(2, 1fr);
   grid-template-columns: repeat(3, 1fr);
   gap: 10px; /* Adjust the gap between grid items as needed */
-  max-width: 600px; /* Set a maximum width for better readability */
+  max-width: 900px; /* Set a maximum width for better readability */
   margin: 40px auto; /* Center the grid container */
 }
 

@@ -6,12 +6,15 @@ import styles from "./DriversList.module.css";
 
 function DriversList({ drivers, isLoading, from }) {
   if (isLoading) return <Spinner />;
-  console.log(drivers.from, "from driverslist");
   return (
     <>
       <div className={styles.container}>
         <h1 className={styles.title}>
-          {from?.from == "fired" ? "የተሰናበቱ አሽከርካሪዎች" : "የአሽካሪዎች ዝርዝር"}
+          {from?.from == "topdrivers"
+            ? "ምንም አደጋ ያላደረሱ አሽከርካሪዎች"
+            : from?.from == "fired"
+            ? "የተሰናበቱ አሽከርካሪዎች"
+            : "የአሽካሪዎች ዝርዝር"}
         </h1>
       </div>
       <div className={styles.driverList}>

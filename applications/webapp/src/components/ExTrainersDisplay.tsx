@@ -3,7 +3,7 @@ import { useState } from "react";
 import TrainerList from "./TrainerList";
 import AddTrainerForm from "./AddTrainerForm";
 
-function TrainersDisplay({
+function ExTrainersDisplay({
   trainers,
   isLoading,
   handlePrevPage,
@@ -11,13 +11,15 @@ function TrainersDisplay({
   page,
   results,
 }) {
-  const [isFormVisible, setIsFormVisible] = useState(false);
-
-  const activeTrainers = trainers.filter((trainer) => trainer.activeTrainer);
-
+  const inactiveTrainers = trainers.filter((trainer) => !trainer.activeTrainer);
+  const from = { from: "extrainers" };
   return (
     <div className={styles.display}>
-      <TrainerList trainers={activeTrainers} isLoading={isLoading} />
+      <TrainerList
+        from={from}
+        trainers={inactiveTrainers}
+        isLoading={isLoading}
+      />
 
       {!isLoading && (
         <div className={styles.buttons}>
@@ -37,4 +39,4 @@ function TrainersDisplay({
   );
 }
 
-export default TrainersDisplay;
+export default ExTrainersDisplay;

@@ -20,6 +20,8 @@ import Approve from "./views/owner/Approve";
 import AdminApprove from "./views/owner/AdminApprove";
 import AccidentView from "./views/accidentView";
 import FiredAppLayout from "./views/FiredAppLayout";
+import ExTrainersLayout from "./views/ExTrainersLayout";
+import TopDriversLayout from "./views/TopDriversLayout";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -42,6 +44,18 @@ function App() {
               setIsAuthenticated={setIsAuthenticated}
             >
               <AppLayout />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="topdrivers"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              setIsAuthenticated={setIsAuthenticated}
+            >
+              <TopDriversLayout />
             </ProtectedRoute>
           }
         />
@@ -77,6 +91,17 @@ function App() {
               setIsAuthenticated={setIsAuthenticated}
             >
               <VehiclesAppLayout />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/extrainers"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              setIsAuthenticated={setIsAuthenticated}
+            >
+              <ExTrainersLayout />
             </ProtectedRoute>
           }
         />
