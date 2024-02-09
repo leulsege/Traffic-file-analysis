@@ -36,6 +36,7 @@ function VehicleProfile() {
   }, []);
 
   if (isLoading) return <Spinner />;
+  console.log(vehicle.crashedBy);
 
   return (
     <>
@@ -49,6 +50,31 @@ function VehicleProfile() {
         <div className={styles.profileSettings}>
           <VehicleForm vehicle={vehicle} setVehicle={setVehicle} />
         </div>
+
+        {vehicle.crashedBy ? (
+          <div className={styles.driverList}>
+            <p className={styles.currentPoint}>
+              በዚህ መኪና አደጋ ያደረሱ አሽከርካሪዎች ዝርዝር
+            </p>
+            {vehicle.crashedBy?.map((driver) => (
+              <div className={styles.smallContainer}>
+                <img
+                  className={styles.driverImg}
+                  src={
+                    driver.photo
+                      ? `${
+                          import.meta.env.VITE_BACKEND_STATIC_FILE
+                        }/img/drivers/${driver.photo}`
+                      : "/default-user-profile.jpg"
+                  }
+                />
+                <span className={styles.name}>{driver.fullName}</span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          ""
+        )}
       </main>
     </>
   );

@@ -1,6 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./AccidentViewForm.module.css";
 import { useState, useEffect } from "react";
+import ConfirmationPrompt from "./ConfirmationPrompt";
+import CustomSnackbar from "./CustomSnackBar";
 
 function AccidentForm({ accidentData, setAccident }) {
   const navigate = useNavigate();
@@ -44,6 +46,16 @@ function AccidentForm({ accidentData, setAccident }) {
     accidentData.givenDecision
   );
 
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setShowSnackbar(false);
+  };
+
   async function handleUpdate() {
     try {
       const response = await fetch(
@@ -75,8 +87,14 @@ function AccidentForm({ accidentData, setAccident }) {
       if (response.ok) {
         const accidentInfo = await response.json();
         setAccident(accidentInfo.data.vehicleAccident);
+        setSnackbarMessage("Driver Updated Successfully!");
+        setSnackbarSeverity("success");
+        setShowSnackbar(true);
       } else {
         const errorData = await response.json();
+        setSnackbarMessage(errorData.message);
+        setSnackbarSeverity("error");
+        setShowSnackbar(true);
         console.log(errorData);
       }
     } catch (error) {
@@ -115,7 +133,6 @@ function AccidentForm({ accidentData, setAccident }) {
             id="accidentPlace"
             onChange={(e) => setPlateNumber(e.target.value)}
             value={plateNumber}
-            required
           />
         </div>
         <div className={styles.row}>
@@ -125,7 +142,6 @@ function AccidentForm({ accidentData, setAccident }) {
             id="accidentPlace"
             onChange={(e) => setAccidentPlace(e.target.value)}
             value={accidentPlace}
-            required
           />
         </div>
 
@@ -136,7 +152,6 @@ function AccidentForm({ accidentData, setAccident }) {
             id="firstName"
             onChange={(e) => setAccidentDate(e.target.value)}
             value={accidentDate}
-            required
           />
         </div>
         <div className={styles.row}>
@@ -146,7 +161,6 @@ function AccidentForm({ accidentData, setAccident }) {
             id="damages"
             onChange={(e) => setDamages(e.target.value)}
             value={damages}
-            required
           />
         </div>
         <div className={styles.row}>
@@ -156,7 +170,6 @@ function AccidentForm({ accidentData, setAccident }) {
             id="accidentPlace"
             onChange={(e) => setCause(e.target.value)}
             value={cause}
-            required
           />
         </div>
 
@@ -167,7 +180,6 @@ function AccidentForm({ accidentData, setAccident }) {
             id="guilty"
             onChange={(e) => setGuilty(e.target.value)}
             value={guilty}
-            required
           />
         </div>
 
@@ -234,7 +246,7 @@ function AccidentForm({ accidentData, setAccident }) {
         <div className={styles.row}>
           <label htmlFor="date">የተሰበሰበበት ቀን</label>
           <input
-            type="text"
+            type="date"
             id="paymentRequestLetterDate"
             onChange={(e) => setPaymentRequestLetterDate(e.target.value)}
             value={paymentRequestLetterDate}
@@ -248,6 +260,7 @@ function AccidentForm({ accidentData, setAccident }) {
             id="reducedPoint"
             onChange={(e) => setReducedPoint(e.target.value)}
             value={reducedPoint}
+            required
           />
         </div>
 
@@ -265,9 +278,18 @@ function AccidentForm({ accidentData, setAccident }) {
           <button className={styles.updbtn} onClick={handleUpdate}>
             update Accident
           </button>
-          <button className={styles.delbtn} onClick={handleDelete}>
-            Delete Accident
-          </button>
+          <CustomSnackbar
+            open={showSnackbar}
+            onClose={handleSnackbarClose}
+            message={snackbarMessage}
+            severity={snackbarSeverity}
+          />
+          <ConfirmationPrompt
+            onConfirm={handleDelete}
+            onCancel={() => console.log("Deletion canceled")}
+          >
+            <button className={styles.delbtn}>Delete Driver</button>
+          </ConfirmationPrompt>
         </div>
       </form>
     </main>

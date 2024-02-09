@@ -2,12 +2,22 @@ import styles from "./LoggedinNavBar.module.css";
 import { NavLink } from "react-router-dom";
 
 import LogoLoggedin from "./LogoLoggedin";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import CustomSnackbar from "./CustomSnackBar";
 
 function LoggedinNavBar() {
   const [isButtonVisible, setIsButtonVisible] = useState(false);
   const [givenPoint, setGivenPoint] = useState();
   const [trainingEntryPoint, setTrainingEntryPoint] = useState();
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setShowSnackbar(false);
+  };
 
   function handleInputClick() {
     setIsButtonVisible(true);
@@ -19,9 +29,65 @@ function LoggedinNavBar() {
     }, 3000);
   }
 
-  function handleOnClick() {
-    console.log("clicked");
+  async function handleOnClick() {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API}/setconfig`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            givenPoint,
+            trainingEntryPoint,
+          }),
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        const configInfo = await response.json();
+        setGivenPoint(configInfo.givenPoint);
+        setTrainingEntryPoint(configInfo.trainingEntryPoint);
+        setSnackbarMessage("Config Updated Successfully!");
+        setSnackbarSeverity("success");
+        setShowSnackbar(true);
+      } else {
+        const errorData = await response.json();
+        setSnackbarMessage(errorData.message);
+        setSnackbarSeverity("error");
+        setShowSnackbar(true);
+        console.log(errorData);
+      }
+    } catch (error) {
+      setSnackbarMessage("unknown error");
+      setSnackbarSeverity("success");
+      setShowSnackbar(true);
+      console.error("Error fetching config data:", error);
+    }
   }
+
+  useEffect(function () {
+    async function fetchDriver() {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_API}/setconfig`,
+          {
+            credentials: "include",
+          }
+        );
+        if (response.ok) {
+          const configInfo = await response.json();
+          setGivenPoint(configInfo.givenPoint);
+          setTrainingEntryPoint(configInfo.trainingEntryPoint);
+        } else {
+          const errorData = await response.json();
+          console.log(errorData);
+        }
+      } catch (error) {
+        console.error("Error fetching config data:", error);
+      }
+    }
+    fetchDriver();
+  }, []);
 
   return (
     <nav className={styles.nav}>
@@ -53,9 +119,17 @@ function LoggedinNavBar() {
           />
         </div>
         {isButtonVisible && (
-          <button className={styles.updbtn} onClick={handleOnClick}>
-            Submit
-          </button>
+          <>
+            <button className={styles.updbtn} onClick={handleOnClick}>
+              Submit
+            </button>
+            <CustomSnackbar
+              open={showSnackbar}
+              onClose={handleSnackbarClose}
+              message={snackbarMessage}
+              severity={snackbarSeverity}
+            />
+          </>
         )}
       </div>
       <ul>

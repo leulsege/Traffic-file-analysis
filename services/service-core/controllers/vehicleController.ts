@@ -49,14 +49,16 @@ export const getVehicle = asyncError(
       })
 
     const uniqueDrivers = new Map()
-    const uniqueCrashedBy = vehicle.crashedBy.map((crash) => {
-      const driverId = crash.driver.id
+    const uniqueCrashedBy = vehicle.crashedBy?.map((crash) => {
+      if (crash.accidentDate !== null) {
+        const driverId = crash.driver.id
 
-      if (!uniqueDrivers.has(driverId)) {
-        uniqueDrivers.set(driverId, crash.driver)
+        if (!uniqueDrivers.has(driverId)) {
+          uniqueDrivers.set(driverId, crash.driver)
+        }
+
+        return { ...crash.toObject(), driver: driverId }
       }
-
-      return { ...crash.toObject(), driver: driverId }
     })
 
     const uniqueDriverArray = Array.from(uniqueDrivers.values())

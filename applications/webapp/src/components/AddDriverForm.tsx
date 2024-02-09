@@ -13,7 +13,6 @@ function AddDriverForm() {
   const [birthDate, setBirthDate] = useState();
   const [phoneNumber, setPhoneNumber] = useState();
   const [vehicle, setVehicle] = useState();
-  const [givenPoint, setGivenPoint] = useState();
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
@@ -42,7 +41,6 @@ function AddDriverForm() {
             licenseNumber,
             licenseExpiredDate,
             idNumber,
-            givenPoint,
             vehicle,
           }),
           credentials: "include",
@@ -148,16 +146,6 @@ function AddDriverForm() {
             id="idNumber"
             onChange={(e) => setIdNumber(e.target.value)}
             value={idNumber}
-          />
-        </div>
-
-        <div className={styles.row}>
-          <label htmlFor="text">የተሰጠው ነጥብ</label>
-          <input
-            type="text"
-            id="givenPoint"
-            onChange={(e) => setGivenPoint(e.target.value)}
-            value={givenPoint}
           />
         </div>
 

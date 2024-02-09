@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
 import styles from "./DriverProfile.module.css";
 import UserForm from "../components/UserForm";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import AccidentForm from "../components/AccidentForm";
 import AccidentTrack from "../components/accidentTrack";
 import PhotoUpload from "../components/photoUpload";
 import LoggedinNavBar from "../components/LoggedinNavBar";
 import CustomSnackbar from "../components/CustomSnackBar";
+import ConfirmationPrompt from "../components/ConfirmationPrompt";
 
 function DriverProfile() {
   const [driver, setDriver] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [showAccidentForm, setShowAccidentForm] = useState(false);
   const driverId = useParams();
+  const navigate = useNavigate();
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
@@ -23,6 +25,26 @@ function DriverProfile() {
     }
     setShowSnackbar(false);
   };
+
+  async function handleClear() {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API}/drivers/clear/${driverId.id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        navigate(`/drivers`);
+      } else {
+        const errorData = await response.json();
+        console.log(errorData);
+      }
+    } catch (error) {
+      console.error("Error clear accident:", error);
+    }
+  }
 
   useEffect(function () {
     async function fetchDriver() {
@@ -112,7 +134,14 @@ function DriverProfile() {
                 >
                   Add Accident
                 </button>
-                <button className={styles.delbtn}>Clear</button>
+                <ConfirmationPrompt
+                  onConfirm={handleClear}
+                  onCancel={() => console.log("Deletion canceled")}
+                >
+                  <button className={styles.delbtn} onClick={handleClear}>
+                    Clear
+                  </button>
+                </ConfirmationPrompt>
               </div>
               <CustomSnackbar
                 open={showSnackbar}
