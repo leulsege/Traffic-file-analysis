@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./DriverProfile.module.css";
 import { useParams } from "react-router-dom";
 import Spinner from "../components/Spinner";
@@ -36,7 +36,6 @@ function VehicleProfile() {
   }, []);
 
   if (isLoading) return <Spinner />;
-  console.log(vehicle.crashedBy);
 
   return (
     <>
@@ -44,19 +43,19 @@ function VehicleProfile() {
       <main className={styles.container}>
         <div className={styles.imgholder}>
           <img src="/vehicle.jpg" className={styles.driverImg} />
-          <p className={styles.name}>{vehicle.name}</p>
-          <p className={styles.phoneNumber}>{vehicle.phoneNumber}</p>
+          <p className={styles.name}>{(vehicle as any).name}</p>
+          <p className={styles.phoneNumber}>{(vehicle as any).phoneNumber}</p>
         </div>
         <div className={styles.profileSettings}>
           <VehicleForm vehicle={vehicle} setVehicle={setVehicle} />
         </div>
 
-        {vehicle.crashedBy ? (
+        {(vehicle as any).crashedBy ? (
           <div className={styles.driverList}>
             <p className={styles.currentPoint}>
               በዚህ መኪና አደጋ ያደረሱ አሽከርካሪዎች ዝርዝር
             </p>
-            {vehicle.crashedBy?.map((driver) => (
+            {(vehicle as any).crashedBy?.map((driver: any) => (
               <div className={styles.smallContainer}>
                 <img
                   className={styles.driverImg}

@@ -12,7 +12,7 @@ function LoggedinNavBar() {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
-  const handleSnackbarClose = (event, reason) => {
+  const handleSnackbarClose = (reason: any) => {
     if (reason === "clickaway") {
       return;
     }
@@ -98,7 +98,7 @@ function LoggedinNavBar() {
           <input
             type="number"
             id="givenPoint"
-            onChange={(e) => setGivenPoint(e.target.value)}
+            onChange={(e) => setGivenPoint(e.target.value as any)}
             value={givenPoint}
             className={styles.inputStyle}
             onClick={handleInputClick}
@@ -111,7 +111,7 @@ function LoggedinNavBar() {
           <input
             type="number"
             id="training End Date"
-            onChange={(e) => setTrainingEntryPoint(e.target.value)}
+            onChange={(e) => setTrainingEntryPoint(e.target.value as any)}
             value={trainingEntryPoint}
             className={styles.inputStyle}
             onClick={handleInputClick}

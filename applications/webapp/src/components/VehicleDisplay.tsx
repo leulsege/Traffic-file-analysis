@@ -12,7 +12,7 @@ function Display({
   handlePrevPage,
   page,
   results,
-}) {
+}: any) {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   function handleAddDriversClick() {

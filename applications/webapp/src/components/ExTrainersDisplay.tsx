@@ -1,7 +1,5 @@
 import styles from "./Display.module.css";
-import { useState } from "react";
 import TrainerList from "./TrainerList";
-import AddTrainerForm from "./AddTrainerForm";
 
 function ExTrainersDisplay({
   trainers,
@@ -10,8 +8,10 @@ function ExTrainersDisplay({
   handleNextPage,
   page,
   results,
-}) {
-  const inactiveTrainers = trainers.filter((trainer) => !trainer.activeTrainer);
+}: any) {
+  const inactiveTrainers = trainers.filter(
+    (trainer: any) => !trainer.activeTrainer
+  );
   const from = { from: "extrainers" };
   return (
     <div className={styles.display}>

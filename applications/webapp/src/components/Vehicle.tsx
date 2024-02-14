@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import styles from "./Driver.module.css";
 
-function Vehicles({ vehicle }) {
+function Vehicles({ vehicle }: any) {
   const navigate = useNavigate();
 
   const handleVehicle = () => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import styles from "./AccidentView.module.css";
 import { useState } from "react";
 import AccidentViewForm from "../components/AccidentViewForm";
@@ -47,18 +47,18 @@ function AccidentView() {
         <div className={styles.imgholder}>
           <a
             href={
-              accident.photo &&
+              (accident as any).photo &&
               `${import.meta.env.VITE_BACKEND_STATIC_FILE}/img/accidents/${
-                accident.photo
+                (accident as any).photo
               }`
             }
           >
             <img
               src={
-                accident.photo
+                (accident as any).photo
                   ? `${
                       import.meta.env.VITE_BACKEND_STATIC_FILE
-                    }/img/accidents/${accident.photo}`
+                    }/img/accidents/${(accident as any).photo}`
                   : "/default-accident.png"
               }
               className={styles.driverImg}
@@ -68,7 +68,9 @@ function AccidentView() {
             url={`vehicleaccidents/uploadphoto/${accidentId.id}`}
             setProfile={setAccident}
           />
-          <p className={styles.reducedPoint}>-{accident.reducedPoint}</p>
+          <p className={styles.reducedPoint}>
+            -{(accident as any).reducedPoint}
+          </p>
         </div>
         <div className={styles.profileSettings}>
           <AccidentViewForm accidentData={accident} setAccident={setAccident} />

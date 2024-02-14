@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import styles from "./AppLayout.module.css";
 import FiredDisplay from "../components/FiredDisplay";
@@ -8,14 +8,14 @@ import LoggedinNavBar from "../components/LoggedinNavBar";
 
 export default function AppLayout() {
   const [drivers, setDrivers] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [results, setResults] = useState(1);
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
 
   // Parse the 'page' query parameter to a number, defaulting to 1
-  const page = parseInt(queryParams.get("page")) || 1;
+  const page = parseInt(queryParams.get("page") as any) || 1;
 
   const handleNextPage = () => {
     const nextPage = page + 1;
@@ -27,7 +27,7 @@ export default function AppLayout() {
     updatePage(prevPage);
   };
 
-  const updatePage = (newPage) => {
+  const updatePage = (newPage: any) => {
     // Update the 'page' query parameter
     queryParams.set("page", newPage.toString());
 

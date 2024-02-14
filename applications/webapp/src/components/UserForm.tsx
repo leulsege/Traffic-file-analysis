@@ -1,12 +1,10 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./UserForm.module.css";
 import { useState } from "react";
-import { useStepContext } from "@mui/material";
-import Spinner from "./Spinner";
 import ConfirmationPrompt from "./ConfirmationPrompt";
 import CustomSnackbar from "./CustomSnackBar";
 
-function UserForm({ driver, setDriver }) {
+function UserForm({ driver, setDriver }: any) {
   const [fullName, setFullName] = useState(driver.fullName);
   const [gender, setGender] = useState(driver.gender);
   const [licenseLevel, setLicenseLevel] = useState(driver.licenseLevel);
@@ -25,7 +23,7 @@ function UserForm({ driver, setDriver }) {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
-  const handleSnackbarClose = (event, reason) => {
+  const handleSnackbarClose = (reason: any) => {
     if (reason === "clickaway") {
       return;
     }

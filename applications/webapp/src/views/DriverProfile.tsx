@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./DriverProfile.module.css";
 import UserForm from "../components/UserForm";
 import { useNavigate, useParams } from "react-router-dom";
@@ -19,7 +19,7 @@ function DriverProfile() {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
-  const handleSnackbarClose = (event, reason) => {
+  const handleSnackbarClose = (reason: any) => {
     if (reason === "clickaway") {
       return;
     }
@@ -72,7 +72,7 @@ function DriverProfile() {
   }, []);
 
   const toggleAccidentForm = () => {
-    if (driver.vehicle) return setShowAccidentForm(!showAccidentForm);
+    if ((driver as any).vehicle) return setShowAccidentForm(!showAccidentForm);
     setSnackbarMessage("በመጀመሪያ ለአሽከርካሪው መኪና ይሰይሙ");
     setSnackbarSeverity("error");
     setShowSnackbar(true);
@@ -87,17 +87,17 @@ function DriverProfile() {
         <div className={styles.imgholder}>
           <a
             href={
-              driver.photo &&
+              (driver as any).photo &&
               `${import.meta.env.VITE_BACKEND_STATIC_FILE}/img/drivers/${
-                driver.photo
+                (driver as any).photo
               }`
             }
           >
             <img
               src={
-                driver.photo
+                (driver as any).photo
                   ? `${import.meta.env.VITE_BACKEND_STATIC_FILE}/img/drivers/${
-                      driver.photo
+                      (driver as any).photo
                     }`
                   : "/default-user-profile.jpg"
               }
@@ -108,9 +108,11 @@ function DriverProfile() {
             url={`drivers/uploadphoto/${driverId.id}`}
             setProfile={setDriver}
           />
-          <p className={styles.name}>{driver.fullName}</p>
-          <p className={styles.phoneNumber}>{driver.phoneNumber}</p>
-          <p className={styles.currentPoint}>ቀሪ ነጥብ = {driver.currentPoint}</p>
+          <p className={styles.name}>{(driver as any).fullName}</p>
+          <p className={styles.phoneNumber}>{(driver as any).phoneNumber}</p>
+          <p className={styles.currentPoint}>
+            ቀሪ ነጥብ = {(driver as any).currentPoint}
+          </p>
         </div>
         <div className={styles.profileSettings}>
           <UserForm driver={driver} setDriver={setDriver} />
@@ -148,7 +150,7 @@ function DriverProfile() {
                 message={snackbarMessage}
                 severity={snackbarSeverity}
               />
-              <AccidentTrack accidents={driver.accidentRecord} />
+              <AccidentTrack accidents={(driver as any).accidentRecord} />
             </>
           )}
         </div>

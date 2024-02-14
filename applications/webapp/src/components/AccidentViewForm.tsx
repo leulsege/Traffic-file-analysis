@@ -1,10 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./AccidentViewForm.module.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ConfirmationPrompt from "./ConfirmationPrompt";
 import CustomSnackbar from "./CustomSnackBar";
 
-function AccidentForm({ accidentData, setAccident }) {
+function AccidentForm({ accidentData, setAccident }: any) {
   const navigate = useNavigate();
 
   const [plateNumber, setPlateNumber] = useState(
@@ -49,7 +49,7 @@ function AccidentForm({ accidentData, setAccident }) {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
-  const handleSnackbarClose = (event, reason) => {
+  const handleSnackbarClose = (reason: any) => {
     if (reason === "clickaway") {
       return;
     }

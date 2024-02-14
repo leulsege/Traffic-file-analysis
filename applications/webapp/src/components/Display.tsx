@@ -11,9 +11,9 @@ function Display({
   handlePrevPage,
   page,
   results,
-}) {
+}: any) {
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const activeDrivers = drivers.filter((driver) => driver.active);
+  const activeDrivers = drivers.filter((driver: any) => driver.active);
 
   function handleAddDriversClick() {
     setIsFormVisible(true);

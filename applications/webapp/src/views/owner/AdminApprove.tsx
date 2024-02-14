@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import styles from "../DriverProfile.module.css";
 import { useState } from "react";
 import LoggedinNavBar from "../../components/LoggedinNavBar";
@@ -44,17 +44,17 @@ function AdminApprove() {
         <div className={styles.imgholder}>
           <a
             href={
-              admin.photo &&
+              (admin as any).photo &&
               `${import.meta.env.VITE_BACKEND_STATIC_FILE}/img/admins/${
-                admin.photo
+                (admin as any).photo
               }`
             }
           >
             <img
               src={
-                admin.photo
+                (admin as any).photo
                   ? `${import.meta.env.VITE_BACKEND_STATIC_FILE}/img/admins/${
-                      admin.photo
+                      (admin as any).photo
                     }`
                   : "/default-user-profile.jpg"
               }
@@ -62,9 +62,9 @@ function AdminApprove() {
             />
           </a>
           <p className={styles.name}>
-            {admin.firstName} {admin.lastName}
+            {(admin as any).firstName} {(admin as any).lastName}
           </p>
-          <p className={styles.phoneNumber}>{admin.role}</p>
+          <p className={styles.phoneNumber}>{(admin as any).role}</p>
         </div>
         <div className={styles.profileSettings}>
           <ApproveAdminForm admin={admin} setAdmin={setAdmin} />

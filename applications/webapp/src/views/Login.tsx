@@ -5,7 +5,7 @@ import { useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
-export default function Login({ setIsAuthenticated }) {
+export default function Login({ setIsAuthenticated }: any) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [error, setError] = useState(null);
@@ -16,7 +16,7 @@ export default function Login({ setIsAuthenticated }) {
     setSnackbarOpen(false);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     try {
@@ -66,7 +66,7 @@ export default function Login({ setIsAuthenticated }) {
             type="email"
             required
             id="email"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value as any)}
             value={email}
             placeholder="Email address"
           />
@@ -78,7 +78,7 @@ export default function Login({ setIsAuthenticated }) {
             type="password"
             required
             id="password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value as any)}
             value={password}
             placeholder="Password"
           />

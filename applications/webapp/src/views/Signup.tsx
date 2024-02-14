@@ -7,7 +7,6 @@ import Message from "../components/Message";
 import Spinner from "../components/Spinner";
 
 export default function Signup() {
-  // PRE-FILL FOR DEV PURPOSES
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [firstName, setFirstName] = useState();
@@ -23,7 +22,7 @@ export default function Signup() {
     setSnackbarOpen(false);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     try {
@@ -76,7 +75,7 @@ export default function Signup() {
               <input
                 type="text"
                 id="firstName"
-                onChange={(e) => setFirstName(e.target.value)}
+                onChange={(e) => setFirstName(e.target.value as any)}
                 value={firstName}
                 required
                 placeholder="First Name"
@@ -88,7 +87,7 @@ export default function Signup() {
               <input
                 type="text"
                 id="lastName"
-                onChange={(e) => setLastName(e.target.value)}
+                onChange={(e) => setLastName(e.target.value as any)}
                 value={lastName}
                 required
                 placeholder="Last Name"
@@ -100,7 +99,7 @@ export default function Signup() {
               <input
                 type="email"
                 id="email"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value as any)}
                 value={email}
                 required
                 placeholder="Email address"
@@ -112,7 +111,7 @@ export default function Signup() {
               <input
                 type="password"
                 id="password"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value as any)}
                 value={password}
                 required
                 placeholder="Password"
@@ -124,7 +123,7 @@ export default function Signup() {
               <input
                 type="password"
                 id="confirmPassword"
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={(e) => setConfirmPassword(e.target.value as any)}
                 value={confirmPassword}
                 required
                 placeholder="Comfirm Password"

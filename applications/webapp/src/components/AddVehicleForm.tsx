@@ -1,7 +1,6 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./UserForm.module.css";
 import { useState } from "react";
-import Spinner from "./Spinner";
 import CustomSnackbar from "./CustomSnackBar";
 
 function AddVehicleForm() {
@@ -16,14 +15,13 @@ function AddVehicleForm() {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
-  const handleSnackbarClose = (event, reason) => {
+  const handleSnackbarClose = (reason: any) => {
     if (reason === "clickaway") {
       return;
     }
     setShowSnackbar(false);
   };
 
-  const vehicleId = useParams();
   const navigate = useNavigate();
 
   async function handleCreate() {
@@ -72,7 +70,7 @@ function AddVehicleForm() {
           <input
             type="text"
             id="vehicleType"
-            onChange={(e) => setVehicleType(e.target.value)}
+            onChange={(e) => setVehicleType(e.target.value as any)}
             value={vehicleType}
             required
           />
@@ -83,7 +81,7 @@ function AddVehicleForm() {
           <input
             type="text"
             id="plateNumber"
-            onChange={(e) => setPlateNumber(e.target.value)}
+            onChange={(e) => setPlateNumber(e.target.value as any)}
             value={plateNumber}
           />
         </div>
@@ -93,7 +91,7 @@ function AddVehicleForm() {
           <input
             type="tel"
             id="moterNumber"
-            onChange={(e) => setMoterNumber(e.target.value)}
+            onChange={(e) => setMoterNumber(e.target.value as any)}
             value={moterNumber}
             required
           />
@@ -104,7 +102,7 @@ function AddVehicleForm() {
           <input
             type="tel"
             id="moterNumber"
-            onChange={(e) => setChanciNumber(e.target.value)}
+            onChange={(e) => setChanciNumber(e.target.value as any)}
             value={chanciNumber}
             required
           />
@@ -115,7 +113,7 @@ function AddVehicleForm() {
           <input
             type="text"
             id="sideNumber"
-            onChange={(e) => setSideNumber(e.target.value)}
+            onChange={(e) => setSideNumber(e.target.value as any)}
             value={sideNumber}
           />
         </div>
@@ -125,7 +123,7 @@ function AddVehicleForm() {
           <input
             type="number"
             id="bmServiceTime"
-            onChange={(e) => setBmServiceTime(e.target.value)}
+            onChange={(e) => setBmServiceTime(e.target.value as any)}
             value={bmServiceTime}
           />
         </div>
@@ -135,7 +133,7 @@ function AddVehicleForm() {
           <input
             type="number"
             id="pmServiceTime"
-            onChange={(e) => setPmServiceTime(e.target.value)}
+            onChange={(e) => setPmServiceTime(e.target.value as any)}
             value={pmServiceTime}
           />
         </div>
@@ -145,7 +143,7 @@ function AddVehicleForm() {
           <input
             type="text"
             id="others"
-            onChange={(e) => setOthers(e.target.value)}
+            onChange={(e) => setOthers(e.target.value as any)}
             value={others}
           />
         </div>

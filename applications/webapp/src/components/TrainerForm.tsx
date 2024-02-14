@@ -1,10 +1,10 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./UserForm.module.css";
 import { useState } from "react";
 import ConfirmationPrompt from "./ConfirmationPrompt";
 import CustomSnackbar from "./CustomSnackBar";
 
-function UserForm({ trainings, setTraining }) {
+function UserForm({ trainings, setTraining }: any) {
   const navigate = useNavigate();
   const trainerId = useParams();
 
@@ -28,7 +28,7 @@ function UserForm({ trainings, setTraining }) {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
-  const handleSnackbarClose = (event, reason) => {
+  const handleSnackbarClose = (reason: any) => {
     if (reason === "clickaway") {
       return;
     }

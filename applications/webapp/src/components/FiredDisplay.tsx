@@ -2,8 +2,6 @@
 
 import DriversList from "./DriversList";
 import styles from "./Display.module.css";
-import { useState } from "react";
-import AddDriverForm from "./AddDriverForm";
 function FiredDisplay({
   drivers,
   isLoading,
@@ -11,19 +9,9 @@ function FiredDisplay({
   handlePrevPage,
   page,
   results,
-}) {
-  const [isFormVisible, setIsFormVisible] = useState(false);
-
-  const inactiveDrivers = drivers.filter((driver) => !driver.active);
+}: any) {
+  const inactiveDrivers = drivers.filter((driver: any) => !driver.active);
   const from = { from: "fired" };
-
-  function handleAddDriversClick() {
-    setIsFormVisible(true);
-  }
-
-  function handleBack() {
-    setIsFormVisible(false);
-  }
 
   return (
     <>

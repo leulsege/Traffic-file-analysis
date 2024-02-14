@@ -9,14 +9,14 @@ import LoggedinNavBar from "../components/LoggedinNavBar";
 
 export default function VehiclesAppLayout() {
   const [vehicles, setVehicles] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [results, setResults] = useState(1);
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
 
   // Parse the 'page' query parameter to a number, defaulting to 1
-  const page = parseInt(queryParams.get("page")) || 1;
+  const page = parseInt(queryParams.get("page") as any) || 1;
 
   const handleNextPage = () => {
     const nextPage = page + 1;
@@ -28,7 +28,7 @@ export default function VehiclesAppLayout() {
     updatePage(prevPage);
   };
 
-  const updatePage = (newPage) => {
+  const updatePage = (newPage: any) => {
     queryParams.set("page", newPage.toString());
 
     navigate(`?${queryParams.toString()}`);

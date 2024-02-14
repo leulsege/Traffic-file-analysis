@@ -1,7 +1,7 @@
 import styles from "../components/owner/Admin.module.css";
 import { useNavigate } from "react-router";
 
-function Trainer({ trainer }) {
+function Trainer({ trainer }: any) {
   const navigate = useNavigate();
 
   function handleTrainer() {

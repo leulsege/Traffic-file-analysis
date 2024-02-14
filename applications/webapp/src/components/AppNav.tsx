@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import styles from "./AppNav.module.css";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import Spinner from "./Spinner";
 
-function AppNav({ setDrivers, setVehicles, setTrainers, setExDrivers }) {
+function AppNav({ setDrivers, setVehicles, setExDrivers }: any) {
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
@@ -88,6 +89,8 @@ function AppNav({ setDrivers, setVehicles, setTrainers, setExDrivers }) {
       fetchData();
     }
   }, [query]);
+
+  if (loading) return <Spinner />;
 
   return (
     <>

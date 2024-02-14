@@ -3,14 +3,14 @@ import styles from "./AdminForm.module.css";
 import { useState } from "react";
 import CustomSnackbar from "../CustomSnackBar";
 
-function AdminForm({ admin, setAdmin }) {
+function AdminForm({ admin, setAdmin }: any) {
   const [firstName, setFirstName] = useState(admin.firstName);
   const [lastName, setLastName] = useState(admin.lastName);
   const navigate = useNavigate();
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
-  const handleSnackbarClose = (event, reason) => {
+  const handleSnackbarClose = (reason: any) => {
     if (reason === "clickaway") {
       return;
     }

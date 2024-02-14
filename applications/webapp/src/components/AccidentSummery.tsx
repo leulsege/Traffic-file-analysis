@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./accidentTrack.module.css";
 
-function accidentSummery({ accident }) {
+function accidentSummery({ accident }: any) {
   const navigate = useNavigate();
   function handleClick() {
     navigate(`/accidents/${accident._id}`);

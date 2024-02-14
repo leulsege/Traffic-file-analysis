@@ -1,10 +1,10 @@
 import styles from "./accidentTrack.module.css";
 import AccidentSummery from "./AccidentSummery";
 
-function accidentTrack({ accidents }) {
+function accidentTrack({ accidents }: any) {
   return (
     <div className={styles.driverList}>
-      {accidents.map((accident) => (
+      {accidents.map((accident: any) => (
         <AccidentSummery key={accident._id} accident={accident} />
       ))}
     </div>

@@ -9,39 +9,7 @@ function TrainersForm() {
   const [trainingEndDate, setTrainingEndDate] = useState("");
   const [trainingPassPoint, setTrainingPassPoint] = useState("");
   const [trainingResult, setTrainingResult] = useState("");
-  const [checkUp, setCheckUP] = useState("");
-
-  async function handleCreate() {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_API}/vehicles`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            vehicleType,
-            plateNumber,
-            moterNumber,
-            chanciNumber,
-            sideNumber,
-            pmServiceTime,
-            bmServiceTime,
-            others,
-          }),
-          credentials: "include",
-        }
-      );
-      if (response.ok) {
-        const vehicle = await response.json();
-        navigate(`/vehicles/${vehicle.data.vehicle._id}`);
-      } else {
-        const errorData = await response.json();
-        console.log(errorData);
-      }
-    } catch (error) {
-      console.error("Error fetching vehicle:", error);
-    }
-  }
+  const [checkUp, setCheckUp] = useState("");
 
   return (
     <main className={styles.login}>
@@ -119,7 +87,9 @@ function TrainersForm() {
         </div>
 
         <div>
-          <Link className={styles.ctaLink}>Submit</Link>
+          <Link to="" className={styles.ctaLink}>
+            Submit
+          </Link>
         </div>
       </form>
     </main>

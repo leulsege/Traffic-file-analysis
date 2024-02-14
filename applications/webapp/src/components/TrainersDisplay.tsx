@@ -1,7 +1,5 @@
 import styles from "./Display.module.css";
-import { useState } from "react";
 import TrainerList from "./TrainerList";
-import AddTrainerForm from "./AddTrainerForm";
 
 function TrainersDisplay({
   trainers,
@@ -10,10 +8,10 @@ function TrainersDisplay({
   handleNextPage,
   page,
   results,
-}) {
-  const [isFormVisible, setIsFormVisible] = useState(false);
-
-  const activeTrainers = trainers.filter((trainer) => trainer.activeTrainer);
+}: any) {
+  const activeTrainers = trainers.filter(
+    (trainer: any) => trainer.activeTrainer
+  );
 
   return (
     <div className={styles.display}>

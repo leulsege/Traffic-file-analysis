@@ -4,7 +4,7 @@ import Driver from "./Driver";
 import Spinner from "./Spinner";
 import styles from "./DriversList.module.css";
 
-function DriversList({ drivers, isLoading, from }) {
+function DriversList({ drivers, isLoading, from }: any) {
   if (isLoading) return <Spinner />;
   return (
     <>
@@ -18,7 +18,7 @@ function DriversList({ drivers, isLoading, from }) {
         </h1>
       </div>
       <div className={styles.driverList}>
-        {drivers.map((driver) => (
+        {drivers.map((driver: any) => (
           <Driver key={driver._id} driver={driver} />
         ))}
       </div>

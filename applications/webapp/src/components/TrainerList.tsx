@@ -4,7 +4,7 @@ import Spinner from "./Spinner";
 import styles from "./DriversList.module.css";
 import Trainer from "./Trainer";
 
-function TrainerList({ trainers, isLoading, from }) {
+function TrainerList({ trainers, isLoading, from }: any) {
   if (isLoading) return <Spinner />;
 
   return (
@@ -16,7 +16,7 @@ function TrainerList({ trainers, isLoading, from }) {
         </h1>
       </div>
       <div className={styles.driverList}>
-        {trainers.map((trainer) => {
+        {trainers.map((trainer: any) => {
           if (!trainer._id) {
             console.error("Vehicle id is missing:", trainer);
             return null;

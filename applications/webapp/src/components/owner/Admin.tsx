@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./Admin.module.css";
 
-function Admin({ admin }) {
+function Admin({ admin }: any) {
   const navigate = useNavigate();
   const textClass = admin.approved ? styles.approved : styles.notApproved;
 

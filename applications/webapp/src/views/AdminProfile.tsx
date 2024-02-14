@@ -43,17 +43,17 @@ function AdminProfile() {
         <div className={styles.imgholder}>
           <a
             href={
-              admin.photo &&
+              (admin as any).photo &&
               `${import.meta.env.VITE_BACKEND_STATIC_FILE}/img/admins/${
-                admin.photo
+                (admin as any).photo
               }`
             }
           >
             <img
               src={
-                admin.photo
+                (admin as any).photo
                   ? `${import.meta.env.VITE_BACKEND_STATIC_FILE}/img/admins/${
-                      admin.photo
+                      (admin as any).photo
                     }`
                   : "/default-user-profile.jpg"
               }
@@ -61,9 +61,9 @@ function AdminProfile() {
             />
           </a>
           <p className={styles.name}>
-            {admin.firstName} {admin.lastName}
+            {(admin as any).firstName} {(admin as any).lastName}
           </p>
-          <p className={styles.phoneNumber}>{admin.role}</p>
+          <p className={styles.phoneNumber}>{(admin as any).role}</p>
           <PhotoUpload url={`admins/uploadphoto`} setProfile={setAdmin} />
         </div>
         <div className={styles.profileSettings}>

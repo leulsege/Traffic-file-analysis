@@ -17,7 +17,7 @@ export default function ForgetPassword() {
     setSnackbarOpen(false);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     try {
@@ -64,7 +64,7 @@ export default function ForgetPassword() {
                 type="email"
                 required
                 id="email"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value as any)}
                 value={email}
                 placeholder="Email address"
               />

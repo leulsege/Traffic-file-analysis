@@ -1,11 +1,10 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./UserForm.module.css";
 import { useState } from "react";
-import Spinner from "./Spinner";
 import ConfirmationPrompt from "./ConfirmationPrompt";
 import CustomSnackbar from "./CustomSnackBar";
 
-function VehicleForm({ vehicle, setVehicle }) {
+function VehicleForm({ vehicle, setVehicle }: any) {
   const [bmServiceTime, setBmServiceTime] = useState(vehicle.bmServiceTime);
   const [pmServiceTime, setPmServiceTime] = useState(vehicle.pmServiceTime);
   const [vehicleType, setVehicleType] = useState(vehicle.vehicleType);
@@ -17,7 +16,7 @@ function VehicleForm({ vehicle, setVehicle }) {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
-  const handleSnackbarClose = (event, reason) => {
+  const handleSnackbarClose = (reason: any) => {
     if (reason === "clickaway") {
       return;
     }

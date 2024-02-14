@@ -1,11 +1,11 @@
 // PhotoUpload.js
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "./PhotoUpload.module.css";
 
-function PhotoUpload({ url, setProfile }) {
+function PhotoUpload({ url, setProfile }: any) {
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const handleFileChange = (event) => {
+  const handleFileChange = (event: any) => {
     const file = event.target.files[0];
     setSelectedImage(file);
     console.log(selectedImage);

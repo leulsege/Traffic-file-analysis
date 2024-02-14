@@ -1,4 +1,4 @@
-import { useNavigate, Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PageNav from "../components/Navbar";
 import styles from "./Login.module.css";
 import { useState } from "react";
@@ -17,7 +17,7 @@ export default function ResetPassword() {
     setSnackbarOpen(false);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     try {
@@ -30,8 +30,7 @@ export default function ResetPassword() {
         }
       );
       if (response.ok) {
-        const userData = await response.json();
-        navigate("/app");
+        navigate("/drivers");
       } else {
         const errorData = await response.json();
         setError(errorData.message || "reset password failed");
@@ -54,7 +53,7 @@ export default function ResetPassword() {
             type="password"
             required
             id="password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value as any)}
             value={password}
           />
         </div>
@@ -65,7 +64,7 @@ export default function ResetPassword() {
             type="password"
             required
             id="confirmPassword"
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={(e) => setConfirmPassword(e.target.value as any)}
             value={confirmPassword}
           />
         </div>

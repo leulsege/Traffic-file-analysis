@@ -3,7 +3,7 @@ import Logo from "./Logo";
 import AppNav from "./AppNav";
 import { Outlet } from "react-router-dom";
 
-function Sidebar({ setDrivers, setVehicles, setTrainers, setExDrivers }) {
+function Sidebar({ setDrivers, setVehicles, setTrainers, setExDrivers }: any) {
   return (
     <div className={styles.sidebar}>
       <Logo />

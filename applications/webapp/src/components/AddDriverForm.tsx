@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./Form.module.css";
 import { useState } from "react";
 import CustomSnackbar from "./CustomSnackBar";
@@ -16,7 +16,7 @@ function AddDriverForm() {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
-  const handleSnackbarClose = (event, reason) => {
+  const handleSnackbarClose = (reason: any) => {
     if (reason === "clickaway") {
       return;
     }
@@ -72,7 +72,7 @@ function AddDriverForm() {
           <input
             type="text"
             id="fullName"
-            onChange={(e) => setFullName(e.target.value)}
+            onChange={(e) => setFullName(e.target.value as any)}
             value={fullName}
             required
           />
@@ -82,7 +82,7 @@ function AddDriverForm() {
           <input
             type="tel"
             id="phoneNumber"
-            onChange={(e) => setPhoneNumber(e.target.value)}
+            onChange={(e) => setPhoneNumber(e.target.value as any)}
             value={phoneNumber}
             required
           />
@@ -93,7 +93,7 @@ function AddDriverForm() {
           <input
             type="text"
             id="gender"
-            onChange={(e) => setGender(e.target.value)}
+            onChange={(e) => setGender(e.target.value as any)}
             value={gender}
             required
           />
@@ -103,7 +103,7 @@ function AddDriverForm() {
           <input
             type="date"
             id="birthDate"
-            onChange={(e) => setBirthDate(e.target.value)}
+            onChange={(e) => setBirthDate(e.target.value as any)}
             value={birthDate}
             required
           />
@@ -114,7 +114,7 @@ function AddDriverForm() {
           <input
             type="text"
             id="licenselevel"
-            onChange={(e) => setLicenseLevel(e.target.value)}
+            onChange={(e) => setLicenseLevel(e.target.value as any)}
             value={licenseLevel}
           />
         </div>
@@ -124,7 +124,7 @@ function AddDriverForm() {
           <input
             type="text"
             id="licenseNumber"
-            onChange={(e) => setLicenseNumber(e.target.value)}
+            onChange={(e) => setLicenseNumber(e.target.value as any)}
             value={licenseNumber}
           />
         </div>
@@ -134,7 +134,7 @@ function AddDriverForm() {
           <input
             type="Date"
             id="licenseExpiredDate"
-            onChange={(e) => setLicenseExpiredDate(e.target.value)}
+            onChange={(e) => setLicenseExpiredDate(e.target.value as any)}
             value={licenseExpiredDate}
           />
         </div>
@@ -144,7 +144,7 @@ function AddDriverForm() {
           <input
             type="text"
             id="idNumber"
-            onChange={(e) => setIdNumber(e.target.value)}
+            onChange={(e) => setIdNumber(e.target.value as any)}
             value={idNumber}
           />
         </div>
@@ -154,7 +154,7 @@ function AddDriverForm() {
           <input
             type="text"
             id="vehicle"
-            onChange={(e) => setVehicle(e.target.value)}
+            onChange={(e) => setVehicle(e.target.value as any)}
             value={vehicle}
           />
         </div>

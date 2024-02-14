@@ -1,7 +1,11 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function ProtectedRoute({ children, isAuthenticated, setIsAuthenticated }) {
+function ProtectedRoute({
+  children,
+  isAuthenticated,
+  setIsAuthenticated,
+}: any) {
   const navigate = useNavigate();
 
   useEffect(() => {

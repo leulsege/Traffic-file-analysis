@@ -1,9 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./AccidentForm.module.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CustomSnackbar from "./CustomSnackBar";
 
-function AccidentForm({ driver, setShowAccidentForm }) {
+function AccidentForm({ driver, setShowAccidentForm }: any) {
   const [accidentDate, setAccidentDate] = useState("");
   const [accidentPlace, setAccidentPlace] = useState("");
   const [damages, setDamages] = useState("");
@@ -21,7 +21,7 @@ function AccidentForm({ driver, setShowAccidentForm }) {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
-  const handleSnackbarClose = (event, reason) => {
+  const handleSnackbarClose = (reason: any) => {
     if (reason === "clickaway") {
       return;
     }
@@ -214,7 +214,7 @@ function AccidentForm({ driver, setShowAccidentForm }) {
           <input
             type="Number"
             id="reducedPoint"
-            onChange={(e) => setReducedPoint(e.target.value)}
+            onChange={(e) => setReducedPoint(e.target.value as any)}
             value={reducedPoint}
           />
         </div>
@@ -224,7 +224,7 @@ function AccidentForm({ driver, setShowAccidentForm }) {
           <input
             type="text"
             id="givenDecision"
-            onChange={(e) => setGivenDecision(e.target.value)}
+            onChange={(e) => setGivenDecision(e.target.value as any)}
             value={givenDecision}
           />
         </div>

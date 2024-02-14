@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import styles from "./Driver.module.css";
 
-function Driver({ driver }) {
+function Driver({ driver }: any) {
   const navigate = useNavigate();
 
   const handleDriver = () => {

@@ -1,8 +1,8 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./AdminForm.module.css";
 import ConfirmationPrompt from "../ConfirmationPrompt";
 
-function ApproveAdminForm({ admin, setAdmin }) {
+function ApproveAdminForm({ admin, setAdmin }: any) {
   const adminId = useParams();
   const navigate = useNavigate();
 

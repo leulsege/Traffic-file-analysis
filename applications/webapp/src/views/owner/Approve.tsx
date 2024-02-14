@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import styles from "./Approve.module.css";
 import AdminDisplay from "../../components/owner/AdminDisplay";
@@ -7,7 +7,7 @@ import LoggedinNavBar from "../../components/LoggedinNavBar";
 
 export default function AppLayout() {
   const [admins, setAdmins] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
 
   useEffect(function () {
     async function fetchAdmins() {
