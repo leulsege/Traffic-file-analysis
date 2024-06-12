@@ -3,33 +3,6 @@ import { IsEmail, IsEnum, IsNotEmpty } from 'class-validator'
 import { hash, compare } from 'bcrypt'
 import crypto from 'crypto'
 
-class User {
-  @IsNotEmpty()
-  firstName: string
-
-  @IsNotEmpty()
-  lastName: string
-
-  @IsEmail({}, { message: 'Please provide a valid email' })
-  @IsNotEmpty()
-  email: string
-
-  @IsNotEmpty()
-  password: string
-
-  @IsEnum(['admin', 'owner'])
-  @IsNotEmpty()
-  role: string
-
-  passwordChangedAt: Date
-  passwordResetToken: String
-  passwordResetExpires: Date
-
-  verified: Boolean
-  approved: Boolean
-  photo?: string | null
-}
-
 const userSchema: Schema = new Schema({
   firstName: {
     type: String,

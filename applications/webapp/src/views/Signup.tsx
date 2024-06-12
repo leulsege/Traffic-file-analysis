@@ -27,21 +27,7 @@ export default function Signup() {
 
     try {
       setIsLoading(true);
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_API}/admins/signup`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email,
-            password,
-            firstName,
-            lastName,
-            confirmPassword,
-          }),
-          credentials: "include",
-        }
-      );
+       
       if (response.ok) {
         const data = await response.json();
         setMessage((data as any).message);

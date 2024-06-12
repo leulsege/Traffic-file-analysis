@@ -78,7 +78,8 @@ export const getUser = asyncError(
         user,
       },
     })
-  },
+  },npm cache clean --force
+
 )
 
 export const updateUser = asyncError(
